@@ -1,0 +1,11 @@
+com\product\controller\UserController.class
+com\product\base\Base.class
+com\product\plugin\PagePlugin.class
+com\product\base\BaseMapper.class
+com\product\dao\UserDao.class
+com\product\base\mylistener.class
+com\product\service\UserserviceImpl.class
+com\product\dao\UserDaoImpl.class
+com\product\util\Common.class
+com\product\entity\User.class
+com\product\service\UserService.class
