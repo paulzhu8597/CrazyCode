@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.product.mapper.UserMapper">
 
 	<!--mybatis ehcache缓存配置 -->
@@ -8,8 +9,9 @@
 		/> -->
 	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
 	<!-- 以下与实体类的中字段一致 -->
-	<select id="querySingleUser" parameterType="String" resultType="User">
-	    select userId,userName from User where userid =#{userId} and userpassword=#{userPassword}
+	<select id="querySingleUser" parameterType="User" resultType="User">
+		select userId,userName from User where userid =#{userId} and
+		userpassword=#{userPassword}
 	</select>
-	
+
 </mapper>

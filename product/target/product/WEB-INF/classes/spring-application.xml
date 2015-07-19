@@ -23,7 +23,7 @@
 	<!-- 统一异常处理方式 -->
 	<!-- <bean id="exceptionHandler" class="com.lanyuan.exception.MyExceptionHandler"/> -->
 	
-	<context:component-scan base-package="com.product" />
+	<context:component-scan base-package="com.product.*" />
 	<!-- <context:component-scan base-package="com.lanyuan.logAop" /> -->
 	<!-- 启动对@AspectJ注解的支持 -->
 	<!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller-->  
