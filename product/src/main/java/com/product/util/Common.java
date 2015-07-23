@@ -7,23 +7,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+
+
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 //import com.product.annotation.TableSeg;
 
@@ -562,4 +563,34 @@ public class Common {
 		}
 		return froMmap;
 	}*/
+	
+	public static Integer getPagetotalByPageSize(String recodetotal,String pagesize)
+	{
+		try{
+			int totalpage = 0;
+		int irecodetotal = Integer.valueOf(recodetotal);
+		int ipagesize = Integer.valueOf(pagesize);
+		if(irecodetotal%ipagesize>0)
+		{
+			totalpage = (irecodetotal/ipagesize)+1;
+		}
+		else
+		{
+			totalpage = irecodetotal/ipagesize;
+		}
+		return totalpage;
+		}catch(Exception e)
+		{
+			return 0;
+		}
+	}
+	
+	public static String stringDefaultOfEmpty(String inputstring,String defaultString){
+		return (null==inputstring || "".equals(inputstring) || "null".equals(inputstring))?defaultString:inputstring;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(getPagetotalByPageSize("10","2"));
+	}
+	
 }

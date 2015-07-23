@@ -1,6 +1,7 @@
 package com.product.base;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 已经实现民基本的 增,删,改,查接口,不需要重复写
@@ -162,4 +163,6 @@ public interface BaseMapper {
 	 * <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp3.0v</b>
 	 */
 	public <T> T findbyFrist(String key,String value,Class<T> clazz);
+	
+	public String getCount(Map params);
 }

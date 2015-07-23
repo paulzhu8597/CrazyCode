@@ -48,7 +48,7 @@
 			if (!CommnUtil.notNull(dataType)) {
 				dataType = "html";
 			}
-			var html = '没有结果!';
+			var html = 'null';
 			// 所以AJAX都必须使用ly.ajax..这里经过再次封装,统一处理..同时继承ajax所有属性
 			if (url.indexOf("?") > -1) {
 				url = url + "&_t=" + new Date();
@@ -68,6 +68,78 @@
 			});
 			return html;
 		},
+		
+		normalAjax : function (url, data, dataType){
+			if (!CommnUtil.notNull(dataType)) {
+				dataType = "html";
+			}
+			var html = 'null';
+			// 所以AJAX都必须使用ly.ajax..这里经过再次封装,统一处理..同时继承ajax所有属性
+			if (url.indexOf("?") > -1) {
+				url = url + "&_t=" + new Date();
+			} else {
+				url = url + "?_t=" + new Date();
+			}
+			$.ajax({
+				type : "post", //使用get方法访问后台
+			    dataType : dataType, //json格式的数据
+			    async : false, //同步   不写的情况下 默认为true
+			    url : rootPath+url,
+			    data : data,
+			    success : function(data){
+			    	html =  data;
+				}
+			});
+			return html;
+		},
+		
+		cleanInputValue : function(intputIds){
+			if(""!=intputIds && "undefined"!=intputIds){
+				var ids = intputIds.split(",");
+				for(var i=0;i<ids.length;i++)
+				{
+					$("#"+ids[i]).val("");
+				}
+			}
+		},
+		
+		getInputValue : function(intputIds){
+			alert(intputIds);
+			var rtnvalue = "";
+			if(""!=intputIds && "undefined"!=intputIds){
+				var ids = intputIds.split(",");
+				for(var i=0;i<ids.length;i++)
+				{
+					alert(ids[i]);
+					if(i==0){
+						rtnvalue = rtnvalue+$("#"+ids[i]).val();
+					}
+					else
+					{
+					    rtnvalue += "@_@"+$("#"+ids[i]).val();
+					}
+				}
+			}
+			return rtnvalue;
+		},
+		
+		isHaveSelectMoreCheckbox : function (checkboxname){
+			return $("input[name='"+checkboxname+"']").length>1;
+		},
+		
+		isHaveSelectOneCheckbox : function (checkboxname){
+			return $("input[name='"+checkboxname+"']:checked").length==1;
+		},
+		
+		getCheckBoxValueOfSelect : function (checkboxname){
+			var rtn = "";
+			var arrChk=$("input[name='"+checkboxname+"']:checked");
+		    $(arrChk).each(function(){
+		    	rtn = this.value;                        
+		    }); 
+			return rtn;
+		},
+		
 		/**
 		 * 判断某对象不为空..返回true 否则 false
 		 */

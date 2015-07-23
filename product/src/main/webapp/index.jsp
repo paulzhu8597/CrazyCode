@@ -20,7 +20,7 @@
 						$("#topli").html(html);
 						var tb = $("#loadhtml");
 						tb.html(CommnUtil.loadingImg());
-						tb.load(rootPath+sn[2]);
+						tb.load(rootPath+sn[2]+"&id="+sn[3]);
 				});
 			});
 		});
@@ -216,7 +216,7 @@
 													<c:forEach var="kc" items="${key.children}">
 														<li class="active"><a
 															href="javascript:void(0)"
-															class="active" nav-n="${key.name},${kc.name},${kc.resUrl}?id=${kc.id}"> <i class="fa fa-angle-right"></i> <span>${kc.name}</span>
+															class="active" nav-n="${key.name},${kc.name},${kc.resUrl},${kc.id}"> <i class="fa fa-angle-right"></i> <span>${kc.name}</span>
 														</a></li>
 													</c:forEach>
 												</ul></li>

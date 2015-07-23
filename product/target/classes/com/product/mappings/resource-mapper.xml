@@ -9,8 +9,9 @@
 		/> -->
 	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
 	<!-- 以下与实体类的中字段一致 -->
-	<select id="findByWhere" parameterType="com.product.entity.ResFormMap" resultType="com.product.entity.ResFormMap">
-		select * from product_resources 
+	<select id="findByWhere" parameterType="com.product.entity.ResFormMap"
+		resultType="com.product.entity.ResFormMap">
+		select * from product_resources
 	</select>
 
 </mapper>
