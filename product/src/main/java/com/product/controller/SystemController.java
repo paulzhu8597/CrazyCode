@@ -63,7 +63,7 @@ public class SystemController {
 		params.put("pageSize", Integer.valueOf(pageSize));
 		params.put("table", "cargoinfo");
 		if (Common.isNotEmpty(cargoname)) {
-			params.put("where", " cargoname='" + cargoname + "'");
+			params.put("where", " cargoname like '%" + cargoname + "%'");
 		}
 		return cargoinfomapper.getCargoinfo(params);
 	}
@@ -74,7 +74,7 @@ public class SystemController {
 		Map params = new HashMap();
 		params.put("table", "cargoinfo");
 		if (Common.isNotEmpty(cargoname)) {
-			params.put("where", " cargoname='" + cargoname + "'");
+			params.put("where", " cargoname like '%" + cargoname + "%'");
 		}
 		return cargoinfomapper.getCount(params);
 	}
@@ -128,6 +128,24 @@ public class SystemController {
 						Common.stringDefaultOfEmpty(request.getParameter("timeorg"),"")));
 		} catch (Exception e) {
 			e.printStackTrace();
+			rtn = e.getMessage();
+		}
+		return rtn;
+	}
+	
+	@ResponseBody
+    @RequestMapping("/cargoinfo/deleteCargo")
+	public String deleteCargo(HttpServletRequest request){
+		String rtn = "ok";
+		String idAndName = request.getParameter("idAndName");
+		try{
+		if(Common.isNotEmpty(idAndName)){
+			Map params = new HashMap();
+			params.put("id", idAndName.split("@_@")[0]);
+			params.put("cargoname", idAndName.split("@_@")[1]);
+			cargoinfomapper.deleteByAttribute(params);
+		}
+		}catch (Exception e){
 			rtn = e.getMessage();
 		}
 		return rtn;

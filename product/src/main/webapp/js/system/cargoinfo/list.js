@@ -17,8 +17,10 @@ $(function() {
 					}
 			     }
 				else if("edit"==editfalg){
-					alert("lllll");
-					saveEditCargo();
+					if(saveEditCargo()){
+						$(this).dialog("close");
+						search(0, "true");
+					}
 				}
 			},
 			"取消" : function() {
@@ -32,6 +34,7 @@ $(function() {
 			// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
 		},
 		close : function(ev, ui) {
+			$("#addcargoname").attr('disabled',false);
 			CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
 		}
 	});
@@ -43,6 +46,9 @@ $(function() {
 	});
 	$("#next").click("click", function() {
 		donext();
+	});
+	$("#checkall").click("click", function() {
+		allSelect();
 	});
 	$("#editcargo").click("click", function() {
 		editfalg = "edit";
@@ -120,6 +126,7 @@ function initeditcargo() {
 		var idAndName = CommnUtil.getCheckBoxValueOfSelect("cargoes");
 		var data = CommnUtil.normalAjax("/system/cargoinfo/getOneCargo.do" , "idAndName="+idAndName , "json");
 		if(CommnUtil.notNull(data)){
+			$("#addcargoname").attr('disabled',true);
 			$("#addcargoname").val(data.cargoname);
 			$("#org").val(data.org);
 			$("#irradtype").val(data.irradtype);
@@ -134,7 +141,7 @@ function saveEditCargo(){
 		return false;
 	}
 	if(!validatetime($("#irradtime").val())){
-		alert("时间输入格式不正确！");
+		alert("时间输入格式不正确(格式:yyyy-mm-dd)！");
 		return false;
 	}
 	var data = CommnUtil.normalAjax("/system/cargoinfo/saveEditCargo.do",
@@ -160,7 +167,7 @@ function addcargo() {
 		return false;
 	}
 	if(!validatetime($("#irradtime").val())){
-		alert("时间输入格式不正确！");
+		alert("时间输入格式不正确(格式:yyyy-mm-dd)！");
 		return false;
 	}
 
@@ -181,26 +188,46 @@ function addcargo() {
 	return false;
 }
 function deletecargo() {
-	layer.confirm('是否删除？', function(index) {
-		var url = rootPath + '/role/deleteEntity.shtml';
-		var s = CommnUtil.ajax(url, {
-			ids : cbox.join(",")
-		}, "json");
-		if (s == "success") {
-			layer.msg('删除成功');
-			grid.loadData();
-		} else {
-			layer.msg('删除失败');
+	if(CommnUtil.isHaveSelectOneCheckbox("cargoes")){
+		if(confirm("确认删除货物吗？")){
+			var data = CommnUtil.normalAjax("/system/cargoinfo/deleteCargo.do", "idAndName="+CommnUtil.getCheckBoxValueOfSelect("cargoes"), "json");
+			if(CommnUtil.notNull(data) && "ok" == data){
+				search(0, "true");
+			}
+			else{
+				alert("删除失败!\n错误信息:\n"+data);
+			}
 		}
-	});
+	}else{
+		alert("请选择一个货物！");
+	}
 }
 
 // ==========================================================添加========================================================
 function validatetime(intime){
-	alert("intime : "+intime);
 	var rex = /^(\d{4})\-(\d{2})\-(\d{2})$/;
 	if(CommnUtil.notNull(intime)&&rex.test(intime)){
 		return true;
 	}
 	return false;
+}
+//全选，全不选
+function allSelect() {
+    if ($("#checkall").attr("checked") != "checked") {
+        $("#checkall").removeAttr("checked", "checked");
+    }
+    else {
+        $("#checkall").attr("checked");
+    }
+}
+//反选
+function otherSelect() {
+    $(":checkbox").each(function () {
+        if ($(this).attr("checked") == "checked") {
+            $(this).removeAttr("checked");
+        }
+        else {
+            $(this).attr("checked", "checked");
+        }
+    });
 }

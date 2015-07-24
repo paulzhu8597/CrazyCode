@@ -83,7 +83,7 @@
 				style="margin-bottom: -3px;">
 				<thead>
 					<tr style="line-height: 27px;">
-						<td style="text-align: center">选择</td>
+						<td style="text-align: center"><input type="checkbox" id="checkall"/> 选择</td>
 						<td style="text-align: center">货物名称</td>
 						<td style="text-align: center">单位</td>
 						<td style="text-align: center">辐照方式</td>

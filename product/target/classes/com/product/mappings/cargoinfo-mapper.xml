@@ -25,7 +25,7 @@
 		resultType="Cargoinfo">
 		<include refid="selectcargoinfo" />
 		<if test="cargoname != null and cargoname!=''">
-			where cargoname=#{cargoname}
+			where cargoname like concat('%', #{cargoname}, '%')
 		</if>
 		limit ${pageNow} , ${pageSize}
 	</select>
@@ -50,8 +50,11 @@
 	</select>
 	
 	<update id="saveEditCargo" parameterType="Cargoinfo">
-	    
-	    update cargoinfo set cargoname=#{cargoname},org=#{org}, irradtype=#{irradtype},irradtime=str_to_date(#{irradtime},'%Y-%m-%d'), timeorg=#{timeorg}
+	    update cargoinfo set org=#{org}, irradtype=#{irradtype},irradtime=str_to_date(#{irradtime},'%Y-%m-%d'), timeorg=#{timeorg} where cargoname=#{cargoname}  
 	</update>
+	
+	<delete id="deleteByAttribute" parameterType="java.util.Map" >
+	    delete from cargoinfo where id=#{id} and cargoname=#{cargoname}  
+	</delete>
 	
 </mapper>

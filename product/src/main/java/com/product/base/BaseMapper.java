@@ -103,10 +103,11 @@ public interface BaseMapper {
 	 * <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp2015-04-26</b><br/>
 	 * <b>version：</b><br/>
 	 * <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp3.0v</b>
+	 * @return 
 	 * 
 	 * @throws Exception
 	 */
-	public void deleteByAttribute(String key, String value, Class clazz) throws Exception;
+	public void deleteByAttribute(Map params) throws Exception;
 
 	/**
 	 * 1：传入继承FormMap的子类对象 <br/>
