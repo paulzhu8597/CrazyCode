@@ -1,5 +1,5 @@
 INSERT INTO `product_resources` VALUES (1, '系统基础管理', 0, 'system', '0', 'system', 1, 'fa-desktop', 0, '系统基础管理');
-INSERT INTO `product_resources` VALUES (2, '货物信息', 1, 'cargoinfo', '1', '/system/cargoinfo.do?pageNow=0&pageSize=20', 2, NULL, 0, '货物信息');
+INSERT INTO `product_resources` VALUES (2, '货物信息', 1, 'cargoinfo', '1', '/system/cargoinfo', 2, NULL, 0, '货物信息');
 INSERT INTO `product_resources` VALUES (3, '送货信息', 1, 'shippinginfo', '1', '/system/shippinginfo', 7, 'fa-list', 0, '送货信息');
 INSERT INTO `product_resources` VALUES (4, '送取货人', 1, 'bringtakeinfo', '1', '/system/bringtakeinfo', NULL, NULL, 0, '送取货人');
 INSERT INTO `product_resources` VALUES (5, '单位信息', 1, 'orginfo', '1', '/system/orginfo', 12, 'fa-list-alt', 0, '单位信息');
