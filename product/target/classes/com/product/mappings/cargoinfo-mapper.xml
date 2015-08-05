@@ -27,7 +27,9 @@
 		<if test="cargoname != null and cargoname!=''">
 			where cargoname like concat('%', #{cargoname}, '%')
 		</if>
-		limit ${pageNow} , ${pageSize}
+		 <if test="pageNow != null and pageSize != null">
+		  limit ${pageNow} , ${pageSize}
+		 </if>
 	</select>
 
 	<select id="getCount" parameterType="java.util.Map" resultType="java.lang.String">

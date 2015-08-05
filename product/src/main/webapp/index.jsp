@@ -20,7 +20,7 @@
 						$("#topli").html(html);
 						var tb = $("#loadhtml");
 						tb.html(CommnUtil.loadingImg());
-						tb.load(rootPath+sn[2]+"&id="+sn[3]);
+						tb.load(rootPath+sn[2]);
 				});
 			});
 		});

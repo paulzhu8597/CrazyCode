@@ -104,7 +104,6 @@
 		},
 		
 		getInputValue : function(intputIds){
-			alert(intputIds);
 			var rtnvalue = "";
 			if(""!=intputIds && "undefined"!=intputIds){
 				var ids = intputIds.split(",");
@@ -120,6 +119,24 @@
 					}
 				}
 			}
+			return rtnvalue;
+		},
+		UrlOfInputValue : function(intputIds){
+			var rtnvalue = "";
+			if(""!=intputIds && "undefined"!=intputIds){
+				var ids = intputIds.split(",");
+				for(var i=0;i<ids.length;i++)
+				{
+					if(i==0){
+						rtnvalue = ids[i] + "=" + rtnvalue+$("#"+ids[i]).val();
+					}
+					else
+					{
+						rtnvalue += "&"+ids[i] + "=" + $("#"+ids[i]).val();
+					}
+				}
+			}
+			alert(rtnvalue);
 			return rtnvalue;
 		},
 		
@@ -138,6 +155,35 @@
 		    	rtn = this.value;                        
 		    }); 
 			return rtn;
+		},
+		
+		disableOrEnabledInputValue : function (intputIds,flag){
+			if(""!=intputIds && "undefined"!=intputIds){
+				var ids = intputIds.split(",");
+				for(var i=0;i<ids.length;i++)
+				{
+					$("#"+ids[i]).attr("disabled",flag);
+				}
+			}
+		},
+		
+		haveOneTagIsNull : function(intputIds){
+			if(""!=intputIds && "undefined"!=intputIds){
+				var ids = intputIds.split(",");
+				for(var i=0;i<ids.length;i++)
+				{
+					if($("#"+ids[i]).length > 0){
+						var incontent = $("#"+ids[i]).val();
+						if(((incontent === null)||(incontent === undefined)||(incontent === "undefined")||(incontent === ""))){
+							$("#"+ids[i]).attr("style","border-color: red");
+							return true;
+						}else{
+							$("#"+ids[i]).attr("style","");
+						}
+				    }
+				}
+			}
+			return false
 		},
 		
 		/**

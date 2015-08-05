@@ -57,6 +57,25 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 	
+    <jsp-config>
+    <taglib>
+        <taglib-uri>http://www.crazycode.org/commontaglib</taglib-uri>
+        <taglib-location>/WEB-INF/tags/common.tld</taglib-location>
+    </taglib>
+    <taglib>
+       <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
+       <taglib-location>/WEB-INF/tags/c.tld</taglib-location>
+    </taglib>
+    <taglib>
+       <taglib-uri>http://java.sun.com/jsp/jstl/functions</taglib-uri>
+       <taglib-location>/WEB-INF/tags/fn.tld</taglib-location>
+    </taglib>
+    <taglib>
+       <taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
+       <taglib-location>/WEB-INF/tags/fmt.tld</taglib-location>
+    </taglib>
+  </jsp-config>
+    
 <error-page>
 		<error-code>404</error-code>
 		<location>/404/404.jsp</location>
