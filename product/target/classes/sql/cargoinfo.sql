@@ -1,4 +1,4 @@
-INSERT INTO `cargoinfo` VALUES (1, '带鱼', '条', '无', '2015-7-21 00:00:00', '90');
+INSERT INTO `cargoinfo` VALUES (1, '带鱼', '条', '无', '2015-7-21 13:34:35', '0');
 INSERT INTO `cargoinfo` VALUES (2, '芹菜', '斤', '无', '2015-7-21 13:35:38', '0');
 INSERT INTO `cargoinfo` VALUES (3, '土豆', '斤', '无', '2015-7-21 13:36:03', '0');
 INSERT INTO `cargoinfo` VALUES (4, '香蕉', '斤', '无', '2015-7-21 13:36:39', '0');
@@ -22,5 +22,6 @@ INSERT INTO `cargoinfo` VALUES (21, '火烧', '斤', '无', '2015-7-22 16:48:50'
 INSERT INTO `cargoinfo` VALUES (22, '馒头', '斤', '无', '2015-7-22 16:49:04', '0');
 INSERT INTO `cargoinfo` VALUES (23, '榴莲', '斤', '无', '2015-7-22 16:49:26', '0');
 INSERT INTO `cargoinfo` VALUES (24, 'name', 'org', 'itypr', '2015-7-23 11:15:42', 'timeorg');
+INSERT INTO `cargoinfo` VALUES (25, 'name1', 'org', 'itypr', '0000-0-0 00:00:00', 'timeorg');
 INSERT INTO `cargoinfo` VALUES (26, 'edit', 'oddrg', '', '0000-0-0 00:00:00', '');
-INSERT INTO `cargoinfo` VALUES (27, '王二麻子', '诸城', '辐射', '2015-7-24 00:00:00', '小时/个');
+INSERT INTO `cargoinfo` VALUES (27, '雅马哈', '', '', '7998-0-0 00:00:00', '');

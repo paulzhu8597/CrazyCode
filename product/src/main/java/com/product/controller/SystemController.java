@@ -1,5 +1,7 @@
 package com.product.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,37 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.product.entity.Cargoinfo;
-import com.product.mapper.BringTakeInfoMapper;
 import com.product.mapper.CargoinfoMapper;
-import com.product.mapper.CountOrginfoMapper;
-import com.product.mapper.ShippingInfoMapper;
 import com.product.util.Common;
-/**
- * 基本信息部分只是简单的增删改查，没有复杂业务逻辑简单起见不设置server层，直接在controller下调用mapper访问数据库
- * @author wzq
- *
- */
 
 @Controller
 @RequestMapping("/system/")
 public class SystemController {
 
 	@Resource
-	private CargoinfoMapper cargoinfomapper;//货物信息
-	@Resource
-	private ShippingInfoMapper  shippinginfoMapper;//送货信息
-	@Resource
-	private BringTakeInfoMapper  bringtakeinfoMapper;//送取货人
-	@Resource
-	private CountOrginfoMapper  orginfoMapper;//单位信息
-//==================================================================货物信息
-	/**
-	 * 得到货物信息列表
-	 * @param model
-	 * @param pageNow
-	 * @param pageSize
-	 * @return
-	 */
+	private CargoinfoMapper cargoinfomapper;
+
 	@RequestMapping("cargoinfo")
 	public String cargoinfo(Model model,
 			@RequestParam(value = "pageNow") String pageNow,
@@ -63,16 +44,6 @@ public class SystemController {
 		return Common.BACKGROUND_PATH + "/system/cargoinfo/list";
 	}
 
-	/**
-	 * 分页查询货物
-	 * @param model
-	 * @param cargoname
-	 * @param pageNow
-	 * @param pageSize
-	 * @param isfromsearch
-	 * @return
-	 * @throws Exception
-	 */
 	@ResponseBody
 	@RequestMapping("/cargoinfo/findByPage")
 	public List<Cargoinfo> findByPage(Model model,
@@ -97,11 +68,6 @@ public class SystemController {
 		return cargoinfomapper.getCargoinfo(params);
 	}
 
-	/**
-	 * 根据条件获取某张表的记录数
-	 * @param cargoname
-	 * @return
-	 */
 	@ResponseBody
 	@RequestMapping("/cargoinfo/getCount")
 	public String getCount(@RequestParam(value = "cargoname") String cargoname) {
@@ -113,11 +79,6 @@ public class SystemController {
 		return cargoinfomapper.getCount(params);
 	}
 
-	/**
-	 * 添加一条货物信息
-	 * @param request
-	 * @return
-	 */
 	@ResponseBody
 	@RequestMapping("/cargoinfo/doAddCargo")
 	public String doAddCargo(HttpServletRequest request) {
@@ -143,11 +104,6 @@ public class SystemController {
 		return rtn;
 	}
 
-	/**
-	 * 根据条件得到一条货物记录
-	 * @param idAndName
-	 * @return
-	 */
 	@ResponseBody
     @RequestMapping("/cargoinfo/getOneCargo")
 	public Cargoinfo getOneCargo(@RequestParam(value = "idAndName") String idAndName){
@@ -158,11 +114,6 @@ public class SystemController {
 		return cargoinfo;
 	}
 	
-	/**
-	 * 保存编辑后的货物
-	 * @param request
-	 * @return
-	 */
 	@ResponseBody
     @RequestMapping("/cargoinfo/saveEditCargo")
 	public String saveEditCargo(HttpServletRequest request){
@@ -182,11 +133,6 @@ public class SystemController {
 		return rtn;
 	}
 	
-	/**
-	 * 根据条件删除一条货物记录
-	 * @param request
-	 * @return
-	 */
 	@ResponseBody
     @RequestMapping("/cargoinfo/deleteCargo")
 	public String deleteCargo(HttpServletRequest request){
@@ -205,33 +151,6 @@ public class SystemController {
 		return rtn;
 	}
 	
-	//==================================================================送货信息
-	
-	
-	public ShippingInfoMapper getShippinginfoMapper() {
-		return shippinginfoMapper;
-	}
-
-	public void setShippinginfoMapper(ShippingInfoMapper shippinginfoMapper) {
-		this.shippinginfoMapper = shippinginfoMapper;
-	}
-
-	public BringTakeInfoMapper getBringtakeinfoMapper() {
-		return bringtakeinfoMapper;
-	}
-
-	public void setBringtakeinfoMapper(BringTakeInfoMapper bringtakeinfoMapper) {
-		this.bringtakeinfoMapper = bringtakeinfoMapper;
-	}
-
-	public CountOrginfoMapper getOrginfoMapper() {
-		return orginfoMapper;
-	}
-
-	public void setOrginfoMapper(CountOrginfoMapper orginfoMapper) {
-		this.orginfoMapper = orginfoMapper;
-	}
-
 	public CargoinfoMapper getCargoinfomapper() {
 		return cargoinfomapper;
 	}

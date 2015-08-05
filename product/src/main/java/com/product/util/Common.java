@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
@@ -18,11 +19,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+
+
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-
-import com.product.mapper.CommonMapper;
 
 //import com.product.annotation.TableSeg;
 
@@ -586,7 +588,6 @@ public class Common {
 	public static String stringDefaultOfEmpty(String inputstring,String defaultString){
 		return (null==inputstring || "".equals(inputstring) || "null".equals(inputstring))?defaultString:inputstring;
 	}
-	
 	
 	public static void main(String[] args) {
 		System.out.println(getPagetotalByPageSize("10","2"));
