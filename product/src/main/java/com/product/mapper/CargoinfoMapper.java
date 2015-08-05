@@ -6,7 +6,11 @@ import java.util.Map;
 import com.product.base.BaseMapper;
 import com.product.entity.Cargoinfo;
 
-
+/**
+ * 货物信息mapper
+ * @author wzq
+ *
+ */
 public interface CargoinfoMapper extends BaseMapper{
 public  List<Cargoinfo> getCargoinfo(Map params);
 

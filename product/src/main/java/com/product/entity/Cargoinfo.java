@@ -1,5 +1,10 @@
 package com.product.entity;
 
+/**
+ * 货物信息表
+ * @author wzq
+ *
+ */
 public class Cargoinfo {
 
 private int id=0;
