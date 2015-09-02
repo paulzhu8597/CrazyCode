@@ -23,9 +23,17 @@
 	
 }
 </style>
+<script type="text/javascript">
+function register(){
+	if((navigator.userAgent+"").indexOf("MSIE")==-1)
+    {
+       alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
+       return;
+    }
+}
+</script>
 </head>
-<body
-	style="background-image: url('${pageContext.servletContext.contextPath }/admin_files/9.jpg');margin-top:0px;">
+<body onload="register();"  style="background-image: url('${pageContext.servletContext.contextPath }/admin_files/9.jpg');margin-top:0px;">
 	<div id="loginbox" style="padding-top: 10%;">
 		<form id="loginform" name="loginform" class="form-vertical"
 			style="background-color: rgba(0, 0, 0, 0.5) !important; background: #000; filter: alpha(opacity = 50); *background: #000; *filter: alpha(opacity = 50); /*黑色透明背景结束*/ color: #FFF; bottom: 0px; right: 0px; border: 1px solid #000;"
@@ -82,6 +90,11 @@
 			alert("${error}");
 		}
 		function checkUserForm() {
+			if((navigator.userAgent+"").indexOf("MSIE")==-1)
+		    {
+		       alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
+		       return;
+		    }
 			document.loginform.submit();
 		}
 	</script>

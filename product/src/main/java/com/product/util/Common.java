@@ -13,16 +13,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.catalina.startup.SetAllPropertiesRule;
 import org.apache.commons.lang.StringUtils;
-
-import com.product.mapper.CommonMapper;
 
 //import com.product.annotation.TableSeg;
 
@@ -566,8 +568,8 @@ public class Common {
 	{
 		try{
 			int totalpage = 0;
-		int irecodetotal = Integer.valueOf(recodetotal);
-		int ipagesize = Integer.valueOf(pagesize);
+		int irecodetotal = Integer.valueOf(recodetotal.trim());
+		int ipagesize = Integer.valueOf(pagesize.trim());
 		if(irecodetotal%ipagesize>0)
 		{
 			totalpage = (irecodetotal/ipagesize)+1;
@@ -589,7 +591,7 @@ public class Common {
 	
 	
 	public static void main(String[] args) {
-		System.out.println(getPagetotalByPageSize("10","2"));
+
 	}
-	
+	//1, 2, 3
 }

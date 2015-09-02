@@ -2,6 +2,10 @@ package com.product.bean.common;
 
 public class DictItem {
 
+	private String dictid = "";
+	private String dictname = "";
+	private String status = "";
+	private String descript = "";
 	public DictItem() {
 	}
 
@@ -19,11 +23,6 @@ public class DictItem {
 		this.status = status;
 		this.descript = descript;
 	}
-
-	private String dictid = "";
-	private String dictname = "";
-	private String status = "";
-	private String descript = "";
 
 	public String getDictid() {
 		return dictid;
@@ -56,5 +55,4 @@ public class DictItem {
 	public void setDescript(String descript) {
 		this.descript = descript;
 	}
-
 }

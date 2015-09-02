@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div class="m-b-md">
-			<form>
+	  <div id="receivedCargosHeader">
 			<table class="pp-list table table-striped table-bordered">
 				<tr>
 				 <td >
@@ -70,33 +70,58 @@
 					</fieldset>
 				 </td> 
 				</tr>
-                <tr> <td colspan="2">  <input type="button" id="save" value="Save"> <input type="checkbox"  id="asCurrentRecord" value="0" /> </td></tr>
+                <tr> <td colspan="2">  <input type="button" id="save" value="Save"> 依照当前记录: <input type="checkbox"  id="asCurrentRecord" value="0" /> </td></tr>
 			</table>
-			</form>
+		</div>
+		<input id="hiddenshowhr" type="button" value="︽︾" style="background-color:silver;width:100%" />
 		<fieldset>
-			<legend>详细信息</legend>
+			<legend>已收货物</legend>
 			<header>
 				<div>
 					<form action="" class="form-horizontal">
-						<table class="pp-list table table-striped table-bordered"
+					送货单位：<crazy:dictselect id="showorgs1" name="showorgs1" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect>
+					收货时间：<input id="receivetime1" name="receivetime1" type="text" class="input-medium ui-autocomplete-input" />
+					送  货  人： <crazy:dictselect id="showBringTakeInfos1" name="showBringTakeInfos1" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
+					<input id="query" name="query" type="button" value="Query"/>
+						<table class="pp-list table  table-bordered"
 							style="margin-bottom: -3px;">
 							<thead>
 								<tr style="line-height: 27px;">
-									<td style="text-align: center"><input type="checkbox"
-										id="checkall" /> 选择</td>
-									<td style="text-align: center">货物名称</td>
-									<td style="text-align: center">单位</td>
-									<td style="text-align: center">辐照方式</td>
-									<td style="text-align: center">辐照时间</td>
-									<td style="text-align: center">时间单位</td>
+									<!-- <td style="text-align: center"><input type="checkbox" id="checkall" /> 选择</td> -->
+									<td style="text-align: center">收获日期</td>
+									<td style="text-align: center">送货单位</td>
+									<td style="text-align: center">送货人</td>
+									<td style="text-align: center">联系电话</td>
 								</tr>
 							</thead>
-							<tbody id="cargoes">
+							<tbody id="receivedCargosBody">
+							
 							</tbody>
 						</table>
 					</form>
 				</div>
 			</header>
+			<div class="table-responsive">
+				<div id="paging" class="pagclass">
+				共 <span id="totalpage"></span> 页===第 <span id="pageNow"></span> 页===共<span id="pagerecode"></span> 条            
+			    <input type="button" id="pre" value="pre"/>   <input type="button" id="next" value="next"/>
+				</div>
+		    </div>
+		    <div>
+		    	<table class="pp-list table table-striped table-bordered">
+		    		<thead>
+						<td style="text-align: center">货物名称</td>
+						<td style="text-align: center">数量</td>
+						<td style="text-align: center">重量(吨)</td>
+						<td style="text-align: center">辐照方式</td>
+						<td style="text-align: center">辐照时间</td>
+						<td style="text-align: center">时间单位</td>
+		    		</thead>
+		    		<tbody id="receivedCargosDetail">
+		    		
+		    		</tbody>
+		    	</table>
+		    </div>
 		</fieldset>
 	</div>
 </body>

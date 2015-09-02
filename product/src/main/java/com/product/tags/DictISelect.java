@@ -52,7 +52,7 @@ public class DictISelect extends SimpleTagSupport {
 						rtn.append("<option value='").append(value).append("'").append(">").append(tagtext).append("</option>");
 					}
 				}
-				if(flag == 0 && Common.isNotEmpty(emptyKey) && Common.isNotEmpty(emptyValue)){
+				if(flag == 0 && null !=emptyKey && null !=emptyValue){
 					rtn.append("<option value='").append(emptyKey).append("'").append(" selected ").append(">").append(emptyValue).append("</option>");
 				}
 			} else {

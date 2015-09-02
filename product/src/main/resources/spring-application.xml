@@ -58,7 +58,7 @@
 		<!-- 自动匹配Mapper映射文件 -->
 		<property name="mapperLocations" value="classpath:com/product/mappings/*-mapper.xml"/>
 		<property name="configLocation" value="classpath:com/product/mappings/Configuration.xml" />
-		<property name="typeAliasesPackage" value="com.product.entity"/>
+		<property name="typeAliasesPackage" value="com.product.entity;com.product.bean.common"/>
 		<property name="dataSource" ref="dataSource" />
 		<!-- <property name="plugins">
 			<array>

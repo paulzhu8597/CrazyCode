@@ -4,15 +4,19 @@ package com.product.entity;
  * @author wzq
  *
  */
-public class ReceiveInfo {
+public class ReceiveInfo  extends BaseEntity{
 	private String id;             //receivemgrbase
 	private String receivetime;    //receivemgrbase  收货日期
-	private String receiveorgid; //receivemgrbase  送货单位 shippinginfo：orgname
-	private String receivepeopleid;  //receivemgrbase  送货人 bringtakeinfo：name
+	private String receiveorgid; //receivemgrbase  送货单位 shippinginfo：id
+	private String receiveorgname;//receivemgrbase  送货单位 shippinginfo：orgname
+	private String receivepeopleid;  //receivemgrbase  送货人 bringtakeinfo：id
+	private String receivepeoplename; //receivemgrbase  送货人 bringtakeinfo：name
 	private String telnum;         //receivemgrbase  联系电话
 	private String receivemgrid;   //receivemgrdetail 收获管理基本信息id ReceiveMgrBase：id
 	private String cargoid;        //货物名称 cargoinfo：id
+	private String cargoname;      //货物名称 cargoinfo：cargoname 
 	private String cargocount;     //货物数量
+	private String irradednum;
 	private String countorg;       //数量单位 orginfo：orgname
 	private String cargoweight;    //货物重量(吨)
 	private String funguscount;    //含菌数
@@ -22,6 +26,20 @@ public class ReceiveInfo {
 	private String irradtimeorg;   //辐照时间单位
 	private String irradflag;      //辐照类型：首次辐照、重新辐照、不辐照
 	private String asCurrentRecord;//是否依照当前记录
+	private String status;         //状态，是否指纹确认 0:未指纹确认，1:已指纹确认
+	private String mask;           //说明
+	public String getMask() {
+		return mask;
+	}
+	public void setMask(String mask) {
+		this.mask = mask;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getAsCurrentRecord() {
 		return asCurrentRecord;
 	}
@@ -124,31 +142,28 @@ public class ReceiveInfo {
 	public void setReceivepeopleid(String receivepeopleid) {
 		this.receivepeopleid = receivepeopleid;
 	}
-	@Override
-	public String toString() {
-		return "ReceiveInfo [id=" + id + ", receivetime=" + receivetime
-				+ ", receiveorgid=" + receiveorgid + ", receivepeopleid="
-				+ receivepeopleid + ", telnum=" + telnum + ", receivemgrid="
-				+ receivemgrid + ", cargoid=" + cargoid + ", cargocount="
-				+ cargocount + ", countorg=" + countorg + ", cargoweight="
-				+ cargoweight + ", funguscount=" + funguscount
-				+ ", reqreagent=" + reqreagent + ", irradtype=" + irradtype
-				+ ", irradtime=" + irradtime + ", irradtimeorg=" + irradtimeorg
-				+ ", irradflag=" + irradflag + ", asCurrentRecord="
-				+ asCurrentRecord + ", getAsCurrentRecord()="
-				+ getAsCurrentRecord() + ", getId()=" + getId()
-				+ ", getReceivetime()=" + getReceivetime() + ", getTelnum()="
-				+ getTelnum() + ", getReceivemgrid()=" + getReceivemgrid()
-				+ ", getCargocount()=" + getCargocount() + ", getCountorg()="
-				+ getCountorg() + ", getCargoweight()=" + getCargoweight()
-				+ ", getFunguscount()=" + getFunguscount()
-				+ ", getReqreagent()=" + getReqreagent() + ", getIrradtype()="
-				+ getIrradtype() + ", getIrradtime()=" + getIrradtime()
-				+ ", getIrradtimeorg()=" + getIrradtimeorg()
-				+ ", getIrradflag()=" + getIrradflag() + ", getCargoid()="
-				+ getCargoid() + ", getReceiveorgid()=" + getReceiveorgid()
-				+ ", getReceivepeopleid()=" + getReceivepeopleid()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+	public String getReceiveorgname() {
+		return receiveorgname;
+	}
+	public void setReceiveorgname(String receiveorgname) {
+		this.receiveorgname = receiveorgname;
+	}
+	public String getReceivepeoplename() {
+		return receivepeoplename;
+	}
+	public void setReceivepeoplename(String receivepeoplename) {
+		this.receivepeoplename = receivepeoplename;
+	}
+	public String getCargoname() {
+		return cargoname;
+	}
+	public void setCargoname(String cargoname) {
+		this.cargoname = cargoname;
+	}
+	public String getIrradednum() {
+		return irradednum;
+	}
+	public void setIrradednum(String irradednum) {
+		this.irradednum = irradednum;
 	}
 }
