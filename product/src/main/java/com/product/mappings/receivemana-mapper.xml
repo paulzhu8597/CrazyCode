@@ -122,6 +122,7 @@
 	    (select cargoname from cargoinfo where id=a.cargoid) cargoname,
 	    (select orgname from orginfo where id= a.countorg) countorg,
 	    cargoweight,
+	    fee,
 	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='irradtypes' and di.itemid=a.irradtype) irradtype,
 	    irradtime,
 	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='timeorgs' and di.itemid= a.irradtimeorg) irradtimeorg,
@@ -133,7 +134,7 @@
 	</select>
 	
 	<select id="getEditDetailInfo" parameterType="java.util.Map" resultType="ReceiveInfo">
-		select  cargoid,cargocount,cargoweight,countorg,funguscount,reqreagent,irradtype,irradtime,irradtimeorg,irradflag 
+		select  cargoid,cargocount,cargoweight,countorg,funguscount,reqreagent,irradtype,irradtime,irradtimeorg,irradflag ,fee
 		from receivemgrdetail
 		where id=#{id} and receivemgrid=#{receiveorgid}
 	</select>
@@ -142,7 +143,7 @@
 	    delete from receivemgrdetail where id=#{id} and receivemgrid=#{receivemgrid}
 	</delete>
 	
-	<update id="saveEditConfirDetailInfo" parameterType="ReceiveInfo" >
+	<update id="saveEditConfirDetailInfo" parameterType="ReceiveInfo">
 	    update receivemgrdetail 
 	    set 
 		    cargoid=#{cargoid},
@@ -154,6 +155,7 @@
 		    irradtime=#{irradtime},
 		    irradtimeorg=#{irradtimeorg},
 		    irradflag=#{irradflag},
+		    fee = #{fee},
 		    mask=#{mask}
 	    where  id=#{id} and receivemgrid=#{receivemgrid}
 	</update>
@@ -324,6 +326,18 @@
 	    weight
 	    from takecargodetail
 	    where baseid=#{id}
+	</select>
+	
+	<select id="getReceivedCargoInfo" parameterType="java.lang.String" resultType="ReceiveInfo">
+	    select 
+		date_format((select receivetime from receivemgrbase where id= t.baseid),'%Y/%m/%d')  receivetime,
+		cargoname,
+		(select orgname from  shippinginfo where id=t.receiveorgid) receiveorgname,
+		irradednum,
+		countorg,
+		takecargocount cargoweight,
+		mask
+		from irradiation t where id=#{id}
 	</select>
 	
 </mapper>

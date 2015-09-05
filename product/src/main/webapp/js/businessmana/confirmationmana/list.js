@@ -70,6 +70,18 @@ $(function() {
 			title: "编辑",
 			buttons : {
 				'保存' : function() {
+					var fee = $("#fee").val();
+					if(fee != null && fee != undefined && fee != "undefined" && fee != ""){
+						if(isNaN(fee)){
+							$("#fee").attr("style","border-color: red");
+							alert("费用必须填写并且必须是数字！");
+							return ;
+						}
+					}else{
+						$("#fee").attr("style","border-color: red");
+						alert("费用必须填写并且必须是数字！");
+						return ;
+					}
 					saveEditdetailInfo();
 					$(this).dialog("close");
 				},
@@ -188,6 +200,7 @@ function getDetailInfo(receiveorgid,obj){
 			+ "<td style='text-align: center'>" + data[i].cargocount + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].countorg + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].cargoweight + " </td>" 
+			+ "<td style='text-align: center'>" + data[i].fee + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].irradtype + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].irradtime + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].irradtimeorg + " </td>" 
@@ -217,6 +230,7 @@ function initEditConfirmInfo(){
 	  $("#irradtypes").find("option[value='"+data.irradtype+"']").attr("selected",true);
 	  //$("#irradtime").val(data.irradtime);
 	  document.getElementById("irradtime").value=data.irradtime;
+	  document.getElementById("fee").value=data.fee;
 	  $("#timeorgs").find("option[value='"+data.irradtimeorg+"']").attr("selected",true);//时间单位
 	  $("#irradflags").find("option[value='"+data.irradflag+"']").attr("selected",true);
 	}
@@ -242,6 +256,7 @@ function saveEditdetailInfo(){
 	var timeorgs = $("#timeorgs").val();
 	var irradflags = $("#irradflags").val();
 	var mask = $("#mask").val();
+	var fee = $("#fee").val();
 	var idAndreceiveorgid = CommnUtil.getCheckBoxValueOfSelect("confirmsDetailcheck");
 	var data = CommnUtil.normalAjax("/business/receivingmana/saveEditConfirDetailInfo.do",
 			"cargoname="+cargoname
@@ -255,6 +270,7 @@ function saveEditdetailInfo(){
 			+"&timeorgs="+timeorgs
 			+"&irradflags="+irradflags
 			+"&idAndreceiveorgid="+idAndreceiveorgid
+			+"&fee="+fee
 			+"&mask="+mask,
 			"json");
 	if("ok"==data){

@@ -459,7 +459,7 @@ public class BusinessController {
 		return  ireceivingmana.updateRadiationStatus(id);
 	}
 	
-	//===================================================================================收获管理
+	//===================================================================================出获管理
 	
 	@RequestMapping("shoppingmana")
 	public String initShippingMana(Model model){
@@ -562,6 +562,13 @@ public class BusinessController {
 		String id = request.getParameter("id");
 		return ireceivingmana.queryHaveTakedCargoeDetail(id);
 	}
+	
+	@ResponseBody
+	@RequestMapping("receivingmana/getreceivedcargoinfo")
+    public ReceiveInfo getReceivedCargoInfo(HttpServletRequest request){
+		String id = request.getParameter("id");
+		return ireceivingmana.getReceivedCargoInfo(id);
+    }
 	
 	public IReceivingMana getIreceivingmana() {
 		return ireceivingmana;

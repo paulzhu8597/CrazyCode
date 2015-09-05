@@ -33,5 +33,6 @@ public interface IReceivingMana {
 	String saveTakeCargoe(TakeCargoInfo takecargoinfo);
 	List<TakeCargoInfo> queryHaveTakedCargoeDetail(String id);
 	List<TakeCargoInfo> getHaveTakedCargoes(Map<String, Object> params);
+	ReceiveInfo getReceivedCargoInfo(String id);
     
 }

@@ -242,6 +242,7 @@
 			return true;
 		},
 		
+		
 		/**
 		 * 判断某对象不为空..返回true 否则 false
 		 */

@@ -16,7 +16,7 @@ public class ReceiveInfo  extends BaseEntity{
 	private String cargoid;        //货物名称 cargoinfo：id
 	private String cargoname;      //货物名称 cargoinfo：cargoname 
 	private String cargocount;     //货物数量
-	private String irradednum;
+	private String irradednum;     //辐照数量
 	private String countorg;       //数量单位 orginfo：orgname
 	private String cargoweight;    //货物重量(吨)
 	private String funguscount;    //含菌数
@@ -26,6 +26,7 @@ public class ReceiveInfo  extends BaseEntity{
 	private String irradtimeorg;   //辐照时间单位
 	private String irradflag;      //辐照类型：首次辐照、重新辐照、不辐照
 	private String asCurrentRecord;//是否依照当前记录
+	private int fee=0;             //收取的费用
 	private String status;         //状态，是否指纹确认 0:未指纹确认，1:已指纹确认
 	private String mask;           //说明
 	public String getMask() {
@@ -165,5 +166,11 @@ public class ReceiveInfo  extends BaseEntity{
 	}
 	public void setIrradednum(String irradednum) {
 		this.irradednum = irradednum;
+	}
+	public int getFee() {
+		return fee;
+	}
+	public void setFee(int fee) {
+		this.fee = fee;
 	}
 }

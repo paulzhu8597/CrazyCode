@@ -3,31 +3,6 @@ $(function() {
 	//注册弹出框
 	$("#taketime").Zebra_DatePicker();
 	$("#takecargotime").Zebra_DatePicker();
-	$("#cargoinfo").dialog({
-		autoOpen : false,// 设置对话框打开的方式 不是自动打开
-		show : "bind",
-		hide : "explode",
-		modal : true,
-		height : 350,
-		width : 900,
-		title: "编辑",
-		buttons : {
-			'保存' : function() {
-				
-				$(this).dialog("close");
-			},
-			"取消" : function() {
-				$(this).dialog("close");
-			}
-		},
-		open : function(ev, ui) {
-			   
-			// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
-		},
-		close : function(ev, ui) {
-			
-		}
-	});
 	$("#query").click("click", function() {
 		search(0,"true");
 	});
@@ -88,7 +63,7 @@ function search(pagenow, isfromsearch) {
 			+"-"+data.alltakecargoes[i].takecargocount+"-"+data.alltakecargoes[i].countorg+"-"+data.alltakecargoes[i].cargoweight;
 			//var color = "1"==data.radiations[i].status  ? "background-color: red" : "";
 			html = html
-					+ "<tr  onclick=\"doviewselect('"+param+"',this);\">"
+					+ "<tr  onclick=\"doviewselect('"+param+"',this);\" ondblclick='getcargoinfo("+data.alltakecargoes[i].id+");' >"
 					+ "<td style='text-align: center'>"+ data.alltakecargoes[i].receiveorgname + "</td>"
 					+ "<td style='text-align: center'>"+ data.alltakecargoes[i].cargoname + "</td>"
 					+ "<td style='text-align: center'>"+ data.alltakecargoes[i].irradednum + "</td>"
@@ -107,6 +82,49 @@ function dopre() {
 function donext() {
 	var pageNow = $("#pageNow").text().trim();
 	search(parseInt(pageNow) + 1, "false");
+}
+
+function getcargoinfo(id){
+	initcargoinfo(id);
+    var dialogParent = $("#cargoinfo").parent();  
+    var dialogOwn = $("#cargoinfo").clone();  
+    dialogOwn.hide();  
+	$("#cargoinfo").dialog({
+		autoOpen : false,// 设置对话框打开的方式 不是自动打开
+		show : "bind",
+		hide : "explode",
+		modal : true,
+		height : 350,
+		width : 500,
+		title: "编辑",
+		buttons : {
+			'关闭' : function() {
+				$(this).dialog("close");
+			},
+		},
+		open : function(ev, ui) {
+
+			// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
+		},
+		close : function(ev, ui) {
+            dialogOwn.appendTo(dialogParent);  
+            $(this).dialog("destroy").remove(); 
+		}
+	});
+	$('#cargoinfo').dialog('open');
+}
+
+function initcargoinfo(id){
+	var data = CommnUtil.normalAjax("/business/receivingmana/getreceivedcargoinfo.do","id="+id,"json");
+	if(CommnUtil.notNull(data)){
+		$("#receivetime").text(data.receivetime);
+		$("#divcargoname").text(data.cargoname);
+		$("#receiveorgname").text(data.receiveorgname);
+		$("#irradednum").text(data.irradednum);
+		$("#countorg").text(data.countorg);
+		$("#cargoweight").text(data.cargoweight);
+		$("#mask").text(data.mask);
+	}
 }
 
 function doviewselect(id,obj){

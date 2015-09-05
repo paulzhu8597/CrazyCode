@@ -87,6 +87,7 @@ irradtype VARCHAR(32) comment '辐照方式 cargoinfo：irradtype',
 irradtime VARCHAR(32) comment   '辐照时间',
 irradtimeorg  VARCHAR(32) comment '辐照时间单位',
 irradflag VARCHAR(32) comment ' 辐照类型：首次辐照、重新辐照、不辐照',
+fee int comment '货物费用',
 irradednum int comment '已照数量',
 status varchar(1) comment '状态',
 mask varchar(255) comment '备注说明'

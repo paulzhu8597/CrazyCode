@@ -97,6 +97,9 @@
 		<td>备注信息：</td><td><crazy:dictselect id="irradflags" name="irradflags" collection="${irradflags }"/></td>
 		</tr>
 		<tr>
+		<td>收取费用：</td><td> <input type="text" id="fee" name="fee"  /> </td>
+		</tr>
+		<tr>
 		<td>其他说明：</td><td> <input id="mask" name="mask" type="text" /> </td>
 		</tr>
 		</table>
@@ -114,6 +117,7 @@
 								<td>数量</td>
 								<td>单位</td>
 								<td>重量(吨)</td>
+								<td>费用(元)</td>
 								<td>辐照方式</td>
 								<td>辐照时间</td>
 								<td>时间单位</td>

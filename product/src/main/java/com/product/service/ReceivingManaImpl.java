@@ -318,6 +318,10 @@ public class ReceivingManaImpl implements IReceivingMana {
 		return receivingmanamapper.getAllTakeCargoes(params);
 	}
 	
+	public ReceiveInfo getReceivedCargoInfo(String id){
+		return receivingmanamapper.getReceivedCargoInfo(id);
+	}
+	
 	public ReceivingManaMapper getReceivingmanamapper() {
 		return receivingmanamapper;
 	}

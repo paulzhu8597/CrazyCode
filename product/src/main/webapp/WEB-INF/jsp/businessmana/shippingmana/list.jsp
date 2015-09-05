@@ -25,7 +25,31 @@
 </head>
   
 <body>
-<div id="cargoinfo"></div>
+<div id="cargoinfo" style="display: none;" >
+<table class="pp-list table  table-bordered" >
+<tr>
+<td>送货日期：</td><td> <span id="receivetime"> </span> </td>
+</tr>
+<tr>
+<td>货物名称：</td><td> <span id="divcargoname"> </span> </td>
+</tr>
+<tr>
+<td>送货单位：</td><td> <span id="receiveorgname"> </span> </td>
+</tr>
+<tr>
+<td>货物数量：</td><td> <span id="irradednum"> </span> </td>
+</tr>
+<tr>
+<td>计量单位：</td><td> <span id="countorg"> </span> </td>
+</tr>
+<tr>
+<td>已取数量：</td><td> <span id="cargoweight"> </span> </td>
+</tr>
+<tr>
+<td>备注信息：</td><td> <span id="mask"> </span> </td>
+</tr>
+</table>
+</div>
 	<div class="m-b-md">
 		<div>
 		<fieldset>
