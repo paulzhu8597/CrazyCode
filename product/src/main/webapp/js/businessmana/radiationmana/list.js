@@ -167,7 +167,7 @@ function initcurrentradiations(){
 		var html = "";
 		for(var i=0;i<data.length;i++){
 			html = html
-			+ "<tr  ondblclick='completeradiation("+data[i].id+");'>"
+			+ "<tr  ondblclick='completeradiation("+data[i].id+");' onclick=\"doradationview(this);\">"
 			+ "<td style='text-align: center'>"+ data[i].cargoname + "</td>"
 			+ "<td style='text-align: center'>"+ data[i].receiveorgname + "</td>"
 			+ "<td style='text-align: center'>"+ data[i].irradednum + "</td>"
@@ -184,6 +184,10 @@ function initcurrentradiations(){
 	}
 }
 
+function doradationview(obj){
+	$("#radiatingcargo").find("tr").attr("style","");
+	$(obj).attr("style","background-color: red");
+}
 
 function completeradiation(id){
 	if(confirm("您确定当前货物已完成辐照吗？")){

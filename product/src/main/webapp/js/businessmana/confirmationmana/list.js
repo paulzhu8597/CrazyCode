@@ -82,6 +82,10 @@ $(function() {
 						alert("费用必须填写并且必须是数字！");
 						return ;
 					}
+					if(!CommnUtil.isnumber("cargocount,cargoweight,funguscount,reqreagent,irradtime")){
+						alert("标红部分必须是数字！");
+						return;
+					}
 					saveEditdetailInfo();
 					$(this).dialog("close");
 				},

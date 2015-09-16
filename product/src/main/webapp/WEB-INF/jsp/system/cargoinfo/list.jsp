@@ -34,7 +34,7 @@
 		<input type="button" id="deletecargo" value="删除" class="btn btn-default"/>
 	</form>
 </div>
-<div id="adddialog" title="新增货物">
+<div id="adddialog" title="新增货物" style="display: none;">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">*货物名称</label>
 				<div class="col-sm-9">

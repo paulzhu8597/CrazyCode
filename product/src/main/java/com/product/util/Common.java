@@ -586,7 +586,11 @@ public class Common {
 	}
 	
 	public static String stringDefaultOfEmpty(String inputstring,String defaultString){
+		try{
 		return (null==inputstring || "".equals(inputstring) || "null".equals(inputstring))?defaultString:inputstring;
+		}catch (Exception e){
+			return "";
+		}
 	}
 	
 	

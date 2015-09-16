@@ -1,43 +1,7 @@
 //$('#irradtime').Zebra_DatePicker();
 var editfalg = "";
 $(function() {
-	$("#adddialog").dialog({
-		autoOpen : false,// 设置对话框打开的方式 不是自动打开
-		show : "bind",
-		hide : "explode",
-		modal : true,
-		height : 500,
-		width : 450,
-		buttons : {
-			'保存' : function() {
-				if("add"==editfalg){
-					if (addcargo()) {
-						$(this).dialog("close");
-						search(0, "true");
-					}
-			     }
-				else if("edit"==editfalg){
-					if(saveEditCargo()){
-						$(this).dialog("close");
-						search(0, "true");
-					}
-				}
-			},
-			"取消" : function() {
-				$(this).dialog("close");
-			}
-		},
-		open : function(ev, ui) {
-			if("edit"==editfalg){
-				initeditcargo();
-			}
-			// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
-		},
-		close : function(ev, ui) {
-			$("#addcargoname").attr('disabled',false);
-			CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
-		}
-	});
+
 	$("#search").click("click", function() {// 绑定查询按扭
 		search(0, "true");
 	});
@@ -52,6 +16,50 @@ $(function() {
 	});
 	$("#editcargo").click("click", function() {
 		editfalg = "edit";
+		$("#adddialog").attr("title","编辑货物");
+	    var dialogParent = $("#adddialog").parent();  
+	    var dialogOwn = $("#adddialog").clone();  
+	    dialogOwn.hide();  
+		$("#adddialog").dialog({
+			autoOpen : false,// 设置对话框打开的方式 不是自动打开
+			show : "bind",
+			hide : "explode",
+			modal : true,
+			height : 500,
+			width : 450,
+			buttons : {
+				'保存' : function() {
+					if("add"==editfalg){
+						if (addcargo()) {
+							$(this).dialog("close");
+							search(0, "true");
+						}
+				     }
+					else if("edit"==editfalg){
+						if(saveEditCargo()){
+							$(this).dialog("close");
+							search(0, "true");
+						}
+					}
+				},
+				"取消" : function() {
+					$(this).dialog("close");
+				}
+			},
+			open : function(ev, ui) {
+				if("edit"==editfalg){
+					initeditcargo();
+				}
+				// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
+			},
+			close : function(ev, ui) {
+				$("#addcargoname").attr('disabled',false);
+				CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
+				dialogOwn.appendTo(dialogParent);  
+				$(this).dialog("destroy").remove(); 
+			}
+		});
+		
 		if(CommnUtil.isHaveSelectOneCheckbox("cargoes")){
 			$('#adddialog ').dialog('open');
 		}
@@ -64,6 +72,50 @@ $(function() {
 	});
 	$('#addcargo').click(function() {
 		editfalg = "add";
+		$("#adddialog").attr("title","新增货物");
+	    var dialogParent = $("#adddialog").parent();  
+	    var dialogOwn = $("#adddialog").clone();  
+	    dialogOwn.hide();  
+		$("#adddialog").dialog({
+			autoOpen : false,// 设置对话框打开的方式 不是自动打开
+			show : "bind",
+			hide : "explode",
+			modal : true,
+			height : 500,
+			width : 450,
+			buttons : {
+				'保存' : function() {
+					if("add"==editfalg){
+						if (addcargo()) {
+							$(this).dialog("close");
+							search(0, "true");
+						}
+				     }
+					else if("edit"==editfalg){
+						if(saveEditCargo()){
+							$(this).dialog("close");
+							search(0, "true");
+						}
+					}
+				},
+				"取消" : function() {
+					$(this).dialog("close");
+				}
+			},
+			open : function(ev, ui) {
+				if("edit"==editfalg){
+					initeditcargo();
+				}
+				// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
+			},
+			close : function(ev, ui) {
+				$("#addcargoname").attr('disabled',false);
+				CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
+				dialogOwn.appendTo(dialogParent);  
+				$(this).dialog("destroy").remove(); 
+			}
+		});
+		
 		$('#adddialog').dialog('open');
 	});
 });

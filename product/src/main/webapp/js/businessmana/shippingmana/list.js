@@ -134,12 +134,18 @@ function doviewselect(id,obj){
 }
 
 function save(){
+	if(globalselectedtakeinfo==""){
+		alert("请选择一条货物！");
+		return;
+	}
 	var taketime = $("#taketime").val();
 	var proxyOrg = $("#proxyOrg").val();
 	var showorgs = $("#showorgs").val();
 	var takecargocount = $("#takecargocount").val();
 	var allcount = globalselectedtakeinfo.split("-")[3];
-	if(!(takecargocount && ""!=takecargocount && parseInt(takecargocount)>0 && parseInt(takecargocount)<=parseInt(allcount))){
+	var havetake = globalselectedtakeinfo.split("-")[4];
+	var gap = parseInt(allcount) - parseInt(havetake);
+	if(!(takecargocount && ""!=takecargocount && parseInt(takecargocount)>0 && parseInt(takecargocount)<=gap)){
 		alert("取货数量要大于0小于等于总数量并且必须填写！");
 		return;
 	}
@@ -166,7 +172,7 @@ function save(){
 	
 	if("ok"==data){
 		alert("保存成功！");
-		CommnUtil.cleanInputValue("taketime,proxyOrg,telnum,shippers,takecargocount");
+		CommnUtil.cleanInputValue("takecargocount");
 		search(0, "false");
 		takedsearch(0,"false");
 	}else{
@@ -200,7 +206,7 @@ function takedsearch(pagenow, isfromsearch){
 		}
 		for (var i = 0; i < data.havetakedcargoes.length; i++) {
 			html = html
-					+ "<tr  onclick=\"doviewselectoftaked("+data.havetakedcargoes[i].id+");\">"
+					+ "<tr  onclick=\"doviewselectoftaked("+data.havetakedcargoes[i].id+",this);\">"
 					+ "<td style='text-align: center'>"+ data.havetakedcargoes[i].taketime + "</td>"
 					+ "<td style='text-align: center'>"+ data.havetakedcargoes[i].takecargoorg + "</td>"
 					+ "<td style='text-align: center'>"+ data.havetakedcargoes[i].proxyorg + "</td>"
@@ -223,7 +229,9 @@ function takeddonext() {
 	search(parseInt(pageNow) + 1, "false");
 }
 
-function doviewselectoftaked(id){
+function doviewselectoftaked(id,obj){
+	$("#takedcargoes").find("tr").attr("style","");
+	$(obj).attr("style","background-color: red");
 	var data = CommnUtil.normalAjax("/business/receivingmana/queryhavetakedcargoedetail.do","id="+id,"json");
 	if ("null" != data && 'undefined' != data) {
 		var html = "";

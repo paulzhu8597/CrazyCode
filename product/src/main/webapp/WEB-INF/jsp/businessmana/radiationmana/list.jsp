@@ -37,6 +37,7 @@
 								收货时间：<input id="receivetime" name="receivetime" type="text" class="input-medium ui-autocomplete-input" />
 								货物名称： <crazy:dictselect id="cargoname" name="cargoname"  emptyKey="" emptyValue="请选择"  collection="${showcargoinfos}"  ></crazy:dictselect>
 								<input id="query" name="query" type="button" value="Query"/>
+								<div align="left"><font size="2" color="red"  >双击进行辐照</font></div>
 								<table class="pp-list table  table-bordered">
 									<thead>
 										<tr>
@@ -138,7 +139,8 @@
 		
 						<fieldset>
 							<legend>在照货物</legend>
-							<table class="pp-list table table-striped table-bordered" >
+							<div align="left"><font size="2" color="red"  >双击完成辐照</font></div>
+							<table class="pp-list table  table-bordered" >
 								<thead>
 								<tr>
 								<td>货物名称</td>

@@ -37,7 +37,7 @@
 				<a class="btn btn-link visible-xs"
 					data-toggle="class:nav-off-screen,open" data-target="#nav,html">
 					<i class="fa fa-bars"></i>
-				</a> <a href="index.shtml#" class="navbar-brand"
+				</a> <a href="${pageContext.servletContext.contextPath }/index.do" class="navbar-brand"
 					data-toggle="fullscreen"><img
 					src="${ctx}/notebook/notebook_files/logo.png" class="m-r-sm">Notebook</a>
 				<a class="btn btn-link visible-xs" data-toggle="dropdown"

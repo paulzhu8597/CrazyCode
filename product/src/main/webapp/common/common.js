@@ -242,6 +242,17 @@
 			return true;
 		},
 		
+		checkedBoxSetValueAndReturnValue : function (checkboxid,checkedValue,unCheckedvalue){
+			var item = document.getElementById(""+checkboxid+"");
+			if(item){
+				if(item.checked){
+					item.value=checkedValue;
+				}else{
+					item.value=unCheckedvalue;
+				}
+			}
+			return item.value;
+		},
 		
 		/**
 		 * 判断某对象不为空..返回true 否则 false

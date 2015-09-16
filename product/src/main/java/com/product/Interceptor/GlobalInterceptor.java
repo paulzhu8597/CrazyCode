@@ -24,12 +24,15 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
         if(null!=user){
         	Set menuurls = user.getMenuurls();
         	if(menuurls.contains(currenturl)){
+        		System.out.println("privilege Ok>>>>>>>>>>>>>>>>>>>>>>>");
         		return true;
         	}else {
         		 request.getRequestDispatcher("/noPrivileges.jsp").forward(request, response);  
+        		 System.out.println("privilege reject>>>>>>>>>>>>>>>>>>>>>>>");
         		 return false;
         	}
         }
+        System.out.println("privilege reject>>>>>>>>>>>>>>>>>>>>>>>");
 		return false;
 	}
 

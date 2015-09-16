@@ -87,8 +87,10 @@ irradtype VARCHAR(32) comment '辐照方式 cargoinfo：irradtype',
 irradtime VARCHAR(32) comment   '辐照时间',
 irradtimeorg  VARCHAR(32) comment '辐照时间单位',
 irradflag VARCHAR(32) comment ' 辐照类型：首次辐照、重新辐照、不辐照',
-fee int comment '货物费用',
+fee int default 0 comment '货物费用',
 irradednum int comment '已照数量',
+paid int not null default 0 comment '已付费用',
+unpaid int not null default 0 comment '未付费用,默认是fee的值',
 status varchar(1) comment '状态',
 mask varchar(255) comment '备注说明'
 ) comment='收货管理基本信息表的子表-存储详细信息';
@@ -153,9 +155,30 @@ shippers varchar(64) comment '发货人'
 DROP TABLE IF EXISTS `takecargodetail`;
 create table takecargodetail(
 id int PRIMARY key auto_increment,
+irradedid int not null default 0 comment '辐照货物Id',
 baseid int not null  comment '基本信息表Id',
 cargoname varchar(64)  comment '货物名称',
 cargocount varchar(64) comment '货物数量',
 countorg varchar(64) comment '数量单位',
 weight varchar(64) comment '重量单位(吨)'
 ) comment='出货信心附表';
+
+
+
+DROP TABLE IF EXISTS `chargelog`;
+create table chargelog(
+id int PRIMARY key auto_increment,
+chargeid int not null comment '对receivemgrdetail表的那条记录收的款',
+chargeorg varchar(128) comment '交款单位',
+chargetime   DATETIME comment '交款日期',
+chargeamount DOUBLE comment '交款金额',
+receivetime datetime not null comment '收货日期',
+cargoname varchar(128) comment '货物名称',
+cargocount varchar(128) comment '货物数量',
+cargoweight varchar(128) comment '货物重量',
+fee DOUBLE comment '费用',
+paid DOUBLE comment '已付',
+unpaid DOUBLE comment '未付',
+mask varchar(255) comment '收费说明',
+operater varchar(128) comment '操作员'
+)comment='收款记录表';

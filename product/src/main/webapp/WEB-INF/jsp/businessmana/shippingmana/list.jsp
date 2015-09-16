@@ -114,7 +114,7 @@
 			出货时间：<input type="text" id="takecargotime"  />
 			取货单位：<crazy:dictselect id="showorgsoftaked" name="showorgsoftaked"  emptyKey="" emptyValue="请选择" collection="${showorgs}" ></crazy:dictselect>
 			<input id="querytakedcargo"  type="button" value="Query"/>
-			<table  class="pp-list table table-striped table-bordered">
+			<table  class="pp-list table  table-bordered">
 			<thead>
 			<tr>
 			<td>出货日期</td>

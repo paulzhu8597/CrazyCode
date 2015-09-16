@@ -156,6 +156,7 @@
 		    irradtimeorg=#{irradtimeorg},
 		    irradflag=#{irradflag},
 		    fee = #{fee},
+		    unpaid = #{fee},
 		    mask=#{mask}
 	    where  id=#{id} and receivemgrid=#{receivemgrid}
 	</update>
@@ -291,8 +292,8 @@
 	</insert>
 	
 	<insert id="saveTakeCargoDetail">
-	    insert into takecargodetail(baseid,cargoname,cargocount,countorg,weight)
-	    values(#{baseid},#{cargoname},#{cargocount},#{countorg},#{weight})
+	    insert into takecargodetail(baseid,irradedid,cargoname,cargocount,countorg,weight)
+	    values(#{baseid},#{irradaedcargoid},#{cargoname},#{cargocount},#{countorg},#{weight})
 	</insert>
 	
 	<select id="getHaveTakedCargoes" parameterType="java.util.Map" resultType="TakeCargoInfo">

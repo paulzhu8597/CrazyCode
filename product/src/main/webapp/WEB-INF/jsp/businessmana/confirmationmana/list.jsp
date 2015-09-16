@@ -37,6 +37,7 @@
 								送  货  人： <crazy:dictselect id="showBringTakeInfos" name="showBringTakeInfos" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
 								<input id="query" name="query" type="button" value="Query"/>
 								<input type="button" id="deleteconfirm" name="deleteconfirm" value="Delete" />
+								<div align="left"><font size="2" color="red"  >双击完成收获确认</font></div>
 								<table class="pp-list table  table-bordered">
 									<thead>
 										<tr>

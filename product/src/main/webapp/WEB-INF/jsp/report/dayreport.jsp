@@ -7,6 +7,45 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="styles.css">
     <title>日报表</title>
+<style type="text/css">
+#prat1{
+width: 50%;
+height: 300px;
+/* background: blue; */
+float: left;
+overflow:auto;
+border: 1px;
+border-color: red;
+}
+#prat2{
+width: 50%;
+height: 300px;
+/* background: red; */
+float: left;
+overflow:auto;
+border: 1px;
+border-color: red;
+}
+#prat3{
+width: 50%;
+height: 300px;
+/* background: yellow; */
+float: left;
+clear: left;
+overflow:auto;
+border: 1px;
+border-color: red;
+}
+#prat4{
+width: 50%;
+height: 300px;
+/* background: green; */
+float: left;
+overflow:auto;
+border: 1px;
+border-color: red;
+}
+</style>
     
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.1.min.js"></script>
@@ -21,92 +60,88 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ZebraDatepicker/core.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ZebraDatepicker/zebra_datepicker.js"></script> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/laydate/laydate.js"></script>
-	<script type="text/javascript">
-	$(function (){
-		$('#printtime').Zebra_DatePicker();
-		$("#query").click("click", function() {
-		goprint();
-		});
-	});
-	
-	function goprint(){
-		 window.open("/product/report/goprintpage.do",'_blank');
-	}
-	
-	</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/report/report.js"></script>
+<script type="text/javascript">
+ var ismonth = "${ismoth}";
+</script>
   </head>
   <body>
-  <div class="m-b-md">
-  统计日期： <input type="text" id="printtime"  /> <input type="button" value="query" id="query"  />
+  <div class="m-b-md" >
+  统计日期： <input type="text" id="printtime"  /> <input type="button" value="query" id="query"  /> <input type="button" value="Print" id="Print" />
   </div>
   <div class="m-b-md" id="printdiv"> 
-  <table width="100%" class="pp-list table table-striped table-bordered">
-  <thead>
-  <tr>
-  <td> 收获时间</td>
-  <td> 送货单位</td>
-  <td> 送货人</td>
-  <td> 货物名称</td>
-  <td> 数量</td>
-  <td> 重量(吨)</td>
-  <td> 辐照方式</td>
-  <td> 辐照时间</td>
-  <td> 剂量要求</td>
-  <td> 照前菌数</td>
-  <td> 费用(元)</td>
-  <td> 备注</td>
-  <td> 操作员</td>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td>2015-06-01</td>
-  <td>阿里巴巴</td>
-  <td>沈询</td>
-  <td>蒜苗</td>
-  <td>6</td>
-  <td>斤</td>
-  <td>动态辐照</td>
-  <td>24</td>
-  <td>1230</td>
-  <td>10</td>
-  <td>125</td>
-  <td>第一批货物</td>
-  <td>管理员</td>
-  </tr>
-  <tr>
-  <td>2015-06-01</td>
-  <td>阿里巴巴</td>
-  <td>沈询</td>
-  <td>蒜苗</td>
-  <td>6</td>
-  <td>斤</td>
-  <td>动态辐照</td>
-  <td>24</td>
-  <td>1230</td>
-  <td>10</td>
-  <td>125</td>
-  <td>第一批货物</td>
-  <td>管理员</td>
-  </tr>
-  <tr>
-  <td>2015-06-01</td>
-  <td>阿里巴巴</td>
-  <td>沈询</td>
-  <td>蒜苗</td>
-  <td>6</td>
-  <td>斤</td>
-  <td>动态辐照</td>
-  <td>24</td>
-  <td>1230</td>
-  <td>10</td>
-  <td>125</td>
-  <td>第一批货物</td>
-  <td>管理员</td>
-  </tr>
-  </tbody>
-  </table>
+	<div id="prat1">
+		<table id="dalidyReceived" class="pp-list table  table-bordered" title="当日收获">
+		<caption align="top">当日收货</caption> 
+		<thead>
+			<tr>
+			<td>收货时间</td>
+			<td>送货单位</td>
+			<td>送货人</td>
+			<td>货物名称</td>
+			<td>数量</td>
+			<td>数量单位</td>
+			<td>重量(吨)</td>
+			</tr>
+		</thead>
+		<tbody id="dalidyReceivedBody">
+		
+		</tbody>
+		</table>
+	</div>
+	<div id="prat2">
+		<table id="dalidyIrradation" class="pp-list table  table-bordered" title="当日辐照">
+		<caption align="top">当日辐照</caption> 
+		<thead>
+		<tr>
+		<td>货物名称</td>
+		<td>送货单位</td>
+		<td>数量</td>
+		<td>单位</td>
+		<td>重量(吨)</td>
+		<td>吊具位置</td>
+		<td>辐照方式</td>
+		</tr>
+		</thead>
+		<tbody id="dalidyIrradationBody" > 
+		
+		</tbody>
+		</table>
+	</div>
+	<div id="prat3">
+		<table id="dalidyOutCargoes" class="pp-list table  table-bordered" title="当日出货" >
+		<caption align="top">当日出货</caption>  
+		<thead>
+		<tr>
+		<td>发货时间</td>
+		<td>取货单位</td>
+		<td>委托单位</td>
+		<td>取货人</td>
+		<td>货物名称</td>
+		<td>数量</td>
+		</tr>
+		</thead>
+		<tbody id="dalidyOutCargoesbody">
+		
+		</tbody>
+		</table>
+	</div>
+	<div id="prat4">
+		<table id="dalidyCharge"  class="pp-list table  table-bordered" title="当日 收款">
+		<caption align="top">当日收款</caption> 
+		<thead>
+		<tr>
+		<td>收货时间</td>
+		<td>交款单位</td>
+		<td>交款金额</td>
+		<td>操作员</td>
+		</tr>
+		</thead>
+		<tbody id="dalidyChargeBody">
+		
+		</tbody>
+		</table>
+	</div>
   </div>
-  
   </body>
 </html>

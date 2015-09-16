@@ -63,7 +63,6 @@ var allmenues = "${allmenues}";
   <td>收款</td>
   <td>日报表</td>
   <td>月报表</td>
-  <td>应收已付</td>
   </tr>
   </thead>
   <tbody id="userprivileges">

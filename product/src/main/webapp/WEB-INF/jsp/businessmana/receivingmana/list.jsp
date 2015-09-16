@@ -33,7 +33,7 @@
 				 <fieldset>
 				 <legend>基本信息</legend>
 					 <table class="pp-list table table-striped table-bordered">
-						<tr><td>收获日期：</td><td><input id="receivetime" name="receivetime" type="text" class="input-medium ui-autocomplete-input" /> <td></tr>
+						<tr><td>收货日期：</td><td><input id="receivetime" name="receivetime" type="text" class="input-medium ui-autocomplete-input" /> <td></tr>
 						<tr> <td>送货单位：</td><td><crazy:dictselect id="showorgs" name="showorgs"  collection="${showorgs}" ></crazy:dictselect> </td> </tr>
 						<tr> <td>送货人：</td><td><crazy:dictselect id="showBringTakeInfos" name="showBringTakeInfos"  collection="${showBringTakeInfos}"></crazy:dictselect> </td> </tr>
 						<tr> <td>联系电话 ：</td><td><input id="telnum" name="telnum" type="text" class="input-medium ui-autocomplete-input"  /> </td> </tr>
@@ -83,12 +83,14 @@
 					收货时间：<input id="receivetime1" name="receivetime1" type="text" class="input-medium ui-autocomplete-input" />
 					送  货  人： <crazy:dictselect id="showBringTakeInfos1" name="showBringTakeInfos1" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
 					<input id="query" name="query" type="button" value="Query"/>
+					<br/>
+					<div align="left"><font size="2" color="red"  >双击完成收获</font></div>
 						<table class="pp-list table  table-bordered"
 							style="margin-bottom: -3px;">
 							<thead>
 								<tr style="line-height: 27px;">
 									<!-- <td style="text-align: center"><input type="checkbox" id="checkall" /> 选择</td> -->
-									<td style="text-align: center">收获日期</td>
+									<td style="text-align: center">收货日期</td>
 									<td style="text-align: center">送货单位</td>
 									<td style="text-align: center">送货人</td>
 									<td style="text-align: center">联系电话</td>
