@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50067
 File Encoding         : 65001
 
-Date: 2015-08-29 09:29:09
+Date: 2015-09-21 20:44:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,7 +49,7 @@ CREATE TABLE `cargoinfo` (
   `timeorg` varchar(32) default NULL COMMENT '时间单位',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `cargoname` (`cargoname`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='货物信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='货物信息表';
 
 -- ----------------------------
 -- Records of cargoinfo
@@ -80,6 +80,40 @@ INSERT INTO `cargoinfo` VALUES ('23', '榴莲', '斤', '无', '2015-07-22 16:49:
 INSERT INTO `cargoinfo` VALUES ('24', 'name', 'org', 'itypr', '2015-07-23 11:15:42', 'timeorg');
 INSERT INTO `cargoinfo` VALUES ('26', 'edit', 'oddrg', '', '0000-00-00 00:00:00', '');
 INSERT INTO `cargoinfo` VALUES ('27', '王二麻子', '诸城', '辐射', '2015-07-24 00:00:00', '小时/个');
+INSERT INTO `cargoinfo` VALUES ('28', '旮旯', 'Google', '静态辐射', '2015-09-06 00:00:00', '8');
+INSERT INTO `cargoinfo` VALUES ('29', '水电费', '水电费', '水电费', '2015-09-09 00:00:00', '34');
+
+-- ----------------------------
+-- Table structure for `chargelog`
+-- ----------------------------
+DROP TABLE IF EXISTS `chargelog`;
+CREATE TABLE `chargelog` (
+  `id` int(11) NOT NULL auto_increment,
+  `chargeid` int(11) NOT NULL COMMENT '对receivemgrdetail表的那条记录收的款',
+  `chargeorg` varchar(128) default NULL COMMENT '交款单位',
+  `chargetime` datetime default NULL COMMENT '交款日期',
+  `chargeamount` double default NULL COMMENT '交款金额',
+  `receivetime` datetime NOT NULL COMMENT '收货日期',
+  `cargoname` varchar(128) default NULL COMMENT '货物名称',
+  `cargocount` varchar(128) default NULL COMMENT '货物数量',
+  `cargoweight` varchar(128) default NULL COMMENT '货物重量',
+  `fee` double default NULL COMMENT '费用',
+  `paid` double default NULL COMMENT '已付',
+  `unpaid` double default NULL COMMENT '未付',
+  `mask` varchar(255) default NULL COMMENT '收费说明',
+  `operater` varchar(128) default NULL COMMENT '操作员',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='收款记录表';
+
+-- ----------------------------
+-- Records of chargelog
+-- ----------------------------
+INSERT INTO `chargelog` VALUES ('1', '40', '阿里巴巴', '2015-09-11 15:25:00', '5', '2015-09-09 00:00:00', '金针菇', '150', '250', '100', '5', '95', '阿里巴巴第一次收费', null);
+INSERT INTO `chargelog` VALUES ('2', '40', '阿里巴巴', '2015-09-11 15:25:59', '1', '2015-09-09 00:00:00', '金针菇', '150', '250', '100', '6', '94', '阿里巴巴第二次收费', null);
+INSERT INTO `chargelog` VALUES ('3', '40', '阿里巴巴', '2015-09-11 15:32:59', '94', '2015-09-09 00:00:00', '金针菇', '150', '250', '100', '100', '0', '阿里巴巴第二次收费', null);
+INSERT INTO `chargelog` VALUES ('4', '32', '华为', '2015-09-13 12:49:28', '90', '2015-08-29 00:00:00', '带鱼', '23', '45', '100', '90', '10', '百度收费', null);
+INSERT INTO `chargelog` VALUES ('5', '30', '百度', '2015-09-13 12:51:14', '50', '2015-08-14 00:00:00', '豆角', '7868', '345', '100', '50', '50', '百度收费', null);
+INSERT INTO `chargelog` VALUES ('6', '39', '阿里巴巴', '2015-09-16 16:57:05', '20', '2015-09-09 00:00:00', '蘑菇', '100', '200', '100', '20', '80', '阿里巴巴马云', 'admin');
 
 -- ----------------------------
 -- Table structure for `dict_group`
@@ -94,6 +128,7 @@ CREATE TABLE `dict_group` (
 -- ----------------------------
 -- Records of dict_group
 -- ----------------------------
+INSERT INTO `dict_group` VALUES ('allmenu', '所有菜单');
 INSERT INTO `dict_group` VALUES ('irradflags', '辐照类型');
 INSERT INTO `dict_group` VALUES ('irradtypes', '辐照方式');
 INSERT INTO `dict_group` VALUES ('loadmodel', '辐照装载模式');
@@ -121,6 +156,18 @@ INSERT INTO `dict_item` VALUES ('secondirrad', 'irradflags', '重新辐射');
 INSERT INTO `dict_item` VALUES ('noirrad', 'irradflags', '不辐射');
 INSERT INTO `dict_item` VALUES ('fullload', 'loadmodel', '满载');
 INSERT INTO `dict_item` VALUES ('maximum', 'loadmodel', '最大值');
+INSERT INTO `dict_item` VALUES ('2', 'allmenu', '货物信息');
+INSERT INTO `dict_item` VALUES ('3', 'allmenu', '送货信息');
+INSERT INTO `dict_item` VALUES ('4', 'allmenu', '送取货人');
+INSERT INTO `dict_item` VALUES ('5', 'allmenu', '单位信息');
+INSERT INTO `dict_item` VALUES ('7', 'allmenu', '收货管理');
+INSERT INTO `dict_item` VALUES ('8', 'allmenu', '收货确认');
+INSERT INTO `dict_item` VALUES ('9', 'allmenu', '辐照管理');
+INSERT INTO `dict_item` VALUES ('10', 'allmenu', '出货管理');
+INSERT INTO `dict_item` VALUES ('12', 'allmenu', '权限配置');
+INSERT INTO `dict_item` VALUES ('15', 'allmenu', '收款');
+INSERT INTO `dict_item` VALUES ('17', 'allmenu', '日报表');
+INSERT INTO `dict_item` VALUES ('18', 'allmenu', '月报表');
 
 -- ----------------------------
 -- Table structure for `irradiation`
@@ -138,32 +185,29 @@ CREATE TABLE `irradiation` (
   `irradtype` varchar(64) default NULL COMMENT '辐照类型',
   `irradtime` varchar(64) default NULL COMMENT '辐照时间',
   `timeorg` varchar(64) default NULL COMMENT '时间单位',
-  `doirraddate` varchar(64) default NULL COMMENT '日期',
-  `ordernum` varchar(64) default NULL COMMENT '序号',
-  `connecttime` varchar(64) default NULL COMMENT '交接时间',
-  `firstspreadernum` varchar(64) default NULL COMMENT '首位吊具号',
-  `irradbatchnum` varchar(64) default NULL COMMENT '辐照批号',
-  `entrancetime` varchar(64) default NULL COMMENT '入场时间',
-  `spreadernum` varchar(64) default NULL COMMENT '吊具号码',
-  `loadmodel` varchar(64) default NULL COMMENT '装载模式',
-  `runparam` varchar(64) default NULL COMMENT '运行参数',
-  `runcycle` varchar(64) default NULL COMMENT '运行圈数',
-  `changedesc` varchar(128) default NULL COMMENT '变动说明',
-  `nextcyclestarttime` varchar(64) default NULL COMMENT '下圈开始时间',
+  `doirraddate` date default NULL COMMENT '辐照日期',
+  `starttime` datetime default NULL COMMENT '开始时间',
+  `position` varchar(64) default NULL COMMENT '吊具号码',
+  `takecargocount` varchar(32) default NULL COMMENT '已取货数量',
   `status` varchar(1) default NULL COMMENT '状态',
   `mask` varchar(64) default NULL COMMENT '备注',
-  `takecargocount` varchar(32) default NULL COMMENT '已取货数量',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of irradiation
 -- ----------------------------
-INSERT INTO `irradiation` VALUES ('1', '20', '13', '1', '地瓜', '234', '1', '234', 'staticirrad', '234', 'hour', '2015-08-26', '2', '123', '23', '34', '2015-08-26', '432', '23', '234', '234', '243', '234', '1', '42', '234');
-INSERT INTO `irradiation` VALUES ('2', '21', '13', '1', '芹菜', '567556', '1', '567', 'staticirrad', '67', 'hour', '2015-08-26', '234', '2015-08-26', '123', '23', '2015-08-26', '234', '23', '23', '234', '234', '234', '1', '342', '567556');
-INSERT INTO `irradiation` VALUES ('3', '22', '14', '2', '带鱼', '345', '1', '3457', 'staticirrad', '5675675', 'hour', '234', '324', '234', '234', '234', '234', '23', '234', '4', '23', '234', '234', '1', '324', '345');
-INSERT INTO `irradiation` VALUES ('4', '23', '15', '2', '土豆', '4234', '1', '345', 'staticirrad', '', 'hour', '2015-08-27', '23', '2015-08-27 9:00', '5', '2', '2015-08-27 9:30', '6', 'fullload', '63', '3', '35', '34', '0', '534', '0');
-INSERT INTO `irradiation` VALUES ('5', '27', '18', '3', '土豆', '234', '3', '234', 'dnyirrad', '', 'minute', '2015-08-28', '5', '2015-08-28 11:00', '5', '4', '2015-08-28 11:20', '7', 'maximum', '44', '6', '46', '6', '0', '4456', '0');
+INSERT INTO `irradiation` VALUES ('1', '25', '17', '1', '黄瓜', '6', '1', '234', 'staticirrad', '64', 'hour', '2015-09-01', '2015-09-01 00:00:00', '', '0', '1', '');
+INSERT INTO `irradiation` VALUES ('2', '34', '22', '1', '带鱼', '1234', '3', '123', 'dnyirrad', '123', 'minute', '2015-09-01', '2015-09-01 00:00:00', '4554', '1234', '1', '');
+INSERT INTO `irradiation` VALUES ('3', '37', '24', '1', '芹菜', '7', '3', '45', 'staticirrad', '45', 'minute', '2015-09-01', '2015-09-01 00:00:00', '12', '7', '1', '');
+INSERT INTO `irradiation` VALUES ('4', '37', '24', '1', '芹菜', '60', '1', '45', 'staticirrad', '45', 'hour', '2015-09-01', '2015-09-01 00:00:00', '98', '0', '0', '');
+INSERT INTO `irradiation` VALUES ('5', '36', '24', '1', '带鱼', '34', '1', '53', 'staticirrad', '56', 'hour', '2015-09-01', '2015-09-01 00:00:00', '66', '9', '1', '');
+INSERT INTO `irradiation` VALUES ('6', '39', '26', '3', '蘑菇', '50', '2', '200', 'dnyirrad', '6', 'hour', '2015-09-09', '2015-09-09 00:00:00', '1', '0', '1', '');
+INSERT INTO `irradiation` VALUES ('7', '39', '26', '3', '蘑菇', '50', '2', '200', 'dnyirrad', '6', 'hour', '2015-09-09', '2015-09-09 00:00:00', '2', '49', '1', '');
+INSERT INTO `irradiation` VALUES ('8', '26', '17', '1', '鲶鱼', '23', '1', '67843', 'dnyirrad', '789', 'hour', '2015-09-12', '2015-09-12 00:00:00', '999', '0', '0', '');
+INSERT INTO `irradiation` VALUES ('9', '40', '26', '3', '金针菇', '150', '3', '250', 'dnyirrad', '6', 'minute', '2015-09-12', '2015-09-12 00:00:00', '7', '0', '1', '');
+INSERT INTO `irradiation` VALUES ('10', '29', '19', '3', '芹菜', '6', '3', '10', 'dnyirrad', '453', 'minute', '2015-09-19', '2015-09-19 00:00:00', '80', '0', '0', '');
+INSERT INTO `irradiation` VALUES ('11', '45', '30', '3', '西瓜', '10', '4', '456', 'staticirrad', '456', 'hour', '2015-09-21', '2015-09-21 00:00:00', '7', '10', '1', '');
 
 -- ----------------------------
 -- Table structure for `orginfo`
@@ -199,6 +243,8 @@ CREATE TABLE `product_chart` (
 -- Records of product_chart
 -- ----------------------------
 INSERT INTO `product_chart` VALUES ('checkRepeatOfsaveReceive', '1');
+INSERT INTO `product_chart` VALUES ('NOPRINTPICTUREDEFAULT', 'yangmi.jpg');
+INSERT INTO `product_chart` VALUES ('PRINTPICTURESAVEDIR', 'E:/Amusement/新建文件夹 (7)/');
 
 -- ----------------------------
 -- Table structure for `product_resources`
@@ -216,7 +262,7 @@ CREATE TABLE `product_resources` (
   `ishide` int(3) default '0',
   `description` varchar(200) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_resources
@@ -232,15 +278,12 @@ INSERT INTO `product_resources` VALUES ('8', '收货确认', '6', 'confirmation'
 INSERT INTO `product_resources` VALUES ('9', '辐照管理', '6', 'irradiationmana', '1', '/business/Irradiationmana.do', null, null, '0', '辐照管理');
 INSERT INTO `product_resources` VALUES ('10', '出货管理', '6', 'shippingmana', '1', '/business/shoppingmana.do', null, null, '0', '出货管理');
 INSERT INTO `product_resources` VALUES ('11', '权限管理', '0', 'privilegemana', '1', '/privilegemana/', null, null, '0', '权限管理');
-INSERT INTO `product_resources` VALUES ('12', '权限配置', '11', 'privilegeconfig', '1', '/privilegemana/configuration.do', null, null, '0', null);
-INSERT INTO `product_resources` VALUES ('13', '角色配置', '11', 'privilegerole', '1', '/privilegemana/privilegerole.do', null, null, '0', '角色管理');
+INSERT INTO `product_resources` VALUES ('12', '权限配置', '11', 'privilegeconfig', '1', '/privilegemana/configuration.do', null, null, '0', '权限配置');
 INSERT INTO `product_resources` VALUES ('14', '收款管理', '0', 'collectionmana', '1', '/collection/', null, null, '0', '收款管理');
 INSERT INTO `product_resources` VALUES ('15', '收款', '14', 'collectioninit', '1', '/collection/init.do', null, null, '0', '收款');
 INSERT INTO `product_resources` VALUES ('16', '报表管理', '0', 'report', '1', '/report/', null, null, '0', '报表管理');
 INSERT INTO `product_resources` VALUES ('17', '日报表', '16', 'dayreport', '1', '/report/dayreport.do', null, null, '0', '日报表');
 INSERT INTO `product_resources` VALUES ('18', '月报表', '16', 'monthreport', '1', '/report/monthreport.do', null, null, '0', '月报表');
-INSERT INTO `product_resources` VALUES ('19', '应收已付', '0', 'prepaidreceivable', '1', '/prepaidreceivable/', null, null, '0', '应收已付');
-INSERT INTO `product_resources` VALUES ('20', '应收已付', '19', 'prepaidreceivableinit', null, '/prepaidreceivable/prepaidreceivableinit.do', null, null, '0', '应收已付');
 
 -- ----------------------------
 -- Table structure for `receivemgrbase`
@@ -255,7 +298,7 @@ CREATE TABLE `receivemgrbase` (
   `status` varchar(1) default NULL COMMENT '是否指纹确认 0:未指纹确认，1:已指纹确认',
   `userid` varchar(32) default NULL COMMENT '操作员编号',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='收货管理基本信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='收货管理基本信息表';
 
 -- ----------------------------
 -- Records of receivemgrbase
@@ -263,12 +306,20 @@ CREATE TABLE `receivemgrbase` (
 INSERT INTO `receivemgrbase` VALUES ('13', '2015-08-26 00:00:00', '1', '1', '234', '2', 'admin');
 INSERT INTO `receivemgrbase` VALUES ('14', '2015-08-26 00:00:00', '2', '1', '345', '2', 'admin');
 INSERT INTO `receivemgrbase` VALUES ('15', '2015-08-26 00:00:00', '2', '1', '2342', '2', 'admin');
-INSERT INTO `receivemgrbase` VALUES ('16', '2015-08-26 00:00:00', '1', '4', '345634', '1', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('16', '2015-08-26 00:00:00', '', '4', '111111', '2', 'admin');
 INSERT INTO `receivemgrbase` VALUES ('17', '2015-08-26 00:00:00', '1', '3', '345', '2', 'admin');
 INSERT INTO `receivemgrbase` VALUES ('18', '2015-08-27 00:00:00', '3', '3', '34253', '2', 'admin');
-INSERT INTO `receivemgrbase` VALUES ('19', '2015-08-01 00:00:00', '1', '4', '234', '1', 'admin');
-INSERT INTO `receivemgrbase` VALUES ('20', '2015-08-14 00:00:00', '2', '1', '456', '0', 'admin');
-INSERT INTO `receivemgrbase` VALUES ('21', '2015-08-29 00:00:00', '1', '4', '34252', '0', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('19', '2015-09-19 00:00:00', '3', '3', '12345678', '2', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('20', '2015-08-14 00:00:00', '2', '1', '456', '2', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('21', '2015-08-29 00:00:00', '1', '4', '34252', '1', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('22', '2015-08-31 00:00:00', '1', '1', '123', '2', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('23', '2015-08-31 00:00:00', '1', '1', '123', '1', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('24', '2015-09-01 00:00:00', '1', '1', '234', '2', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('26', '2015-09-09 00:00:00', '3', '3', '18765831631', '2', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('27', '2015-09-19 00:00:00', '', '3', '999999', '2', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('28', '2015-09-20 00:00:00', '2', '1', '09809890', '0', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('29', '2015-09-20 00:00:00', '1', '4', '56567', '1', 'admin');
+INSERT INTO `receivemgrbase` VALUES ('30', '2015-09-21 00:00:00', '3', '3', '345', '2', 'admin');
 
 -- ----------------------------
 -- Table structure for `receivemgrdetail`
@@ -290,26 +341,40 @@ CREATE TABLE `receivemgrdetail` (
   `mask` varchar(255) default NULL,
   `irradednum` int(11) default NULL COMMENT '已照数量',
   `status` varchar(1) default NULL COMMENT '状态',
+  `fee` double default '0' COMMENT '货物费用',
+  `paid` double NOT NULL default '0' COMMENT '已付费用',
+  `unpaid` double NOT NULL default '0' COMMENT '未付费用,默认是fee的值',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='收货管理基本信息表的子表-存储详细信息';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='收货管理基本信息表的子表-存储详细信息';
 
 -- ----------------------------
 -- Records of receivemgrdetail
 -- ----------------------------
-INSERT INTO `receivemgrdetail` VALUES ('20', '13', '7', '234', '1', '234', '789', '345345', 'staticirrad', '234', 'hour', 'firstirrad', '', '234', '2');
-INSERT INTO `receivemgrdetail` VALUES ('21', '13', '2', '567556', '1', '567', '675', '755', 'staticirrad', '67', 'hour', 'firstirrad', null, '567556', '2');
-INSERT INTO `receivemgrdetail` VALUES ('22', '14', '1', '345', '1', '3457', '7', '345', 'staticirrad', '5675675', 'hour', 'firstirrad', null, '345', '2');
-INSERT INTO `receivemgrdetail` VALUES ('23', '15', '3', '4234', '1', '345', '345', '234', 'staticirrad', '345', 'hour', 'firstirrad', null, '4234', '2');
-INSERT INTO `receivemgrdetail` VALUES ('24', '16', '12', '34', '1', '345', '345tg', '34', 'staticirrad', '345', 'hour', 'firstirrad', null, '0', '1');
-INSERT INTO `receivemgrdetail` VALUES ('25', '17', '8', '6', '1', '234', '234', '234', 'staticirrad', '64', 'hour', 'firstirrad', null, '0', '2');
-INSERT INTO `receivemgrdetail` VALUES ('26', '17', '14', '23', '1', '67843', '234', '234', 'staticirrad', '789', 'hour', 'firstirrad', null, '0', '2');
-INSERT INTO `receivemgrdetail` VALUES ('27', '18', '3', '234', '3', '234', '234', '234', 'dnyirrad', '234', 'minute', 'secondirrad', null, '234', '2');
-INSERT INTO `receivemgrdetail` VALUES ('28', '19', '1', '234467', '3', '353', '23456', '56234', 'dnyirrad', '5345', 'minute', 'secondirrad', null, '0', '1');
-INSERT INTO `receivemgrdetail` VALUES ('29', '19', '2', '76', '3', '32', '12', '1321', 'dnyirrad', '453', 'minute', 'secondirrad', null, '0', '1');
-INSERT INTO `receivemgrdetail` VALUES ('30', '20', '11', '7868', '3', '345', '345', '13', 'dnyirrad', '24', 'minute', 'noirrad', null, '0', '0');
-INSERT INTO `receivemgrdetail` VALUES ('31', '20', '10', '23', '4', '45', '456', '456', 'staticirrad', '345', 'minute', 'firstirrad', null, '0', '0');
-INSERT INTO `receivemgrdetail` VALUES ('32', '21', '1', '23', '3', '45', '45', '45', 'dnyirrad', '456', 'minute', 'firstirrad', null, '0', '0');
-INSERT INTO `receivemgrdetail` VALUES ('33', '21', '8', '65', '4', '5', '543', '23', 'staticirrad', '45', 'hour', 'secondirrad', null, '0', '0');
+INSERT INTO `receivemgrdetail` VALUES ('20', '13', '7', '234', '1', '234', '789', '345345', 'staticirrad', '234', 'hour', 'firstirrad', '', '235', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('21', '13', '2', '567556', '1', '567', '675', '755', 'staticirrad', '67', 'hour', 'firstirrad', null, '567556', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('22', '14', '1', '345', '1', '3457', '7', '345', 'staticirrad', '5675675', 'hour', 'firstirrad', null, '345', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('23', '15', '3', '4234', '1', '345', '345', '234', 'staticirrad', '345', 'hour', 'firstirrad', null, '4234', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('24', '16', '12', '34', '1', '345', '345tg', '34', 'staticirrad', '345', 'hour', 'firstirrad', '', '0', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('25', '17', '8', '6', '1', '234', '234', '234', 'staticirrad', '64', 'hour', 'firstirrad', null, '6', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('26', '17', '14', '23', '1', '67843', '234', '234', 'staticirrad', '789', 'hour', 'firstirrad', null, '23', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('27', '18', '3', '234', '3', '234', '234', '234', 'dnyirrad', '234', 'minute', 'secondirrad', null, '234', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('28', '19', '1', '234467', '3', '353', '23456', '56234', 'dnyirrad', '5345', 'minute', 'secondirrad', '', '0', '2', '99', '0', '99');
+INSERT INTO `receivemgrdetail` VALUES ('29', '19', '2', '76', '3', '32', '12', '1321', 'dnyirrad', '453', 'minute', 'secondirrad', null, '6', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('30', '20', '11', '7868', '3', '345', '345', '13', 'dnyirrad', '24', 'minute', 'noirrad', 'hah ', '0', '2', '100', '50', '100');
+INSERT INTO `receivemgrdetail` VALUES ('31', '20', '10', '23', '4', '45', '456', '456', 'staticirrad', '345', 'minute', 'firstirrad', null, '0', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('32', '21', '1', '23', '3', '45', '45', '45', 'dnyirrad', '456', 'minute', 'firstirrad', null, '0', '1', '100', '90', '10');
+INSERT INTO `receivemgrdetail` VALUES ('33', '21', '8', '65', '4', '5', '543', '23', 'staticirrad', '45', 'hour', 'secondirrad', null, '0', '1', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('34', '22', '1', '1234', '1', '123', '123', '1', 'staticirrad', '123', 'hour', 'firstirrad', null, '1234', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('35', '23', '1', '23', '1', '234', '234', '234', 'staticirrad', '234', 'hour', 'firstirrad', null, '0', '1', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('36', '24', '1', '234', '1', '53', '23', '23', 'staticirrad', '56', 'hour', 'firstirrad', null, '34', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('37', '24', '2', '567', '1', '45', '45', '45', 'staticirrad', '45', 'hour', 'firstirrad', null, '60', '2', '100', '0', '100');
+INSERT INTO `receivemgrdetail` VALUES ('39', '26', '17', '100', '2', '200', '600', '20', 'dnyirrad', '6', 'hour', 'firstirrad', null, '100', '2', '100', '20', '80');
+INSERT INTO `receivemgrdetail` VALUES ('40', '26', '19', '150', '2', '250', '50', '40', 'dnyirrad', '6', 'hour', 'firstirrad', null, '150', '2', '100', '100', '0');
+INSERT INTO `receivemgrdetail` VALUES ('41', '27', '14', '456', '2', '34', '453', '5', 'dnyirrad', '5', 'minute', 'secondirrad', null, '0', '2', '0', '0', '0');
+INSERT INTO `receivemgrdetail` VALUES ('42', '28', '14', '70', '4', '34', '65', '34', 'dnyirrad', '56', 'minute', 'secondirrad', null, '0', '0', '0', '0', '0');
+INSERT INTO `receivemgrdetail` VALUES ('43', '29', '18', '45', '3', '45', '7', '3', 'dnyirrad', '46', 'minute', 'noirrad', null, '0', '1', '0', '0', '0');
+INSERT INTO `receivemgrdetail` VALUES ('44', '30', '1', '65', '2', '456', '4567', '65', 'dnyirrad', '456', 'minute', 'noirrad', null, '0', '2', '0', '0', '0');
+INSERT INTO `receivemgrdetail` VALUES ('45', '30', '5', '35', '4', '456', '6', '35', 'staticirrad', '456', 'hour', 'secondirrad', null, '10', '2', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -325,37 +390,6 @@ CREATE TABLE `role` (
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', '管理员');
 INSERT INTO `role` VALUES ('2', '值班员');
-
--- ----------------------------
--- Table structure for `role_menu`
--- ----------------------------
-DROP TABLE IF EXISTS `role_menu`;
-CREATE TABLE `role_menu` (
-  `roleid` int(11) default NULL COMMENT '角色id',
-  `menuid` int(11) default NULL COMMENT '菜单id'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色菜单连接表';
-
--- ----------------------------
--- Records of role_menu
--- ----------------------------
-INSERT INTO `role_menu` VALUES ('1', '7');
-INSERT INTO `role_menu` VALUES ('1', '8');
-INSERT INTO `role_menu` VALUES ('1', '9');
-INSERT INTO `role_menu` VALUES ('1', '10');
-INSERT INTO `role_menu` VALUES ('1', '12');
-INSERT INTO `role_menu` VALUES ('1', '13');
-INSERT INTO `role_menu` VALUES ('1', '15');
-INSERT INTO `role_menu` VALUES ('1', '17');
-INSERT INTO `role_menu` VALUES ('1', '18');
-INSERT INTO `role_menu` VALUES ('1', '20');
-INSERT INTO `role_menu` VALUES ('1', '2');
-INSERT INTO `role_menu` VALUES ('1', '3');
-INSERT INTO `role_menu` VALUES ('1', '4');
-INSERT INTO `role_menu` VALUES ('1', '5');
-INSERT INTO `role_menu` VALUES ('2', '2');
-INSERT INTO `role_menu` VALUES ('2', '3');
-INSERT INTO `role_menu` VALUES ('2', '4');
-INSERT INTO `role_menu` VALUES ('2', '5');
 
 -- ----------------------------
 -- Table structure for `shippinginfo`
@@ -388,14 +422,23 @@ CREATE TABLE `takecargobase` (
   `takecargopeople` varchar(64) default NULL COMMENT '取货人',
   `telnum` varchar(64) default NULL COMMENT '联系电话',
   `shippers` varchar(64) default NULL COMMENT '发货人',
+  `status` varchar(1) default '0' COMMENT '状态0:初始状态，即刚添加：1：已出货',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='出货信息表基表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='出货信息表基表';
 
 -- ----------------------------
 -- Records of takecargobase
 -- ----------------------------
-INSERT INTO `takecargobase` VALUES ('5', '2015-08-26 00:00:00', '1', '华为子公司', '4', '234', '234');
-INSERT INTO `takecargobase` VALUES ('6', '2015-08-26 00:00:00', '2', '百度', '1', '234', '345');
+INSERT INTO `takecargobase` VALUES ('5', '2015-08-26 00:00:00', '1', '华为子公司', '4', '234', '234', '1');
+INSERT INTO `takecargobase` VALUES ('6', '2015-08-26 00:00:00', '2', '百度', '1', '234', '345', '0');
+INSERT INTO `takecargobase` VALUES ('7', '2015-09-01 00:00:00', '1', '华为深圳', '4', '345', '战三', '0');
+INSERT INTO `takecargobase` VALUES ('8', '2015-09-01 00:00:00', '2', '山东分部', '1', '564', '李四', '0');
+INSERT INTO `takecargobase` VALUES ('9', '2015-09-01 00:00:00', '2', '北京总部', '1', '45', '李四', '0');
+INSERT INTO `takecargobase` VALUES ('10', '2015-09-08 00:00:00', '1', '子公司', '4', '3453634', '张三', '0');
+INSERT INTO `takecargobase` VALUES ('11', '2015-09-09 00:00:00', '1', '华为子公司', '4', '123', '王五', '0');
+INSERT INTO `takecargobase` VALUES ('12', '2015-09-09 00:00:00', '3', '杭州', '3', '18765831631', '李四', '0');
+INSERT INTO `takecargobase` VALUES ('13', '2015-09-16 00:00:00', '1', '华为山东', '4', '190', '任正非', '1');
+INSERT INTO `takecargobase` VALUES ('14', '2015-09-21 00:00:00', '3', '阿里巴巴山东', '3', '456456', '马云秘书', '1');
 
 -- ----------------------------
 -- Table structure for `takecargodetail`
@@ -408,16 +451,27 @@ CREATE TABLE `takecargodetail` (
   `cargocount` varchar(64) default NULL COMMENT '货物数量',
   `countorg` varchar(64) default NULL COMMENT '数量单位',
   `weight` varchar(64) default NULL COMMENT '重量单位(吨)',
+  `irradedid` int(11) NOT NULL default '0' COMMENT '辐照货物Id',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='出货信心附表';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='出货信心附表';
 
 -- ----------------------------
 -- Records of takecargodetail
 -- ----------------------------
-INSERT INTO `takecargodetail` VALUES ('7', '5', '地瓜', '234', '1', '234');
-INSERT INTO `takecargodetail` VALUES ('8', '5', '芹菜', '567556', '1', '567');
-INSERT INTO `takecargodetail` VALUES ('9', '6', '带鱼', '345', '1', '3457');
-INSERT INTO `takecargodetail` VALUES ('10', '6', '带鱼', '345', '1', '3457');
+INSERT INTO `takecargodetail` VALUES ('7', '5', '地瓜', '234', '1', '234', '0');
+INSERT INTO `takecargodetail` VALUES ('8', '5', '芹菜', '567556', '1', '567', '0');
+INSERT INTO `takecargodetail` VALUES ('9', '6', '带鱼', '345', '1', '3457', '0');
+INSERT INTO `takecargodetail` VALUES ('10', '6', '带鱼', '345', '1', '3457', '0');
+INSERT INTO `takecargodetail` VALUES ('11', '7', '带鱼', '', '3', '123', '0');
+INSERT INTO `takecargodetail` VALUES ('12', '8', '带鱼', '3', '3', '123', '0');
+INSERT INTO `takecargodetail` VALUES ('13', '9', '带鱼', '1231', '3', '123', '0');
+INSERT INTO `takecargodetail` VALUES ('14', '10', '带鱼', '9', '1', '53', '5');
+INSERT INTO `takecargodetail` VALUES ('15', '11', '芹菜', '2', '3', '45', '3');
+INSERT INTO `takecargodetail` VALUES ('16', '11', '芹菜', '2', '3', '45', '3');
+INSERT INTO `takecargodetail` VALUES ('17', '12', '蘑菇', '25', '2', '200', '7');
+INSERT INTO `takecargodetail` VALUES ('18', '12', '蘑菇', '24', '2', '200', '7');
+INSERT INTO `takecargodetail` VALUES ('19', '13', '芹菜', '3', '3', '45', '3');
+INSERT INTO `takecargodetail` VALUES ('20', '14', '西瓜', '10', '4', '456', '11');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -427,26 +481,14 @@ CREATE TABLE `user` (
   `userId` varchar(32) NOT NULL,
   `userName` varchar(128) NOT NULL,
   `userPassword` varchar(128) NOT NULL,
+  `roleid` int(11) NOT NULL,
+  `menuids` varchar(128) default NULL,
   UNIQUE KEY `userId` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('admin', 'admin', 'admin');
-INSERT INTO `user` VALUES ('root', 'root', 'root');
-
--- ----------------------------
--- Table structure for `user_role`
--- ----------------------------
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
-  `userid` varchar(32) default NULL COMMENT '用户id',
-  `roleid` int(11) default NULL COMMENT '角色id'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色连接表';
-
--- ----------------------------
--- Records of user_role
--- ----------------------------
-INSERT INTO `user_role` VALUES ('admin', '1');
-INSERT INTO `user_role` VALUES ('root', '2');
+INSERT INTO `user` VALUES ('admin', 'admin', 'admin', '1', '2,3,4,5,7,8,9,10,12,15,17,18');
+INSERT INTO `user` VALUES ('root', 'root', 'admin', '2', '2,3,4,5,7,18');
+INSERT INTO `user` VALUES ('sir', 'sir', '123456', '1', '7,8,9,10');

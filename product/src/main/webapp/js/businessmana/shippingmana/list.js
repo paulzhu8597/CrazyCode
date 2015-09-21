@@ -206,7 +206,7 @@ function takedsearch(pagenow, isfromsearch){
 		}
 		for (var i = 0; i < data.havetakedcargoes.length; i++) {
 			html = html
-					+ "<tr  onclick=\"doviewselectoftaked("+data.havetakedcargoes[i].id+",this);\">"
+					+ "<tr  onclick=\"doviewselectoftaked("+data.havetakedcargoes[i].id+",this);\"  ondblclick=\"cargoOutPrintConfirm("+data.havetakedcargoes[i].id+","+data.havetakedcargoes[i].takecargopeopleid+");\" >"
 					+ "<td style='text-align: center'>"+ data.havetakedcargoes[i].taketime + "</td>"
 					+ "<td style='text-align: center'>"+ data.havetakedcargoes[i].takecargoorg + "</td>"
 					+ "<td style='text-align: center'>"+ data.havetakedcargoes[i].proxyorg + "</td>"
@@ -246,4 +246,70 @@ function doviewselectoftaked(id,obj){
 		}
 		$("#takedcargoedetail").html(html);
 	}
+}
+
+function refreshCargoOutPrintConfirmDialog(id,takecargopeopleid){
+	var data = CommnUtil.normalAjax("/business/receivingmana/gethavetakedcargoebaseanddetail.do","takedcargoid="+id,"json");
+	if(CommnUtil.notNull(data)){
+		if(CommnUtil.notNull(data.takecargoinfo)){
+			$("#shoppingprintconfirmouttime").text(data.takecargoinfo.taketime);
+			$("#shoppingprintconfirmtakeorg").text(data.takecargoinfo.takecargoorg);
+			$("#shoppingprintconfirmproxyorg").text(data.takecargoinfo.proxyorg);
+			$("#shoppingprintconfirmtakepeople").text(data.takecargoinfo.takecargopeople);
+			$("#shoppingprintconfirmtel").text(data.takecargoinfo.telnum);
+			$("#shoppingprintconfirmpicture").attr("src","business/receivingmana/geprint.do?id="+takecargopeopleid+"&date="+new Date());
+		}
+		if(CommnUtil.notNull(data.takecargodetailinfos)){
+			var html="";
+			for(var i=0;i<data.takecargodetailinfos.length;i++){
+				html=html+
+				"<tr>"
+				+"<td style='text-align: center'> "+data.takecargodetailinfos[i].cargoname+"</td>"
+				+"<td style='text-align: center'> "+data.takecargodetailinfos[i].cargocount+"</td>"
+				+"<td style='text-align: center'> "+data.takecargodetailinfos[i].weight+"</td>"
+				+"</tr";
+			}
+			$("#shoppingprintconfirmbody").html(html);
+		}
+	}
+}
+
+function cargoOutPrintConfirm(id,takecargopeopleid){
+	
+    var dialogParent = $("#shoppingprintconfirm").parent();  
+    var dialogOwn = $("#shoppingprintconfirm").clone();  
+    dialogOwn.hide();
+	$("#shoppingprintconfirm").dialog({
+		autoOpen : false,// 设置对话框打开的方式 不是自动打开
+		show : "bind",
+		hide : "explode",
+		modal : true,
+		height : 500,
+		width : 750,
+		title: "出货确认",
+		buttons : {
+			'保存' : function() {
+				var data = CommnUtil.normalAjax("/business/receivingmana/doConfirmOutCargo.do","takedcargoid="+id,"json");
+				if("ok"==data){
+					alert("确认成功！");
+					takedsearch(0,"false");
+				}else{
+					alert(data);
+				}
+				$(this).dialog("close");
+			},
+			'取消' : function() {
+				
+				$(this).dialog("close");
+			}
+		},
+		open : function(ev, ui) {
+			refreshCargoOutPrintConfirmDialog(id,takecargopeopleid);
+		},
+		close : function(ev, ui) {
+            dialogOwn.appendTo(dialogParent);  
+            $(this).dialog("destroy").remove(); 
+		}
+	});
+	$('#shoppingprintconfirm').dialog('open');
 }

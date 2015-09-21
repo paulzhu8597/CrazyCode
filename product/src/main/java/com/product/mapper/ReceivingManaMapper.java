@@ -41,5 +41,10 @@ public interface ReceivingManaMapper {
 	List<TakeCargoInfo> queryHaveTakedCargoeDetailByBaseId(String id);
 	List<TakeCargoInfo> getHaveTakedCargoes(Map<String, Object> params);
 	ReceiveInfo getReceivedCargoInfo(String id);
+	ReceiveInfo editConfirmBaseInfo(String id);
+	int  updateConfirmInfo(Map idandstatus);
+	ReceiveInfo getCargoBaseInfoById(Map param);
+	TakeCargoInfo getHaveTakedCargoById(Map param);
+	int updateTakedCargoBaseInfoStatus(String id);
 
 }

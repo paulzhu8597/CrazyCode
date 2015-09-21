@@ -94,7 +94,7 @@ function search(pagenow, isfromsearch) {
 		for (var i = 0; i < data.receivedCargos.length; i++) {
 			//var color = ("0"==data.receivedCargos[i].status || "" == data.receivedCargos[i].status || !CommnUtil.notNull(data.receivedCargos[i].status)) ? "background-color: red" : "";
 			html = html
-					+ "<tr  onclick=\"getdetailinfo("+data.receivedCargos[i].id+",this);\" ondblclick='gofingerprints("+data.receivedCargos[i].id+","+data.receivedCargos[i].cargoid+");'>"
+					+ "<tr  onclick=\"getdetailinfo("+data.receivedCargos[i].id+",this);\" ondblclick='gofingerprints("+data.receivedCargos[i].id+","+data.receivedCargos[i].receivepeopleid+");'>"
 					+ "<td style='text-align: center'>" + data.receivedCargos[i].receivetime + " </td>" 
 					+ "<td style='text-align: center'>"+ data.receivedCargos[i].receiveorgname + " </td>"
 					+ "<td style='text-align: center'>"+ data.receivedCargos[i].receivepeoplename + " </td>"
@@ -138,16 +138,74 @@ function donext() {
 	var pageNow = $("#pageNow").text().trim();
 	search(parseInt(pageNow) + 1, "false");
 }
-
-function gofingerprints(receiveorgid,cargoid){
-	alert("此处通过单位id:"+receiveorgid+"以及货物id:"+cargoid+"到后台取得指纹仪录入的指纹进行验证，验证完毕将receivemgrbase表的status置为1");
-	var data = CommnUtil.normalAjax("/business/receivingmana/updateReceivedCargoStatus.do","id="+receiveorgid,"json");
-	if("ok"==data){
-		alert("更新成功！");
-		search(0,"false");
-		$("#receivedCargosDetail").html("");
+//初始化对话框数据
+function refreshdialogdata(receiveorgid){
+	var info = CommnUtil.normalAjax("/business/receivingmana/getcargoinfoanddetailinfo.do","receiveorgid="+receiveorgid,"json");
+	if(CommnUtil.notNull(info.baseinfo)){
+		$("#dialogreceivetime").text(info.baseinfo.receivetime);
+		$("#dialogbringcargoorg").text(info.baseinfo.receiveorgname);
+		$("#dialogbringcargoperson").text(info.baseinfo.receivepeoplename);
+		$("#dialogtel").text(info.baseinfo.telnum);
+		$("#printpicture").attr("src","business/receivingmana/geprint.do?id="+info.baseinfo.receivepeopleid+"&date="+new Date());
 	}
-	
+	if(CommnUtil.notNull(info.detaillist)){
+		var html = "";
+		for(var i=0;i<info.detaillist.length;i++){
+			html = html +
+			"<tr>"
+				+"<td style='text-align: center'>"+info.detaillist[i].cargoname+"</td>"
+				+"<td style='text-align: center'>"+info.detaillist[i].cargocount+"</td>"
+				+"<td style='text-align: center'>"+info.detaillist[i].cargoweight+"</td>"
+				+"<td style='text-align: center'>"+info.detaillist[i].irradtime+"</td>"
+				+"<td style='text-align: center'>"+info.detaillist[i].irradtimeorg+"</td>"
+			+"</tr>";
+		}
+		$("#dialogdetail").html(html);
+	}	
+}
+
+function gofingerprints(receiveorgid,receivepeopleid){
+	//alert("此处通过单位id:"+receiveorgid+"以及货物id:"+cargoid+"到后台取得指纹仪录入的指纹进行验证，验证完毕将receivemgrbase表的status置为1");
+	if(confirm("是否完成收货?")){
+		
+	    var dialogParent = $("#receivedcagoprint").parent();  
+	    var dialogOwn = $("#receivedcagoprint").clone();  
+	    dialogOwn.hide();  
+		//此处二次注册弹出框的目的：经测试jquery的dialog插件存在问题，只能重新注册，但是前边的不能删除，否则不能运行
+		$("#receivedcagoprint").dialog({
+			autoOpen : false,// 设置对话框打开的方式 不是自动打开
+			show : "bind",
+			hide : "explode",
+			modal : true,
+			height : 500,
+			width : 500,
+			title: "收货确认",
+			buttons : {
+				'保存' : function() {
+					var data = CommnUtil.normalAjax("/business/receivingmana/updateReceivedCargoStatus.do","id="+receiveorgid,"json");
+					if("ok"==data){
+						alert("更新成功！");
+						search(0,"false");
+						$("#receivedCargosDetail").html("");
+					}else{
+						alert("操作失败！\n"+data);
+					}
+					$(this).dialog("close");
+				},
+				"取消" : function() {
+					$(this).dialog("close");
+				}
+			},
+			open : function(ev, ui) {
+				refreshdialogdata(receiveorgid);
+			},
+			close : function(ev, ui) {
+	            dialogOwn.appendTo(dialogParent);  
+	            $(this).dialog("destroy").remove(); 
+			}
+		});
+		$("#receivedcagoprint").dialog("open");
+	}
 }
 
 function getdetailinfo(id,obj){

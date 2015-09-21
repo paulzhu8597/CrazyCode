@@ -1,18 +1,27 @@
 package com.product.controller;
 
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.product.bean.common.DictItem;
 import com.product.entity.RadiationInfo;
 import com.product.entity.ReceiveInfo;
 import com.product.entity.TakeCargoInfo;
@@ -34,6 +43,17 @@ public class BusinessController {
 	private IReceivingMana ireceivingmana;
 	@Resource
 	private CommonMapper commonmapper;
+	
+    private static final HttpHeaders HTTP_HEADERS;  
+    static {  
+        HTTP_HEADERS = new HttpHeaders();  
+        HTTP_HEADERS.set("Pragma", "No-cache");  
+        HTTP_HEADERS.set("Cache-Control", "No-cache");  
+        HTTP_HEADERS.setDate("Expires", 0);  
+        HTTP_HEADERS.setContentType(MediaType.IMAGE_JPEG); 
+    }  
+	
+
 
 	//====================================================================================收货管理
 	/**
@@ -167,6 +187,25 @@ public class BusinessController {
 		return ireceivingmana.updateConfirmStatus(param);//借用收获确认的方法 与方法名字无关，只是使用其功能
 	}
 	
+	/**
+	 * 根据货物id得到货物详情和基本信息
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("receivingmana/getcargoinfoanddetailinfo")
+	public Map getcargoinfoanddetailinfo(HttpServletRequest request){
+		String receiveorgid = request.getParameter("receiveorgid");
+		Map param = new HashMap();
+		param.put("receiveorgid", receiveorgid);
+		List<ReceiveInfo>  receivedetailinfoes = ireceivingmana.getDetInfoByReceiveorgId(param);//详情
+		ReceiveInfo  receivebaseinfo= ireceivingmana.getCargoBaseInfoById(param);//基本信息
+		Map returnValue = new HashMap();
+		returnValue.put("baseinfo", receivebaseinfo);
+		returnValue.put("detaillist", receivedetailinfoes);
+		return returnValue;
+	}
+	
 	
 	//==============================================================================================收货确认
 	
@@ -185,6 +224,7 @@ public class BusinessController {
 		model.addAttribute("irradflags", commonmapper.getDictItemByGroupId("irradflags"));
 		model.addAttribute("showorgs", ireceivingmana.getAllOrgs());//送货单位
 		model.addAttribute("showBringTakeInfos", ireceivingmana.getAllBringTakeInfoPeople());//送货人
+		//model.addAttribute("picture", "images/zhifubao.png");
 		return Common.BACKGROUND_PATH + "/businessmana/confirmationmana/list";
 	}
 	
@@ -238,6 +278,54 @@ public class BusinessController {
 		}
 		params.put("where", sb.toString());
 		return commonmapper.getCount(params);
+	}
+	
+	@ResponseBody
+	@RequestMapping("receivingmana/editconfirm")
+	public ReceiveInfo editConfirm(HttpServletRequest request){
+		String id = request.getParameter("id");
+		return  ireceivingmana.editConfirmBaseInfo(id);
+	}
+	
+	/**
+	 * 根据送货人Id得到送货人指纹
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("receivingmana/geprint")
+	public ResponseEntity<byte[]> geprint(HttpServletRequest request) {
+	    String DEFAULTPRINTDIR = commonmapper.getChart("PRINTPICTURESAVEDIR");//"E:/Amusement/新建文件夹 (7)/";//指纹默认保存路径  select * from product_chart  where itemid= 'PRINTPICTURESAVEDIR'
+	    String NOPRINTDEFAULTPICTURE = DEFAULTPRINTDIR + commonmapper.getChart("NOPRINTPICTUREDEFAULT");//没指纹默认的显示图像,这张图片要加入文字：此人员没有注册并且没有录入指纹！ select * from product_chart  where itemid= 'NOPRINTPICTUREDEFAULT'
+		String id = request.getParameter("id");
+		 ByteArrayOutputStream out = new ByteArrayOutputStream();  
+		 File filedir = null; 
+		 File findFile = null;
+		 BufferedImage bi;
+		 ResponseEntity<byte[]> re = null;
+		try {
+			filedir = new File(DEFAULTPRINTDIR);
+			File[] fileList = filedir.listFiles();
+			for(int i=0;i<fileList.length;i++){
+				if (fileList[i].isFile()) {
+					String filename = fileList[i].getName().split("\\.")[0];
+					if(filename.equals(id)){
+						findFile = new File(DEFAULTPRINTDIR+fileList[i].getName());
+					}
+				}
+			}
+			if(null==findFile){
+				findFile = new File(NOPRINTDEFAULTPICTURE);
+			}
+			bi = ImageIO.read(findFile);
+			ImageIO.write(bi, "JPEG", out);  
+			re = new ResponseEntity<byte[]>(out.toByteArray(), HTTP_HEADERS, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			
+		}
+		return re;
 	}
 	
 	/**
@@ -339,7 +427,11 @@ public class BusinessController {
 		Map param = new HashMap();
 		param.put("id", id);
 		param.put("status", "2");
-		return ireceivingmana.updateConfirmStatus(param);
+		param.put("receivecargotime", Common.stringDefaultOfEmpty(request.getParameter("receivecargotime"), "") );
+		param.put("bringcargopeopletel", Common.stringDefaultOfEmpty(request.getParameter("bringcargopeopletel"), ""));
+		param.put("bringpeople", Common.stringDefaultOfEmpty(request.getParameter("bringpeople"), ""));
+		param.put("bringorg", Common.stringDefaultOfEmpty(request.getParameter("bringorg"), ""));
+		return ireceivingmana.updateConfirmStatusAndBaseInfo(param);
 	}
 	
 	//===================================================================================辐照管理 
@@ -461,6 +553,11 @@ public class BusinessController {
 	
 	//===================================================================================出获管理
 	
+	/**
+	 * 初始化出货管理界面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("shoppingmana")
 	public String initShippingMana(Model model){
 		model.addAttribute("showcargoinfos", ireceivingmana.getCargoinfo());//货物名称
@@ -470,6 +567,11 @@ public class BusinessController {
 		return Common.BACKGROUND_PATH + "/businessmana/shippingmana/list"; 
 	}
 	
+	/**
+	 * 得到可取获取列表
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("receivingmana/queryalltakecargoes")
 	public Map queryAllTakeCargoes(HttpServletRequest request){
@@ -511,6 +613,11 @@ public class BusinessController {
 		return commonmapper.getCount(params);
 	}
 	
+	/**
+	 * 出货操作
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("receivingmana/savetakecargoe")
 	public String saveTakeCargoe(HttpServletRequest request){
@@ -519,6 +626,11 @@ public class BusinessController {
 		return result;
 	}
 	
+	/**
+	 * 查询已出货物列表
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("receivingmana/queryhavetakedcargoes")
 	public Map queryHaveTakedCargoes(HttpServletRequest request){
@@ -556,6 +668,11 @@ public class BusinessController {
 		return commonmapper.getCount(params);
 	}
 	
+	/**
+	 * 查询已出货物的某条记录的详细信息
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("receivingmana/queryhavetakedcargoedetail")
 	public List<TakeCargoInfo> queryHaveTakedCargoeDetail(HttpServletRequest request){
@@ -563,12 +680,44 @@ public class BusinessController {
 		return ireceivingmana.queryHaveTakedCargoeDetail(id);
 	}
 	
+	/**
+	 * 得到出货物信息
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("receivingmana/getreceivedcargoinfo")
     public ReceiveInfo getReceivedCargoInfo(HttpServletRequest request){
 		String id = request.getParameter("id");
 		return ireceivingmana.getReceivedCargoInfo(id);
     }
+	
+	/**
+	 * 出货管理，出后确认初始化弹出框数据
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("receivingmana/gethavetakedcargoebaseanddetail")
+	public Map getHaveTakedCargoeBaseAndDetail(HttpServletRequest request){
+		String id = request.getParameter("takedcargoid");
+		Map param = new HashMap();
+		Map returnValue = new HashMap();
+		param.put("id", id);
+		TakeCargoInfo takecargoinfo = ireceivingmana.getHaveTakedCargoById(param);
+		List<TakeCargoInfo> takecargodetailinfos = ireceivingmana.queryHaveTakedCargoeDetail(id);
+		returnValue.put("takecargoinfo", takecargoinfo);
+		returnValue.put("takecargodetailinfos", takecargodetailinfos);
+		return returnValue;
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("receivingmana/doConfirmOutCargo")
+	public String  doConfirmOutCargo(HttpServletRequest request){
+		String id = request.getParameter("takedcargoid");
+		return ireceivingmana.updateTakedCargoBaseInfoStatus(id);
+	}
 	
 	public IReceivingMana getIreceivingmana() {
 		return ireceivingmana;

@@ -108,12 +108,55 @@
 		</fieldset>
 		</div>
 		
+		<div id="shoppingprintconfirm" style="display:none;">
+		  <table class="pp-list table table-striped table-bordered">
+		    <tr>
+		      <td>
+				<table class="pp-list table table-striped table-bordered">
+					<tr>
+					  <td>出货日期</td> <td id="shoppingprintconfirmouttime"></td>
+					</tr>
+					<tr>  
+					  <td>取货单位</td>  <td id="shoppingprintconfirmtakeorg"></td>
+					</tr>
+					<tr>  					  
+					  <td>委托单位</td>  <td id="shoppingprintconfirmproxyorg"></td>
+					</tr>
+					<tr>  					  
+					  <td>取货人</td>  <td id="shoppingprintconfirmtakepeople"></td>
+					</tr>
+					<tr>  					  
+					  <td>联系电话</td>  <td id="shoppingprintconfirmtel"></td>
+					</tr>
+				</table>
+		      </td>
+		      <td>
+		       <img id="shoppingprintconfirmpicture" width="100%" height="100%" alt="picture" src="${picture}">
+		      </td>
+		    </tr>
+		  </table>
+			<table class="pp-list table table-striped table-bordered">
+				<thead>
+				  <tr>
+				   <td>货物名称</td>
+				   <td>数量</td>
+				   <td>重量(吨)</td>
+				  </tr>
+				</thead>
+				<tbody id="shoppingprintconfirmbody">
+				  
+				</tbody>
+			</table>
+		</div>
+		
 		<div class="m-b-md">
 			<fieldset>
 			<legend>已出货物</legend>
 			出货时间：<input type="text" id="takecargotime"  />
 			取货单位：<crazy:dictselect id="showorgsoftaked" name="showorgsoftaked"  emptyKey="" emptyValue="请选择" collection="${showorgs}" ></crazy:dictselect>
 			<input id="querytakedcargo"  type="button" value="Query"/>
+			<br/>
+			<div align="left"><font size="2" color="red"  >双击完成出货确认</font></div>
 			<table  class="pp-list table  table-bordered">
 			<thead>
 			<tr>
@@ -125,7 +168,7 @@
 			<td>发  货   人</td>
 			</tr>
 			</thead>
-			<tbody id="takedcargoes">
+			<tbody id="takedcargoes" >
 			
 			</tbody>
 			</table>
@@ -155,7 +198,6 @@
 				</table>
 			</fieldset>
 		</div>
-		
 	</div>
 </body>
 </html>

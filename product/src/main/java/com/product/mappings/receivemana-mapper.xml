@@ -109,10 +109,33 @@
 	 	   limit ${pageNow} , ${pageSize}
 	 	  </if>
 	</select>
-		
+	
+	<select id="editConfirmBaseInfo" parameterType="java.lang.String" resultType="ReceiveInfo">
+	    select 
+		    id,
+		    date_format(receivetime,'%Y-%m-%d') receivetime,
+		    receivepeopleid,
+		    receiveorgid,
+		    telnum
+	    from receivemgrbase 
+	    where id=#{id}
+	</select>	
+	
 	<delete id="deleteconfirms" parameterType="java.lang.String">
 		delete t1.* , t2.* from  receivemgrbase  t1, receivemgrdetail t2 where t1.id = t2.receivemgrid and t1.id in (#{sqlids})
 	</delete>
+	
+	<select id="getCargoBaseInfoById" parameterType="java.util.Map" resultType="ReceiveInfo">
+        select 
+	    id,
+		date_format(receivetime,'%Y-%m-%d') receivetime,
+		(select orgname from shippinginfo  where id=receiveorgid) receiveorgname,
+		receivepeopleid,
+		(select name from bringtakeinfo where id=receivepeopleid) receivepeoplename,
+		telnum
+		from receivemgrbase
+	    where id=#{receiveorgid}
+	</select>
 	
 	<select id="getDetInfoByReceiveorgId" parameterType="java.util.Map" resultType="ReceiveInfo">
 	    select 
@@ -143,6 +166,17 @@
 	    delete from receivemgrdetail where id=#{id} and receivemgrid=#{receivemgrid}
 	</delete>
 	
+	<update id="updateConfirmInfo" parameterType="java.util.Map">
+	    update receivemgrbase
+	    set 
+	       receivetime=#{receivecargotime},
+	       receivepeopleid=#{bringpeople},
+	       receiveorgid=#{bringorg},
+	       telnum=#{bringcargopeopletel}
+	    where id=#{id}   
+	       
+	</update>
+	
 	<update id="saveEditConfirDetailInfo" parameterType="ReceiveInfo">
 	    update receivemgrdetail 
 	    set 
@@ -168,6 +202,7 @@
 	<update id="updateDetailStatus" parameterType="java.lang.String">
 	    update receivemgrdetail set status=#{status} where receivemgrid=#{id}
 	</update>
+	
 	
 	<!-- status为2的数据 ，在收获确认阶段将状态改为2-->
 	<select id="getradiations" parameterType="java.util.Map" resultType="ReceiveInfo">
@@ -287,8 +322,8 @@
 	</select>
 	
 	<insert id="saveTakeCargoBase" useGeneratedKeys="true" keyProperty="baseid" parameterType="TakeCargoInfo">
-	    insert into takecargobase (taketime,takecargoorg,proxyorg,takecargopeople,telnum,shippers)
-	    values(str_to_date(#{taketime},'%Y-%m-%d'),#{takecargoorg},#{proxyorg},#{takecargopeople},#{telnum},#{shippers})
+	    insert into takecargobase (taketime,takecargoorg,proxyorg,takecargopeople,telnum,shippers,status)
+	    values(str_to_date(#{taketime},'%Y-%m-%d'),#{takecargoorg},#{proxyorg},#{takecargopeople},#{telnum},#{shippers},'0')
 	</insert>
 	
 	<insert id="saveTakeCargoDetail">
@@ -302,12 +337,13 @@
 	    date_format(t.taketime,'%Y-%m-%d') taketime,
 	    (select orgname from shippinginfo where id= t.takecargoorg) takecargoorg, 
 	    t.proxyorg,
+	    t.takecargopeople takecargopeopleid,
 	    (select name from bringtakeinfo where id=t.takecargopeople) takecargopeople,
 	    t.telnum,
 	    t.shippers
 	    from  
 	    takecargobase t
-	    where 1=1
+	    where 1=1 and t.status='0'
 	    <if test="takecargotime !=null and takecargotime!=''">
 	    and t.taketime= str_to_date(#{takecargotime},'%Y-%m-%d')
 	    </if>
@@ -317,6 +353,17 @@
 	    <if test="pageNow != null and pageSize != null">
 	 	   limit ${pageNow} , ${pageSize}
 	 	</if>
+	</select>
+	
+	<select id="getHaveTakedCargoById" parameterType="java.util.Map" resultType="TakeCargoInfo">
+	    select 
+	    	date_format(t.taketime,'%Y-%m-%d') taketime,
+	   	 	(select orgname from shippinginfo where id= t.takecargoorg) takecargoorg,
+	    	t.proxyorg,
+	     	(select name from bringtakeinfo where id=t.takecargopeople) takecargopeople,
+	     	t.telnum
+	     from  takecargobase t 
+	     where t.id=#{id}
 	</select>
 	
 	<select id="queryHaveTakedCargoeDetailByBaseId" parameterType="java.lang.String" resultType="TakeCargoInfo">
@@ -340,5 +387,11 @@
 		mask
 		from irradiation t where id=#{id}
 	</select>
+	
+	<update id="updateTakedCargoBaseInfoStatus" parameterType="java.lang.String" >
+	    update takecargobase
+	    set status='1'
+	    where id=#{id}
+	</update>
 	
 </mapper>

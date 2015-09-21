@@ -125,6 +125,49 @@
 		    	</table>
 		    </div>
 		</fieldset>
+		
+		<div id="receivedcagoprint" style="display: none;">
+		<table class="pp-list table table-striped table-bordered">
+			 <tr>
+				  <td>
+				   <table class="pp-list table table-striped table-bordered">
+				   <tr>
+					   <td><nobr>收获日期：</nobr> </td>
+					   <td id="dialogreceivetime">  </td>
+				   </tr>
+				   <tr>
+					   <td> <nobr>送货单位：</nobr> </td>
+					   <td id="dialogbringcargoorg"> </td>
+				   </tr>
+				   <tr>
+					   <td><nobr>送货人：</nobr> </td>
+					   <td id="dialogbringcargoperson"> </td>
+				   </tr>
+				   <tr>
+					   <td><nobr>联系电话：</nobr> </td>
+					   <td id="dialogtel">  </td>
+				   </tr>
+				   </table>
+				  </td>
+			      <td><img id="printpicture" width="100%" height="100%" alt="picture" src="${picture}"></td>
+			 </tr>
+		</table>
+		<table class="pp-list table table-striped table-bordered">
+		<thead>
+		 <tr>
+		  <td>货物名称</td>
+		  <td>数量</td>
+		  <td>重量(吨)</td>
+		  <td>辐照时间</td>
+		  <td>时间单位</td>
+		 </tr>
+		</thead>
+		<tbody id="dialogdetail">
+		
+		</tbody>
+		</table>
+		</div>
+		
 	</div>
 </body>
 </html>

@@ -106,6 +106,35 @@
 		</table>
 		</div>
 		
+		<div id="confirmdialog" style="display: none;">
+		<table>
+		 <tr>
+			  <td>
+			   <table>
+			   <tr>
+				   <td><nobr>收获日期：</nobr> </td>
+				   <td><input id="receivecargotime" type="text"  /> </td>
+			   </tr>
+			   <tr>
+				   <td> <nobr>送货人：</nobr> </td>
+				   <td><crazy:dictselect id="bringpeople" name="bringpeople" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect></td>
+			   </tr>
+			   <tr>
+				   <td><nobr>送货单位：</nobr> </td>
+				   <td><crazy:dictselect id="bringorg" name="bringorg" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect></td>
+			   </tr>
+			   <tr>
+				   <td><nobr>联系电话：</nobr> </td>
+				   <td><input id="bringcargopeopletel" type="text"> </td>
+			   </tr>
+			   </table>
+			  </td>
+		      <td><img id="confirmpicture" width="100%" height="100%" alt="picture" src="${picture}"></td>
+		 </tr>
+		</table>
+		</div>
+		
+		
 						<fieldset>
 							<legend>详细信息</legend>
 							<input name="editdetail"  id="editdetail" type="button" value="Edit" />

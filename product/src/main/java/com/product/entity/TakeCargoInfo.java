@@ -8,6 +8,7 @@ public class TakeCargoInfo {
 	private String takecargoorg  ="";//取货单位
 	private String proxyorg  ="";//委托单位
 	private String takecargopeople  ="";//取货人
+	private String takecargopeopleid  ="";//取货人
 	private String telnum  ="";//联系电话
 	private String shippers  ="";//发货人
 	private String cargoname ="";//货物名称
@@ -91,5 +92,11 @@ public class TakeCargoInfo {
 	}
 	public void setIrradaedcargoid(String irradaedcargoid) {
 		this.irradaedcargoid = irradaedcargoid;
+	}
+	public String getTakecargopeopleid() {
+		return takecargopeopleid;
+	}
+	public void setTakecargopeopleid(String takecargopeopleid) {
+		this.takecargopeopleid = takecargopeopleid;
 	}
 }

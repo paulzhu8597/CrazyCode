@@ -15,32 +15,6 @@ var globalreceiveorgid = "";
 
 $(function() {
 	$('#receivetime').Zebra_DatePicker();
-	//注册弹出框
-	/*$("#editconfirmdetaildiv").dialog({
-		autoOpen : false,// 设置对话框打开的方式 不是自动打开
-		show : "bind",
-		hide : "explode",
-		modal : true,
-		height : 500,
-		width : 450,
-		title: "编辑",
-		buttons : {
-			'保存' : function() {
-				saveEditdetailInfo();
-				$(this).dialog("close");
-			},
-			"取消" : function() {
-				$(this).dialog("close");
-			}
-		},
-		open : function(ev, ui) {
-			initEditConfirmInfo();
-			// CommnUtil.cleanInputValue("addcargoname,org,irradtype,irradtime,timeorg");
-		},
-		close : function(ev, ui) {
-			//CommnUtil.cleanInputValue("cargoname,cargocount,cargoweight,showcountorginfos,funguscount,reqreagent,irradtypes,irradtime,timeorgs,irradflags,irradflag");
-		}
-	});*/
 	$("#query").click("click", function() {
 		search(0,"true");
 	});
@@ -305,14 +279,59 @@ function deletedetail(){
 }
 
 function gofingerprints(id){
-	alert("此处通过单位id:"+id+"到后台取得指纹仪录入的指纹进行验证，验证完毕将receivemgrbase表的status置为2，附属的详情表receivemgrdetail的状态改为2");
-	var data = CommnUtil.normalAjax("/business/receivingmana/updateConfirmStatus.do","id="+id, "json");
-	if("ok"==data){
-		alert("更新成功！");
-		search(0,"true");
+	//alert("此处通过单位id:"+id+"到后台取得指纹仪录入的指纹进行验证，验证完毕将receivemgrbase表的status置为2，附属的详情表receivemgrdetail的状态改为2");
+	if(confirm("是否完成收货确认?")){
+		 
+		 $("#confirmpicture").attr("src","business/receivingmana/geprint.do?id="+id+"&date="+new Date());
+		
+	    var dialogParent = $("#confirmdialog").parent();  
+	    var dialogOwn = $("#confirmdialog").clone();  
+	    dialogOwn.hide();  
+		//此处二次注册弹出框的目的：经测试jquery的dialog插件存在问题，只能重新注册，但是前边的不能删除，否则不能运行
+		$("#confirmdialog").dialog({
+			autoOpen : false,// 设置对话框打开的方式 不是自动打开
+			show : "bind",
+			hide : "explode",
+			modal : true,
+			height : 500,
+			width : 500,
+			title: "收货确认",
+			buttons : {
+				'保存' : function() {
+					saveEditInfo(id);
+					$(this).dialog("close");
+				},
+				"取消" : function() {
+					$(this).dialog("close");
+				}
+			},
+			open : function(ev, ui) {
+				var info = CommnUtil.normalAjax("/business/receivingmana/editconfirm.do","id="+id, "json");
+				 $("#receivecargotime").val(info.receivetime);
+				 $("#bringcargopeopletel").val(info.telnum);
+				 $("#bringpeople").find("option[value='"+info.receivepeopleid+"']").attr("selected",true);
+				 $("#bringorg").find("option[value='"+info.receiveorgid+"']").attr("selected",true);
+			},
+			close : function(ev, ui) {
+	            dialogOwn.appendTo(dialogParent);  
+	            $(this).dialog("destroy").remove(); 
+			}
+		});
+		$("#confirmdialog").dialog("open");
 	}
 }
 
+function saveEditInfo(id){
+	var data = CommnUtil.normalAjax("/business/receivingmana/updateConfirmStatus.do",
+			"id="+id+"&receivecargotime="+$("#receivecargotime").val()+"&bringcargopeopletel="+$("#bringcargopeopletel").val()+"&bringpeople="+$("#bringpeople").val()+"&bringorg="+$("#bringorg").val(),
+			"json");
+	if("ok"==data){
+		alert("更新成功！");
+		search(0,"true");
+	}else{
+		alert("更新失败！"+data);
+	}
+}
 
 
 //全选，全不选

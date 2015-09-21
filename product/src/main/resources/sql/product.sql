@@ -18,11 +18,6 @@ rolename varchar(64) comment '角色名称',
 ) comment='角色表';
 
 
-
-
-
-
-
 insert into user values ("admin","admin","admin");
 ##货物信息
 DROP TABLE IF EXISTS `cargoinfo`;
@@ -148,7 +143,8 @@ takecargoorg varchar(64)  comment '取货单位',
 proxyorg varchar(64) comment '委托单位',
 takecargopeople varchar(64) comment '取货人',
 telnum varchar(64) comment '联系电话',
-shippers varchar(64) comment '发货人'
+shippers  varchar(64) comment '发货人',
+status varchar(1) default '0' comment '状态0:初始状态，即刚添加：1：已出货'
 ) comment='出货信息表基表';
 
 #出货信息表附表

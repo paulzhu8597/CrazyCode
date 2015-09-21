@@ -71,7 +71,7 @@
 			t2.cargoname caroname,
 			t2.cargocount count
  		from takecargobase t1,takecargodetail t2 
- 		where t1.id=t2.baseid
+ 		where t1.status='1' and  t1.id=t2.baseid
         <if test="format != '' and date != ''">
         	and date_format(t1.taketime,'${format}')= #{date}
         </if>

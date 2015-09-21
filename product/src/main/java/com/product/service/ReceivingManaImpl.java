@@ -149,6 +149,13 @@ public class ReceivingManaImpl implements IReceivingMana {
 		return receivingmanamapper.getDetInfoByReceiveorgId(rtntValue);
 	}
 	
+	/**
+	 * 根据基本信息Id得到一条记录
+	 */
+	public ReceiveInfo getCargoBaseInfoById(Map param) {
+		return receivingmanamapper.getCargoBaseInfoById(param);
+	}
+	
 	//删除一条货物确认信息，连带删除其下属的详情
 	public int deleteconfirms(String sqlids) {
 		
@@ -211,8 +218,25 @@ public class ReceivingManaImpl implements IReceivingMana {
 		String rtn  = "";
 		try {
 			int baseresult = receivingmanamapper.updateBaseStatus(idandstatus);
-			if (baseresult > 0) {
+			if (baseresult > 0 ) {
 				receivingmanamapper.updateDetailStatus(idandstatus);
+				rtn = "ok";
+			}
+		} catch (Exception e) {
+			rtn = e.getMessage(); 
+			LogUtil.getLog().error("ReceivingManaImpl.updateConfirmStatus:\n"+rtn);
+			throw new RuntimeException(rtn);
+		}
+		return rtn;
+	}
+	
+	public String updateConfirmStatusAndBaseInfo(Map param) {
+		String rtn  = "";
+		try {
+			int ubasecount =  receivingmanamapper.updateConfirmInfo(param);
+			int baseresult = receivingmanamapper.updateBaseStatus(param);
+			if (baseresult > 0 & ubasecount>0) {
+				receivingmanamapper.updateDetailStatus(param);
 				rtn = "ok";
 			}
 		} catch (Exception e) {
@@ -314,6 +338,10 @@ public class ReceivingManaImpl implements IReceivingMana {
 		return receivingmanamapper.queryHaveTakedCargoeDetailByBaseId(id);
 	}
 	
+	public TakeCargoInfo getHaveTakedCargoById(Map param){
+		return receivingmanamapper.getHaveTakedCargoById(param);
+	}
+	
 	public List<RadiationInfo> getAllTakeCargoes(Map<String, Object> params) {
 		return receivingmanamapper.getAllTakeCargoes(params);
 	}
@@ -322,6 +350,30 @@ public class ReceivingManaImpl implements IReceivingMana {
 		return receivingmanamapper.getReceivedCargoInfo(id);
 	}
 	
+
+	public ReceiveInfo editConfirmBaseInfo(String id) {
+		return receivingmanamapper.editConfirmBaseInfo(id);
+	}
+	
+	@Transactional(rollbackFor=java.lang.Exception.class)
+	public String updateTakedCargoBaseInfoStatus(String id){
+		String rtn = "";
+		try {
+			int result = receivingmanamapper.updateTakedCargoBaseInfoStatus(id);
+			if (result > 0) {
+				rtn = "ok";
+			} else {
+				rtn = "跟新失败！跟新记录数量为0";
+			}
+		} catch (Exception e) {
+			rtn = e.getMessage(); 
+			LogUtil.getLog().error("ReceivingManaImpl.updateTakedCargoBaseInfoStatus:\n"+rtn);
+			throw new RuntimeException(rtn);
+		}
+		return rtn;
+	}
+	
+	//===============================================================
 	public ReceivingManaMapper getReceivingmanamapper() {
 		return receivingmanamapper;
 	}
@@ -340,5 +392,4 @@ public class ReceivingManaImpl implements IReceivingMana {
 	public void setBringtakeinfoMapper(BringTakeInfoMapper bringtakeinfoMapper) {
 		this.bringtakeinfoMapper = bringtakeinfoMapper;
 	}
-
 }
