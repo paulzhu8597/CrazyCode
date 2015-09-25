@@ -37,7 +37,14 @@
 			(select cargoname from cargoinfo where id=t2.cargoid) cargoname, 
 			t2.cargocount count,
 			(select orgname from orginfo where id= t2.countorg) countorg,
- 			t2.cargoweight weight
+ 			t2.cargoweight weight,
+ 			(select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='irradtypes' and di.itemid=t2.irradtype) irradtype,
+ 			t2.irradtime,
+ 			t2.reqreagent,
+ 			t2.funguscount,
+ 			t2.fee,
+ 			t2.mask,
+ 			(select userName from user u where u.userId=(select userid from receivemgrbase c1 where c1.id=t2.receivemgrid)) username
 		from receivemgrbase t1, receivemgrdetail t2 
 		where 
 		    t1.id=t2.receivemgrid  and t2.status='2'

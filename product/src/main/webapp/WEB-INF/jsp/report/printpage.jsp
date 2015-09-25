@@ -108,12 +108,20 @@ var rootPath = "${pageContext.request.contextPath}";
 				+"<td style='text-align: center'>"+data[i].irradtime+"</td>"
 				+"<td style='text-align: center'>"+data[i].reqreagent+"</td>"
 				+"<td style='text-align: center'>"+data[i].funguscount+"</td>"
-				+"<td style='text-align: center'>"+data[i].fee+"</td>"
+				+"<td name='printfee' style='text-align: center'>"+data[i].fee+"</td>"
 				+"<td style='text-align: center'>"+data[i].irradflag+"</td>"
 				+"<td style='text-align: center'>"+data[i].username+"</td>"
 				+"</tr>";
 			}
 			$("#reportbody").html(html);
+			var printfeesum = 0;
+			$("[name='printfee']").each(function(){
+				   var tdvalue =  $(this).text().trim();
+				   if(''!=tdvalue && !isNaN(tdvalue)){
+					   printfeesum +=parseFloat(tdvalue);
+				   }
+				  });
+			$("#printfeesumview").text(printfeesum);
 		}
 	}
 	
@@ -132,7 +140,8 @@ var rootPath = "${pageContext.request.contextPath}";
 	<input class="noprint" type="button"　name="button_show" value="打印预览" onclick="javascript:printpreview();">
 	<input class="noprint" type="button" name="button_fh" value="关闭" onclick="javascript:window.close();">
   <div id="printdiv" class="m-b-md"> 
-  <div align="center"><font size="20">  辐照业务${ismoth == '1'?'月':'日'}统计报表</font></div>
+  <div align="center"><font size="16">  辐照业务${ismoth == '1'?'月':'日'}统计报表</font></div>
+  <div align="center"> <font size="3">统计时间：${date}，打印时间：${printtime}</font> </div>
   <table width="100%" class="pp-list " id="mytable">
   <thead>
   <tr>
@@ -154,6 +163,14 @@ var rootPath = "${pageContext.request.contextPath}";
   <tbody id="reportbody"  class="thebody">
   
   </tbody>
+  <tfoot>
+  <tr>
+  <td style='text-align: center'>合计</td>
+  <td colspan="9"></td>
+  <td style='text-align: center' id="printfeesumview" colspan="1"></td>
+  <td colspan="2"></td>
+  </tr>
+  </tfoot>
   </table>
   </div>
   

@@ -67,31 +67,46 @@ border-color: red;
   </head>
   <body>
   <div class="m-b-md" >
-  统计日期： <input type="text" id="printtime"  /> <input type="button" value="query" id="query"  /> <input type="button" value="Print" id="Print" />
+<font> 统计日期： <input type="text" id="printtime"  /> <input type="button" value="query" id="query"  /> <input type="button" value="Print" id="Print" />
   </div>
   <div class="m-b-md" id="printdiv"> 
 	<div id="prat1">
 		<table id="dalidyReceived" class="pp-list table  table-bordered" title="当日收获">
-		<caption align="top">当日收货</caption> 
+		<caption align="top"><font color="red"> 当日收货</font></caption> 
 		<thead>
 			<tr>
-			<td>收货时间</td>
-			<td>送货单位</td>
-			<td>送货人</td>
-			<td>货物名称</td>
-			<td>数量</td>
-			<td>数量单位</td>
-			<td>重量(吨)</td>
+			<td><nobr>收货时间</nobr> </td>
+			<td><nobr>送货单位 </nobr></td>
+			<td><nobr>送货人</nobr></td>
+			<td><nobr>货物名称</nobr></td>
+			<td><nobr>数量</nobr></td>
+			<td><nobr>数量单位</nobr></td>
+			<td><nobr>重量(吨)</nobr></td>
+			<td><nobr>辐照方式</nobr></td>
+  			<td><nobr>辐照时间</nobr></td>
+  			<td><nobr>剂量要求</nobr></td>
+  			<td><nobr>照前菌数</nobr></td>
+  			<td><nobr>费用(元)</nobr></td>
+  			<td><nobr>备注</nobr></td>
+ 			<td><nobr>操作员</nobr></td>
 			</tr>
 		</thead>
 		<tbody id="dalidyReceivedBody">
 		
 		</tbody>
+		<tfoot>
+		<tr>
+		<td>合计</td>
+		<td colspan="10"></td>
+		<td  id="dalidyReceivedsumview" colspan="1"></td>
+		<td colspan="2"></td>
+		</tr>
+		</tfoot>
 		</table>
 	</div>
 	<div id="prat2">
 		<table id="dalidyIrradation" class="pp-list table  table-bordered" title="当日辐照">
-		<caption align="top">当日辐照</caption> 
+		<caption align="top"><font color="red"> 当日辐照</font></caption> 
 		<thead>
 		<tr>
 		<td>货物名称</td>
@@ -110,7 +125,7 @@ border-color: red;
 	</div>
 	<div id="prat3">
 		<table id="dalidyOutCargoes" class="pp-list table  table-bordered" title="当日出货" >
-		<caption align="top">当日出货</caption>  
+		<caption align="top"><font color="red"> 当日出货</font></caption>  
 		<thead>
 		<tr>
 		<td>发货时间</td>
@@ -128,7 +143,7 @@ border-color: red;
 	</div>
 	<div id="prat4">
 		<table id="dalidyCharge"  class="pp-list table  table-bordered" title="当日 收款">
-		<caption align="top">当日收款</caption> 
+		<caption align="top"><font color="red"> 当日收款</font></caption> 
 		<thead>
 		<tr>
 		<td>收货时间</td>
@@ -140,6 +155,14 @@ border-color: red;
 		<tbody id="dalidyChargeBody">
 		
 		</tbody>
+		<tfoot>
+		 <tr>
+		 <td>合计</td>
+		 <td></td>
+		 <td id="dalidyChargefeeview"></td>
+		 <td></td>
+		 </tr>
+		</tfoot>
 		</table>
 	</div>
   </div>

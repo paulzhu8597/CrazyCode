@@ -8,6 +8,13 @@ private String cargoname="";//货物名称
 private String count="";//数量
 private String countorg="";//数量单位
 private String weight="";//重量
+private String irradtype="";//重量
+private String irradtime="";//重量
+private String reqreagent="";//重量
+private String funguscount="";//重量
+private String fee="";//重量
+private String mask="";//重量
+private String username="";//重量
 public String getReceivetime() {
 	return receivetime;
 }
@@ -49,6 +56,48 @@ public String getWeight() {
 }
 public void setWeight(String weight) {
 	this.weight = weight;
+}
+public String getIrradtype() {
+	return irradtype;
+}
+public void setIrradtype(String irradtype) {
+	this.irradtype = irradtype;
+}
+public String getIrradtime() {
+	return irradtime;
+}
+public void setIrradtime(String irradtime) {
+	this.irradtime = irradtime;
+}
+public String getReqreagent() {
+	return reqreagent;
+}
+public void setReqreagent(String reqreagent) {
+	this.reqreagent = reqreagent;
+}
+public String getFunguscount() {
+	return funguscount;
+}
+public void setFunguscount(String funguscount) {
+	this.funguscount = funguscount;
+}
+public String getFee() {
+	return fee;
+}
+public void setFee(String fee) {
+	this.fee = fee;
+}
+public String getMask() {
+	return mask;
+}
+public void setMask(String mask) {
+	this.mask = mask;
+}
+public String getUsername() {
+	return username;
+}
+public void setUsername(String username) {
+	this.username = username;
 }
 
 }

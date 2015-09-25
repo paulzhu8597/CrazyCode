@@ -53,9 +53,24 @@ function refreshDalidyReceivedBody(){
 			+"<td style='text-align: center'>"+data[i].count+"</td>"
 			+"<td style='text-align: center'>"+data[i].countorg+"</td>"
 			+"<td style='text-align: center'>"+data[i].weight+"</td>"
+			+"<td style='text-align: center'>"+data[i].irradtype+"</td>"
+			+"<td style='text-align: center'>"+data[i].irradtime+"</td>"
+			+"<td style='text-align: center'>"+data[i].reqreagent+"</td>"
+			+"<td style='text-align: center'>"+data[i].funguscount+"</td>"
+			+"<td name='dalidyReceivedsumfeees' style='text-align: center'>"+data[i].fee+"</td>"
+			+"<td style='text-align: center'>"+data[i].mask+"</td>"
+			+"<td style='text-align: center'>"+data[i].username+"</td>"
 			+"</tr>";
 		}
 		$("#dalidyReceivedBody").html(html);
+		var dalidyReceivedsumfeeessum = 0;
+		$("[name='dalidyReceivedsumfeees']").each(function(){
+			   var tdvalue =  $(this).text().trim();
+			   if(''!=tdvalue && !isNaN(tdvalue)){
+				   dalidyReceivedsumfeeessum +=parseFloat(tdvalue);
+			   }
+			  });
+		$("#dalidyReceivedsumview").text(dalidyReceivedsumfeeessum);
 	}
 }
 
@@ -110,11 +125,19 @@ function refreshDalidyChargeBody(){
 			"<tr>"
 			+"<td style='text-align: center'>"+data[i].chargetime+"</td>"
 			+"<td style='text-align: center'>"+data[i].chargeorg+"</td>"
-			+"<td style='text-align: center'>"+data[i].chargeamount+"</td>"
+			+"<td name='dalidyChargefeeviewsum' style='text-align: center'>"+data[i].chargeamount+"</td>"
 			+"<td style='text-align: center'>"+data[i].operater+"</td>"
 			+"</tr>";
 		}
 		$("#dalidyChargeBody").html(html);
+		var dalidyChargefeeviewsum = 0;
+		$("[name='dalidyChargefeeviewsum']").each(function(){
+			   var tdvalue =  $(this).text().trim();
+			   if(''!=tdvalue && !isNaN(tdvalue)){
+				   dalidyChargefeeviewsum +=parseFloat(tdvalue);
+			   }
+			  });
+		$("#dalidyChargefeeview").text(dalidyChargefeeviewsum);
 	}
 }
 
