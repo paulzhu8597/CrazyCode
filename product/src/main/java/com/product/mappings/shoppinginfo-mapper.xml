@@ -13,4 +13,7 @@
 		select * from shippinginfo
 	</select>
 
+	<select id="fuzzyQueryByName" resultType="ShippingInfo" parameterType="java.util.Map">
+	    select * from shippinginfo where orgname like concat('%', #{orgname}, '%')
+	</select>
 </mapper>

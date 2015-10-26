@@ -95,7 +95,14 @@
 		(select name from bringtakeinfo where id=receivepeopleid) receivepeoplename,
 		telnum,
 		status
-		from receivemgrbase where 1=1 and status='1'
+		from receivemgrbase where 1=1 
+		
+		<if test="confirmover == 0">
+		      and status ='1'
+		</if>
+		<if test="confirmover == 1">
+		      and status in ('1','2')
+		</if>
 		  <if test="receivetime !=null and receivetime !=''">
 			  and receivetime= str_to_date(#{receivetime},'%Y-%m-%d')
 		  </if>
@@ -183,6 +190,7 @@
 		    cargoid=#{cargoid},
 		    cargocount=#{cargocount},
 		    cargoweight=#{cargoweight},
+		    countorg=#{countorg},
 		    funguscount=#{funguscount},
 		    reqreagent=#{reqreagent},
 		    irradtype=#{irradtype},
@@ -202,8 +210,30 @@
 	<update id="updateDetailStatus" parameterType="java.lang.String">
 	    update receivemgrdetail set status=#{status} where receivemgrid=#{id}
 	</update>
+	<!--begin 校正SQL -->
+	<select id="queryReciveDetailIdByBaseId" parameterType="java.lang.String" resultType="java.lang.String">
+	    select GROUP_CONCAT(CAST(id AS char)) from receivemgrdetail where receivemgrid=#{id}
+	</select>
 	
+	<select id="queryIrradationIdsByBaseAndDetailID" parameterType="java.util.Map" resultType="java.lang.String">
+	    select GROUP_CONCAT(CAST(id AS char)) from irradiation where baseid=${receivemgrbaseId} and detailid in (${receiveMgrDetailIds})
+	</select>
 	
+	<delete id="deleteIrradationIdsByBaseAndDetailID" parameterType="java.util.Map">
+	    delete   from irradiation where  baseid=${receivemgrbaseId} and detailid in (${receiveMgrDetailIds})
+	</delete>
+	<delete id="deleteTakecargodetailByIrradedId" parameterType="java.lang.String">
+	   delete  from takecargodetail where irradedid in (${irradationIds})     
+	</delete>
+	
+	<update id="updateReceivemgrDetailirradednum" parameterType="java.util.Map" >
+	    update receivemgrdetail
+	    set 
+	       irradednum=0
+	    where id in (${receiveMgrDetailIds})
+	</update>
+	
+	<!-- end 校正SQL -->
 	<!-- status为2的数据 ，在收获确认阶段将状态改为2-->
 	<select id="getradiations" parameterType="java.util.Map" resultType="ReceiveInfo">
 	    select 

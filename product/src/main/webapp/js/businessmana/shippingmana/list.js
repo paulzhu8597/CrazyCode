@@ -30,6 +30,46 @@ $(function() {
 			$("#flowcurrentrecord").val("1");
 		}
 	});
+	
+	$("#searchorg").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#searchorg").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	$("#showorgsoftaked").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#showorgsoftaked").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
 	search(0,"false");
 	takedsearch(0,"false");
 });
@@ -38,7 +78,7 @@ $(function() {
 function search(pagenow, isfromsearch) {
 	var data = CommnUtil.normalAjax("/business/receivingmana/queryalltakecargoes.do",
 			  "pageNow=" + pagenow + "&pageSize=20"
-			  +"&showorgs="+$("#showorgs").val()
+			  +"&showorgs="+$("#searchorg").val().split(":")[0]
 			  +"&cargoname="+$("#cargoname").val(),
 			  "json");
 	//data = $.evalJSON(data);
@@ -140,7 +180,7 @@ function save(){
 	}
 	var taketime = $("#taketime").val();
 	var proxyOrg = $("#proxyOrg").val();
-	var showorgs = $("#showorgs").val();
+	var showorgs1 = $("#showorgs1").val();
 	var takecargocount = $("#takecargocount").val();
 	var allcount = globalselectedtakeinfo.split("-")[3];
 	var havetake = globalselectedtakeinfo.split("-")[4];
@@ -153,8 +193,8 @@ function save(){
 		$("#taketime").attr("style","border-color: red");
 		return ;
 	}
-	if(""==showorgs && ""==proxyOrg){
-		$("#showorgs").attr("style","border-color: red");
+	if(""==showorgs1 && ""==proxyOrg){
+		$("#showorgs1").attr("style","border-color: red");
 		$("#proxyOrg").attr("style","border-color: red");
 		return;
 	}
@@ -185,7 +225,7 @@ function takedsearch(pagenow, isfromsearch){
 	var data = CommnUtil.normalAjax("/business/receivingmana/queryhavetakedcargoes.do",
 			  "pageNow=" + pagenow + "&pageSize=20"
 			  +"&takecargotime="+$("#takecargotime").val()
-			  +"&showorgsoftaked="+$("#showorgsoftaked").val(),
+			  +"&showorgsoftaked="+$("#showorgsoftaked").val().split(":")[0],
 			  "json");
 	//data = $.evalJSON(data);
 	if ("null" != data && 'undefined' != data) {

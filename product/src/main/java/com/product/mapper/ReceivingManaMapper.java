@@ -46,5 +46,10 @@ public interface ReceivingManaMapper {
 	ReceiveInfo getCargoBaseInfoById(Map param);
 	TakeCargoInfo getHaveTakedCargoById(Map param);
 	int updateTakedCargoBaseInfoStatus(String id);
+    String queryReciveDetailIdByBaseId(String id);
+	String queryIrradationIdsByBaseAndDetailID(Map qparam);
+	int deleteIrradationIdsByBaseAndDetailID(Map qparam);
+	int deleteTakecargodetailByIrradedId(Map param);
+	int updateReceivemgrDetailirradednum(Map param);
 
 }

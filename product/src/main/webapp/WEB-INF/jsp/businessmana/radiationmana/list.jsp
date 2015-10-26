@@ -33,7 +33,7 @@
 						<fieldset>
 							<legend>待照货物</legend>
 							<form>
-								送货单位：<crazy:dictselect id="showorgs" name="showorgs" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect>
+								送货单位：<input type="text" id="searchorg" name="searchorg"  />
 								收货时间：<input id="receivetime" name="receivetime" type="text" class="input-medium ui-autocomplete-input" />
 								货物名称： <crazy:dictselect id="cargoname" name="cargoname"  emptyKey="" emptyValue="请选择"  collection="${showcargoinfos}"  ></crazy:dictselect>
 								<input id="query" name="query" type="button" value="Query"/>

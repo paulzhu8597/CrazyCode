@@ -54,7 +54,7 @@
 		<div>
 		<fieldset>
 		<legend>待出货物</legend>
-			送货单位：<crazy:dictselect id="showorgs" name="showorgs" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect>
+			送货单位：<input type="text" id="searchorg" name="searchorg"  />
 			货物名称： <crazy:dictselect id="cargoname" name="cargoname"  emptyKey="" emptyValue="请选择"  collection="${showcargoinfos}"  ></crazy:dictselect>
 			<input id="query" name="query" type="button" value="Query"/>
 			<table class="pp-list table  table-bordered" >
@@ -153,7 +153,7 @@
 			<fieldset>
 			<legend>已出货物</legend>
 			出货时间：<input type="text" id="takecargotime"  />
-			取货单位：<crazy:dictselect id="showorgsoftaked" name="showorgsoftaked"  emptyKey="" emptyValue="请选择" collection="${showorgs}" ></crazy:dictselect>
+			取货单位：<input type="text" id="showorgsoftaked" name="showorgsoftaked"  /><%-- <crazy:dictselect id="showorgsoftaked" name="showorgsoftaked"  emptyKey="" emptyValue="请选择" collection="${showorgs}" ></crazy:dictselect> --%>
 			<input id="querytakedcargo"  type="button" value="Query"/>
 			<br/>
 			<div align="left"><font size="2" color="red"  >双击完成出货确认</font></div>

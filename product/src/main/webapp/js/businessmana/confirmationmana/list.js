@@ -86,18 +86,41 @@ $(function() {
 	$("#deletedetail").click("click", function() {
 		deletedetail();
 	});
+	
+	$("#searchorg").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#searchorg").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
 	search(0,"true");
 });
 
 
 function search(pagenow, isfromsearch) {
+	var confirmover = CommnUtil.checkedBoxSetValueAndReturnValue("confirmover","1","0");
 	var data = CommnUtil.normalAjax("/business/receivingmana/queryconfirms.do",
 			        "pageNow=" + pagenow + "&pageSize=20&isfromsearch="
 			        + isfromsearch
 					+ "&receivetime=" + $("#receivetime").val()
-					+ "&showorgs=" + $("#showorgs").val()
-					+ "&showBringTakeInfos=" + $("#showBringTakeInfos").val()
-					+ "&cargoname=" + $("#cargoname").val(),
+					+ "&showorgs=" + $("#searchorg").val().split(":")[0]
+					+ "&showBringTakeInfos=" + $("#showBringTakeInfos").val() 
+					+ "&cargoname=" + $("#cargoname").val()
+					+ "&confirmover="+confirmover,
 					"json");
 	//data = $.evalJSON(data);
 	if ("null" != data && 'undefined' != data) {
@@ -117,8 +140,9 @@ function search(pagenow, isfromsearch) {
 		}
 		for (var i = 0; i < data.confirms.length; i++) {
 			// alert(data[i].id+"@_@"+data[i].cargoname+"@_@"+data[i].org+"@_@"+data[i].irradtype+"@_@"+data[i].irradtime+"@_@"+data[i].timeorg);
+			var currentcolor = data.confirms[i].status == '2'? "style='background-color: silver'" :"";
 			html = html
-					+ "<tr  ondblclick='gofingerprints("+data.confirms[i].id+");' onclick='getDetailInfo("+data.confirms[i].id+",this);'>"
+					+ "<tr "+currentcolor+" status='"+data.confirms[i].status+"' ondblclick='gofingerprints("+data.confirms[i].id+","+data.confirms[i].status+");' onclick='getDetailInfo("+data.confirms[i].id+",this);'>"
 					+ "<td style='text-align: center'><input type='checkbox' name='confirmscheck' value='"+ data.confirms[i].id + "' /> </td>"
 					+ "<td style='text-align: center'>" + data.confirms[i].receivetime + " </td>" 
 					+ "<td style='text-align: center'>"+ data.confirms[i].receiveorgname + " </td>"
@@ -165,7 +189,11 @@ function getDetailInfo(receiveorgid,obj){
 	globalreceiveorgid = receiveorgid;
 	if(null!=obj){
 		$("#cargoesbody").find("tr").attr("style","");
-		$(obj).attr("style","background-color: red");
+		if($(obj).attr("status")=='2'){
+			$(obj).attr("style","background-color: silver");
+		}else{
+			$(obj).attr("style","background-color: red");
+		}
 	}
 	var data = CommnUtil.normalAjax("/business/receivingmana/getReceivedDetailInfo.do","receiveorgid="+receiveorgid, "json");
 	var html = "";
@@ -278,10 +306,12 @@ function deletedetail(){
 	}
 }
 
-function gofingerprints(id){
+function gofingerprints(id,currentstatus){
 	//alert("此处通过单位id:"+id+"到后台取得指纹仪录入的指纹进行验证，验证完毕将receivemgrbase表的status置为2，附属的详情表receivemgrdetail的状态改为2");
 	if(confirm("是否完成收货确认?")){
-		 
+		 if(currentstatus=='2'){
+			 $("#confirmdialog").attr("style","background-color: silver");
+		 }
 		 $("#confirmpicture").attr("src","business/receivingmana/geprint.do?id="+id+"&date="+new Date());
 		
 	    var dialogParent = $("#confirmdialog").parent();  
@@ -298,7 +328,7 @@ function gofingerprints(id){
 			title: "收货确认",
 			buttons : {
 				'保存' : function() {
-					saveEditInfo(id);
+					saveEditInfo(id,currentstatus);
 					$(this).dialog("close");
 				},
 				"取消" : function() {
@@ -321,9 +351,9 @@ function gofingerprints(id){
 	}
 }
 
-function saveEditInfo(id){
+function saveEditInfo(id,currentstatus){
 	var data = CommnUtil.normalAjax("/business/receivingmana/updateConfirmStatus.do",
-			"id="+id+"&receivecargotime="+$("#receivecargotime").val()+"&bringcargopeopletel="+$("#bringcargopeopletel").val()+"&bringpeople="+$("#bringpeople").val()+"&bringorg="+$("#bringorg").val(),
+			"id="+id+"&receivecargotime="+$("#receivecargotime").val()+"&bringcargopeopletel="+$("#bringcargopeopletel").val()+"&bringpeople="+$("#bringpeople").val()+"&bringorg="+$("#bringorg").val()+"&currentstatus="+currentstatus,
 			"json");
 	if("ok"==data){
 		alert("更新成功！");

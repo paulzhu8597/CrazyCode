@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -243,11 +244,13 @@ public class BusinessController {
 		String showorgs = request.getParameter("showorgs");
 		String receivetime = request.getParameter("receivetime");
 		String showBringTakeInfos = request.getParameter("showBringTakeInfos");
+		String confirmover = request.getParameter("confirmover");
 		params.put("pageNow",Integer.valueOf(pageNow) * Integer.valueOf(pageSize));
 		params.put("pageSize", Integer.valueOf(pageSize));
 		params.put("receivetime", receivetime);
 		params.put("receiveorgid", showorgs);
 		params.put("receivepeopleid", showBringTakeInfos);
+		params.put("confirmover", confirmover);
 		returnValue.put("confirms", ireceivingmana.getconfirms(params));
 		returnValue.put("pagerecode", confirmsCount(request));
 		returnValue.put("totalpage", Common.getPagetotalByPageSize((String) returnValue.get("pagerecode"), pageSize));
@@ -262,11 +265,15 @@ public class BusinessController {
 		String showorgs = request.getParameter("showorgs");
 		String receivetime = request.getParameter("receivetime");
 		String showBringTakeInfos = request.getParameter("showBringTakeInfos");
-		
+		String confirmover = request.getParameter("confirmover");
+
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("table", " receivemgrbase ");
 		StringBuffer sb = new StringBuffer();
 		sb.append(" and status='1' ");
+		if (Common.isNotEmpty(confirmover) & "1".equals(confirmover)) {
+			sb.append("  or status='2'  ");
+		}
 		if (Common.isNotEmpty(receivetime)) {
 			sb.append(" and receivetime= str_to_date('"+ receivetime +"','%Y-%m-%d')");
 		}
@@ -278,6 +285,22 @@ public class BusinessController {
 		}
 		params.put("where", sb.toString());
 		return commonmapper.getCount(params);
+	}
+	
+	/**
+	 * 单位名称下拉查询
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	
+	@ResponseBody
+	@RequestMapping("receivingmana/queryorgs")
+	public List<DictItem> queryorgs(HttpServletRequest request) throws UnsupportedEncodingException{
+		String orgname =  java.net.URLDecoder.decode(request.getParameter("query"),"UTF-8");
+		Map param = new HashMap();
+		param.put("orgname", orgname);
+		return ireceivingmana.fuzzyQueryOrgByName(param);
 	}
 	
 	@ResponseBody
@@ -423,6 +446,8 @@ public class BusinessController {
 	@ResponseBody
 	@RequestMapping("receivingmana/updateConfirmStatus")
 	public String updateConfirmStatus(HttpServletRequest request){
+		String result  = "";
+		String currentstatus = request.getParameter("currentstatus");
 		String id = request.getParameter("id");
 		Map param = new HashMap();
 		param.put("id", id);
@@ -431,7 +456,12 @@ public class BusinessController {
 		param.put("bringcargopeopletel", Common.stringDefaultOfEmpty(request.getParameter("bringcargopeopletel"), ""));
 		param.put("bringpeople", Common.stringDefaultOfEmpty(request.getParameter("bringpeople"), ""));
 		param.put("bringorg", Common.stringDefaultOfEmpty(request.getParameter("bringorg"), ""));
-		return ireceivingmana.updateConfirmStatusAndBaseInfo(param);
+		if(Common.isNotEmpty(currentstatus)&&"2".equals(currentstatus)){
+			result  = ireceivingmana.precessBackProduct(param);
+		}else{
+			result  = ireceivingmana.updateConfirmStatusAndBaseInfo(param);
+		}
+		return result;
 	}
 	
 	//===================================================================================辐照管理 

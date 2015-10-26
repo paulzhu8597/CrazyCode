@@ -54,6 +54,7 @@ public class BusinessControllerHelper {
 		receiveinfo.setCargoid(Common.stringDefaultOfEmpty(request.getParameter("cargoname"),"") );
 		receiveinfo.setCargocount(Common.stringDefaultOfEmpty(request.getParameter("cargocount"),"") );
 		receiveinfo.setCargoweight(Common.stringDefaultOfEmpty(request.getParameter("cargoweight"),""));
+		receiveinfo.setCountorg(Common.stringDefaultOfEmpty(request.getParameter("showcountorginfos"),""));
 		receiveinfo.setFunguscount(Common.stringDefaultOfEmpty(request.getParameter("funguscount"),""));
 		receiveinfo.setReqreagent(Common.stringDefaultOfEmpty(request.getParameter("reqreagent"),""));
 		receiveinfo.setIrradtype(Common.stringDefaultOfEmpty(request.getParameter("irradtypes"),""));

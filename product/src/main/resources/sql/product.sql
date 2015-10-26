@@ -130,7 +130,7 @@ doirraddate DATE comment '辐照日期',
 starttime DATETIME comment '开始时间',
 position varchar(64) comment '吊具号码',
 takecargocount varchar(32) comment '已取货数量',
-status varchar(1) comment '状态',
+status varchar(1) comment '状态,开始状态为0，辐照完毕为1',
 mask varchar(64) comment '备注'
 );
 

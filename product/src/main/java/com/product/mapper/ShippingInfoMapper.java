@@ -1,6 +1,7 @@
 package com.product.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import com.product.entity.ShippingInfo;
 /**
@@ -11,5 +12,6 @@ import com.product.entity.ShippingInfo;
 public interface ShippingInfoMapper {
 
 	List<ShippingInfo> getAllOrgs();
-
+     
+	List<ShippingInfo> fuzzyQueryByName(Map param);
 }

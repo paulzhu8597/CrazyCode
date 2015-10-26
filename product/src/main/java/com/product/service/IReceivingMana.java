@@ -39,5 +39,7 @@ public interface IReceivingMana {
 	ReceiveInfo getCargoBaseInfoById(Map param);
 	TakeCargoInfo getHaveTakedCargoById(Map param);
 	String updateTakedCargoBaseInfoStatus(String id);
+	String precessBackProduct(Map param);
+	List<DictItem> fuzzyQueryOrgByName(Map param);
     
 }

@@ -21,53 +21,54 @@ var allmenues = "${allmenues}";
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/ZebraDatepicker/zebra_datepicker.js"></script> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/charge/chargeManager.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/laydate/laydate.js"></script>
-
 </head>
   
   <body>
   <div class="m-b-md">
 		交款单位： <input id="inputorg" name="inputorg"  type="text" />  <crazy:dictselect id="showorgs" name="showorgs" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect>
 		根据输入单位搜索：<input type="checkbox" id="asinputorg" name="asinputorg" />&nbsp;&nbsp;&nbsp;未付完：<input type="checkbox" id="isunpaidcomplete" name="isunpaidcomplete" />
-		<input type="button" id="query" name="query" value="Query"/>
+		<input type="button" id="query" name="query" value="Query"/>  <input type="button" id="printarea" name="printarea" value="Print"/>
 		<fieldset>
 		  <legend>应收款信息</legend>
-		  <table class="pp-list table  table-bordered">
-		  	<thead>
-		  	<tr>
-		  	<td>收获日期</td>
-		  	<td>送货人</td>
-		  	<td>货物名称</td>
-		  	<td>货物数量</td>
-		  	<td>已照数量</td>
-		  	<td>已取数量</td>
-		  	<td>单位</td>
-		  	<td>重量(吨)</td>
-		  	<td>辐照费</td>
-		  	<td>已付(元)</td>
-		  	<td>未付(元)</td>
-		  	</tr>
-		  	</thead>
-		  	<tbody id="receivableinformation">
-		  		
-		  	</tbody>
-		  	<tfoot>
-		  	<tr>
-		  	
-		  	<td>合计</td>
-		  	<td></td>
-		  	<td></td>
-		  	<td></td>
-		  	<td></td>
-		  	<td></td>
-		  	<td></td>
-		  	<td id="weightsum">￥0.0</td>
-		  	<td id="irradtionsum">￥0.0</td>
-		  	<td id="paidsum">￥0.0</td>
-		  	<td id="unpaidsum">￥0.0</td>
-		  	 
-            </tr>
-		  	</tfoot>
-		  </table>
+		  <div id="beanprintarea">
+			  <table class="pp-list table  table-bordered">
+			  	<thead>
+			  	<tr>
+			  	<td>收获日期</td>
+			  	<td>送货人</td>
+			  	<td>货物名称</td>
+			  	<td>货物数量</td>
+			  	<td>已照数量</td>
+			  	<td>已取数量</td>
+			  	<td>单位</td>
+			  	<td>重量(吨)</td>
+			  	<td>辐照费</td>
+			  	<td>已付(元)</td>
+			  	<td>未付(元)</td>
+			  	</tr>
+			  	</thead>
+			  	<tbody id="receivableinformation">
+			  		
+			  	</tbody>
+			  	<tfoot>
+			  	<tr>
+			  	
+			  	<td>合计</td>
+			  	<td></td>
+			  	<td></td>
+			  	<td></td>
+			  	<td></td>
+			  	<td></td>
+			  	<td></td>
+			  	<td id="weightsum">￥0.0</td>
+			  	<td id="irradtionsum">￥0.0</td>
+			  	<td id="paidsum">￥0.0</td>
+			  	<td id="unpaidsum">￥0.0</td>
+			  	 
+	            </tr>
+			  	</tfoot>
+			  </table>
+		  </div>
 		  费用说明：<input type="text" id="chargeIntroduction"  /> 本次交款：<input type="text" placeholder="取值大于零" id="thePayment"  />元 &nbsp; &nbsp; &nbsp; &nbsp;
 		  <input type="button"  id="docharge" value="收款" />
 		  </fieldset> 

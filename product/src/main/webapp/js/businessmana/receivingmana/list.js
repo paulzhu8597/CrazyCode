@@ -33,6 +33,26 @@ $(function() {
 		donext();
 	});
 	
+	$("#searchorg").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#searchorg").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
 	search(0,"true");
 });
 
@@ -71,7 +91,7 @@ function search(pagenow, isfromsearch) {
 			        "pageNow=" + pagenow + "&pageSize=20&isfromsearch="
 			        + isfromsearch
 					+ "&receivetime1=" + $("#receivetime1").val()
-					+ "&showorgs1=" + $("#showorgs1").val()
+					+ "&showorgs1=" + $("#searchorg").val().split(":")[0]
 					+ "&showBringTakeInfos1=" + $("#showBringTakeInfos1").val(),
 					"json");
 	//data = $.evalJSON(data);
@@ -109,9 +129,9 @@ function search(pagenow, isfromsearch) {
 
 function setPageInfo(pagenow) {
 	var data = CommnUtil.normalAjax("/business/receivingmana/getCount.do",
-			+ "&receivetime1=" + $("#receivetime1").val(),
-			+ "&showorgs1=" + $("#showorgs1").val(),
-			+ "&showBringTakeInfos1=" + $("#showBringTakeInfos1").val(),
+			+ "&receivetime1=" + $("#receivetime1").val()
+			+ "&showorgs1=" + $("#searchorg").val().split(":")[0]
+			+ "&showBringTakeInfos1=" + $("#showBringTakeInfos1").val()
 			+ "&cargoname1=" + $("#cargoname1").val(),
 			"json");
 	if ("null" != data && 'undefined' != data) {

@@ -32,12 +32,14 @@
 						<fieldset>
 							<legend>基本信息</legend>
 							<form>
-								送货单位：<crazy:dictselect id="showorgs" name="showorgs" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect>
+							    
+							              确认完毕：<input type="checkbox" id="confirmover" name="confirmover" />
+								送货单位：<input type="text" id="searchorg" name="searchorg"  /> <%-- <crazy:dictselect id="showorgs" name="showorgs" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect> --%>
 								收货时间：<input id="receivetime" name="receivetime" type="text" class="input-medium ui-autocomplete-input" />
 								送  货  人： <crazy:dictselect id="showBringTakeInfos" name="showBringTakeInfos" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
 								<input id="query" name="query" type="button" value="Query"/>
 								<input type="button" id="deleteconfirm" name="deleteconfirm" value="Delete" />
-								<div align="left"><font size="2" color="red"  >双击完成收获确认</font></div>
+								<div align="left"><font size="2" color="red"  >双击完成收获确认(灰色为已确认)</font></div>
 								<table class="pp-list table  table-bordered">
 									<thead>
 										<tr>

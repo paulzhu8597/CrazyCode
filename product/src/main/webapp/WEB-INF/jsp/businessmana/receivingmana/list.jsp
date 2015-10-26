@@ -79,7 +79,7 @@
 			<header>
 				<div>
 					<form action="" class="form-horizontal">
-					送货单位：<crazy:dictselect id="showorgs1" name="showorgs1" emptyKey="" emptyValue="请选择"  collection="${showorgs}" ></crazy:dictselect>
+					送货单位：<input type="text" id="searchorg" name="searchorg"  />
 					收货时间：<input id="receivetime1" name="receivetime1" type="text" class="input-medium ui-autocomplete-input" />
 					送  货  人： <crazy:dictselect id="showBringTakeInfos1" name="showBringTakeInfos1" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
 					<input id="query" name="query" type="button" value="Query"/>

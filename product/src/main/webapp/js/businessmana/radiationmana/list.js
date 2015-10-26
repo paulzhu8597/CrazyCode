@@ -12,6 +12,27 @@ $(function() {
 	$("#next").click("click", function() {
 		donext();
 	});
+	
+	$("#searchorg").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#searchorg").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
 	search(0,"false");
 	initcurrentradiations();
 });
@@ -21,7 +42,7 @@ function search(pagenow, isfromsearch) {
 			        "pageNow=" + pagenow + "&pageSize=20&isfromsearch="
 			        + isfromsearch
 					+ "&receivetime=" + $("#receivetime").val()
-					+ "&showorgs=" + $("#showorgs").val()
+					+ "&showorgs=" + $("#searchorg").val().split(":")[0]
 					+ "&cargoname=" + $("#cargoname").val(),
 					"json");
 	//data = $.evalJSON(data);

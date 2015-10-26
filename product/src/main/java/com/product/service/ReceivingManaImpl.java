@@ -55,6 +55,22 @@ public class ReceivingManaImpl implements IReceivingMana {
 	}
 	
 	/**
+	 * 货物送货单位(根据名称模糊查询)
+	 */
+	public List<DictItem> fuzzyQueryOrgByName(Map param){
+		List<DictItem> showorgs = new ArrayList<DictItem>();
+		List<ShippingInfo> orgs =  shippinginfoMapper.fuzzyQueryByName(param);
+		DictItem dict = null;
+		for(int i=0;i<orgs.size();i++){
+			dict = new DictItem();
+			dict.setDictid(orgs.get(i).getId());
+			dict.setDictname(orgs.get(i).getOrgname());
+			showorgs.add(dict);
+		}
+		return showorgs;
+	}
+	
+	/**
 	 * 获取送货人
 	 */
 	public List<DictItem> getAllBringTakeInfoPeople() {
@@ -213,7 +229,7 @@ public class ReceivingManaImpl implements IReceivingMana {
 		return result;
 	}
 	
-	
+	@Transactional(rollbackFor=java.lang.Exception.class)
 	public String updateConfirmStatus(Map idandstatus) {
 		String rtn  = "";
 		try {
@@ -230,6 +246,7 @@ public class ReceivingManaImpl implements IReceivingMana {
 		return rtn;
 	}
 	
+	@Transactional(rollbackFor=java.lang.Exception.class)
 	public String updateConfirmStatusAndBaseInfo(Map param) {
 		String rtn  = "";
 		try {
@@ -245,6 +262,36 @@ public class ReceivingManaImpl implements IReceivingMana {
 			throw new RuntimeException(rtn);
 		}
 		return rtn;
+	}
+	
+	@Transactional(rollbackFor=java.lang.Exception.class)
+	public String precessBackProduct(Map param){
+		String result = "ok";
+		try {
+			//第一步：删除下属数据
+			String receivemgrbaseId =  (String)param.get("id");
+			String  receiveMgrDetailIds = receivingmanamapper.queryReciveDetailIdByBaseId(receivemgrbaseId);//得到所有下属的详情的ID，以“,”分割
+			Map qparam = new HashMap();
+			qparam.put("receivemgrbaseId", receivemgrbaseId);
+			qparam.put("receiveMgrDetailIds", receiveMgrDetailIds);
+			String irradationIds = receivingmanamapper.queryIrradationIdsByBaseAndDetailID(qparam);//根据详情Id和基本信息的Id查询所属的辐照ID集合
+			qparam.put("irradationIds", irradationIds);
+			if(null != irradationIds && !"".equals(irradationIds)){ 
+				int deleteCount = receivingmanamapper.deleteIrradationIdsByBaseAndDetailID(qparam);//根据辐照的id删除所关联的辐照记录
+				if(deleteCount>0){
+					int deleteTakecount = receivingmanamapper.deleteTakecargodetailByIrradedId(qparam);
+				}
+			}
+			//第二步：数据恢复默认值，为下一个环节做准备
+			int updatecount = receivingmanamapper.updateReceivemgrDetailirradednum(qparam);
+			// 更新页面信息入库
+			int ubasecount =  receivingmanamapper.updateConfirmInfo(param);
+		} catch (Exception e) {
+			result = e.getMessage();
+			LogUtil.getLog().error("ReceivingManaImpl.precessBackProduct:\n"+result);
+			throw new RuntimeException(result);
+		}
+		return result;
 	}
 	
 	//得到所偶带辐照货物

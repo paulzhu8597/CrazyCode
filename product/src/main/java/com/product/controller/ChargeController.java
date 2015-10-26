@@ -1,5 +1,6 @@
 package com.product.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,13 @@ public class ChargeController {
 		param.put("asinputorg", asinputorg);
 		param.put("inputorg", inputorg);
 		return ichargemana.queryChargeLog(param);
+	}
+	
+	@RequestMapping("doprint")
+	public String doprint(HttpServletRequest request) throws UnsupportedEncodingException{
+		List<ChargeInfo> allunpaid =  getAllUnpaid(request);
+		request.setAttribute("allunpaid", allunpaid);
+		return Common.BACKGROUND_PATH + "/charge/printchargeManager"; 
 	}
 	
 	public IReceivingMana getIreceivingmana() {

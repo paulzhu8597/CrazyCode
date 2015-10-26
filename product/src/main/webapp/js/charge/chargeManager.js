@@ -7,9 +7,20 @@ $(function() {
 	$("#docharge").click("click", function() {
 		docharge();
 	});
+	$("#printarea").click("click", function() {
+		doprint();
+	});
 	search();
 	refresh();
 });
+
+function doprint(){
+	var inputorg = $("#inputorg").val();
+	var showorgs = $("#showorgs").val();
+	var asinputorg = CommnUtil.checkedBoxSetValueAndReturnValue("asinputorg","1","");
+	var isunpaidcomplete = CommnUtil.checkedBoxSetValueAndReturnValue("isunpaidcomplete","1","");
+	 window.open("collection/doprint.do?inputorg="+inputorg+"&showorgs="+showorgs+"&asinputorg="+asinputorg+"&isunpaidcomplete="+isunpaidcomplete,'_blank');
+}
 
 function search(){
 	var inputorg = $("#inputorg").val();
