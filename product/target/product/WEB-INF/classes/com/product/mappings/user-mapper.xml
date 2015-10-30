@@ -10,8 +10,16 @@
 	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
 	<!-- 以下与实体类的中字段一致 -->
 	<select id="querySingleUser" parameterType="User" resultType="User">
-		select userId,userName from User where userid =#{userId} and
+		select userId,userName,menuids from User where userid =#{userId} and
 		userpassword=#{userPassword}
 	</select>
 
+	<select id="getUserMenuids" parameterType="java.util.Map" resultType="java.lang.String">
+	    SELECT resurl from product_resources where id in (${ids}) 
+	</select>
+	
+	<update id="updatepassword" parameterType="User">
+	    update user set userpassword=#{userPassword} where userid=#{userId}
+	</update>
+	
 </mapper>

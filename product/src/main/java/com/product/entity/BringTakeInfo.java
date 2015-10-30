@@ -5,6 +5,15 @@ private String id;
 private String name;
 private String orgname;
 private String tel;
+private String mask;
+public BringTakeInfo(){}
+public BringTakeInfo(String name,String orgname,String tel,String mask){
+	super();
+	this.name=name;
+	this.orgname=orgname;
+	this.tel=tel;
+	this.mask=mask;
+}
 public String getId() {
 	return id;
 }
@@ -35,5 +44,5 @@ public String getMask() {
 public void setMask(String mask) {
 	this.mask = mask;
 }
-private String mask;
+
 }

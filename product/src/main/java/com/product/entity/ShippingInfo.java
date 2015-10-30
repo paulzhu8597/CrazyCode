@@ -9,6 +9,12 @@ public class ShippingInfo {
 private String id;
 private String orgname;
 private String mask;
+public ShippingInfo(){}
+public ShippingInfo(String orgname,String mask){
+	super();
+	this.orgname=orgname;
+	this.mask=mask;
+}
 public String getId() {
 	return id;
 }

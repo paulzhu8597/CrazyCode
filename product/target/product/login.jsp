@@ -23,9 +23,17 @@
 	
 }
 </style>
+<script type="text/javascript">
+function register(){
+	if((navigator.userAgent+"").indexOf("MSIE")==-1)
+    {
+       alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
+       return;
+    }
+}
+</script>
 </head>
-<body
-	style="background-image: url('${pageContext.servletContext.contextPath }/admin_files/9.jpg');margin-top:0px;">
+<body onload="register();"  style="background-image: url('${pageContext.servletContext.contextPath }/admin_files/9.jpg');margin-top:0px;">
 	<div id="loginbox" style="padding-top: 10%;">
 		<form id="loginform" name="loginform" class="form-vertical"
 			style="background-color: rgba(0, 0, 0, 0.5) !important; background: #000; filter: alpha(opacity = 50); *background: #000; *filter: alpha(opacity = 50); /*黑色透明背景结束*/ color: #FFF; bottom: 0px; right: 0px; border: 1px solid #000;"
@@ -67,13 +75,9 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<span class="pull-left" style="width: 33%"><a href="#"
-					class="flip-link btn btn-info" id="to-recover">忘记密码？</a></span>
-					<span class="pull-left" style="width: 33%"><a href="install.shtml"
-					class="flip-link btn btn-danger" id="to-recover">一键初始化系统</a></span>
-					 <span
-					class="pull-right"><a type="submit"
-					href="javascript:checkUserForm()" class="btn btn-success">登&nbsp;&nbsp;录</a></span>
+				<!-- <span class="pull-left" style="width: 33%"><a href="#" class="flip-link btn btn-info" id="to-recover">忘记密码？</a></span>
+					<span class="pull-left" style="width: 33%"><a href="install.shtml" class="flip-link btn btn-danger" id="to-recover">一键初始化系统</a></span> -->
+					 <span   class="pull-right"><a type="submit" href="javascript:checkUserForm()" class="btn btn-success">登&nbsp;&nbsp;录</a></span>
 			</div>
 		</form>
 	</div>
@@ -82,6 +86,11 @@
 			alert("${error}");
 		}
 		function checkUserForm() {
+			if((navigator.userAgent+"").indexOf("MSIE")==-1)
+		    {
+		       alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
+		       return;
+		    }
 			document.loginform.submit();
 		}
 	</script>

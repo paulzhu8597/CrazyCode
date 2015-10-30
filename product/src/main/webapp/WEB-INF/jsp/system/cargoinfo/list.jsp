@@ -62,7 +62,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">辐照时间</label>
 				<div class="col-sm-9">
-					<input type="text" class="form-control" placeholder="请输入辐照时间(格式:yyyy-mm-dd)"
+					<input type="text" class="form-control" placeholder="请输入辐照时间(阿拉伯数字)"
 						name="irradtime" id="irradtime">
 				</div>
 			</div>

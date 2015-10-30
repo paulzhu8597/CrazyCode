@@ -18,7 +18,7 @@
 		-->
 	<sql id="selectcargoinfo">
 		select
-		id,cargoname,org,irradtype,date_format(irradtime,'%Y-%m-%d')
+		id,cargoname,org,irradtype,
 		irradtime,timeorg from cargoinfo
 	</sql>
 	<select id="getCargoinfo" parameterType="java.util.Map"
@@ -44,7 +44,7 @@
 	</select>
 	<!-- str_to_date(#{irradtime},'%Y-%m-%d'):#{irradtime}可以为空字符串，相应的出入的是空字符串 -->
 	<insert id="addcargo" parameterType="Cargoinfo">
-		insert into cargoinfo(cargoname,org,irradtype,irradtime,timeorg) values(#{cargoname},#{org},#{irradtype},str_to_date(#{irradtime},'%Y-%m-%d'),#{timeorg})	    
+		insert into cargoinfo(cargoname,org,irradtype,irradtime,timeorg) values(#{cargoname},#{org},#{irradtype},#{irradtime},#{timeorg})	    
 	</insert>
 
 	<select id="getOneCargo" parameterType="java.util.Map" resultType="Cargoinfo">
@@ -52,7 +52,7 @@
 	</select>
 	
 	<update id="saveEditCargo" parameterType="Cargoinfo">
-	    update cargoinfo set org=#{org}, irradtype=#{irradtype},irradtime=str_to_date(#{irradtime},'%Y-%m-%d'), timeorg=#{timeorg} where cargoname=#{cargoname}  
+	    update cargoinfo set org=#{org}, irradtype=#{irradtype},irradtime=#{irradtime}, timeorg=#{timeorg} where cargoname=#{cargoname}  
 	</update>
 	
 	<delete id="deleteByAttribute" parameterType="java.util.Map" >

@@ -4,6 +4,12 @@ public class CountOrgInfo {
 private String id;
 private String orgname;
 private String mask;
+public CountOrgInfo(){}
+public CountOrgInfo(String orgname , String mask ) {
+	// TODO Auto-generated constructor stub
+	this.mask=mask;
+	this.orgname=orgname;
+}
 public String getId() {
 	return id;
 }

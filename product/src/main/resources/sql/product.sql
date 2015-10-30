@@ -26,7 +26,7 @@ id int PRIMARY key auto_increment,
 cargoname VARCHAR(64) not null UNIQUE  COMMENT '货物名称',
 org VARCHAR(128) comment '单位' ,
 irradtype VARCHAR(32) comment '辐照方式',
-irradtime datetime comment '辐照时间',
+irradtime varchar(32) comment '辐照时间',
 timeorg VARCHAR(32) comment '时间单位'
 )comment='货物信息表';
 
