@@ -87,12 +87,14 @@ function dosave(){
 
 
 function search(pagenow, isfromsearch) {
+	if(pagenow<0){return;}
 	var data = CommnUtil.normalAjax("/business/receivingmana/queryReceivedCargos.do",
 			        "pageNow=" + pagenow + "&pageSize=20&isfromsearch="
 			        + isfromsearch
 					+ "&receivetime1=" + $("#receivetime1").val()
 					+ "&showorgs1=" + $("#searchorg").val().split(":")[0]
-					+ "&showBringTakeInfos1=" + $("#showBringTakeInfos1").val(),
+					+ "&showBringTakeInfos1=" + $("#showBringTakeInfos1").val()
+					+ "&lastdate="+$("#lastdate").val(),
 					"json");
 	//data = $.evalJSON(data);
 	if ("null" != data && 'undefined' != data) {
@@ -113,8 +115,9 @@ function search(pagenow, isfromsearch) {
 		}
 		for (var i = 0; i < data.receivedCargos.length; i++) {
 			//var color = ("0"==data.receivedCargos[i].status || "" == data.receivedCargos[i].status || !CommnUtil.notNull(data.receivedCargos[i].status)) ? "background-color: red" : "";
+			var color = "0"!=data.receivedCargos[i].status ? "style='background-color: silver'" : "";
 			html = html
-					+ "<tr  onclick=\"getdetailinfo("+data.receivedCargos[i].id+",this);\" ondblclick='gofingerprints("+data.receivedCargos[i].id+","+data.receivedCargos[i].receivepeopleid+");'>"
+					+ "<tr "+color+"  onclick=\"getdetailinfo("+data.receivedCargos[i].id+",this,"+data.receivedCargos[i].status+");\" ondblclick='gofingerprints("+data.receivedCargos[i].id+","+data.receivedCargos[i].receivepeopleid+","+data.receivedCargos[i].status+");'>"
 					+ "<td style='text-align: center'>" + data.receivedCargos[i].receivetime + " </td>" 
 					+ "<td style='text-align: center'>"+ data.receivedCargos[i].receiveorgname + " </td>"
 					+ "<td style='text-align: center'>"+ data.receivedCargos[i].receivepeoplename + " </td>"
@@ -184,7 +187,11 @@ function refreshdialogdata(receiveorgid){
 	}	
 }
 
-function gofingerprints(receiveorgid,receivepeopleid){
+function gofingerprints(receiveorgid,receivepeopleid,status){
+	if("0"!=status){
+		alert("当前货物不可确认！");
+		return;
+	}
 	//alert("此处通过单位id:"+receiveorgid+"以及货物id:"+cargoid+"到后台取得指纹仪录入的指纹进行验证，验证完毕将receivemgrbase表的status置为1");
 	if(confirm("是否完成收货?")){
 		
@@ -228,9 +235,13 @@ function gofingerprints(receiveorgid,receivepeopleid){
 	}
 }
 
-function getdetailinfo(id,obj){
+function getdetailinfo(id,obj,status){
 	$("#receivedCargosBody").find("tr").attr("style","");
-	$(obj).attr("style","background-color: red");
+	if("0"!=status){
+		$(obj).attr("style","background-color: silver");
+	}else{
+		$(obj).attr("style","background-color: red");
+	}
 	var data = CommnUtil.normalAjax("/business/receivingmana/getcargodetailinfo.do","id="+id,"json");
 	var html = "";
 	if("null" != data && 'undefined' != data){

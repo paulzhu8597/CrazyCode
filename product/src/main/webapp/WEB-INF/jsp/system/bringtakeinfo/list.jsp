@@ -149,8 +149,8 @@ $(function (){
      
           new ActiveXObject("Wscript.Shell").run("Demo.exe");
           //获取内容
-          $('#adds1').val("C:\Users\name\Documents\Tencent Files\825905961\FileRecv\UR开发程序和驱动\ZKFinger SDK_Ver2.3.3.5\Demo\fingerprint.bmp");
-          $('#adds2').val("C:\Users\name\Documents\Tencent Files\825905961\FileRecv\UR开发程序和驱动\ZKFinger SDK_Ver2.3.3.5\Demo\fingerprint.jpg");
+          //$('#adds1').val("C:\Users\name\Documents\Tencent Files\825905961\FileRecv\UR开发程序和驱动\ZKFinger SDK_Ver2.3.3.5\Demo\fingerprint.bmp");
+         // $('#adds2').val("C:\Users\name\Documents\Tencent Files\825905961\FileRecv\UR开发程序和驱动\ZKFinger SDK_Ver2.3.3.5\Demo\fingerprint.jpg");
 
          //
          //new ActiveXObject("Wscript.Shell").run("D:\\工具\\Pb6安装\\Pb6安装\\SETUP.EXE");

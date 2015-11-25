@@ -24,8 +24,9 @@
 }
 </style>
 <script type="text/javascript">
+
 function register(){
-	if((navigator.userAgent+"").indexOf("MSIE")==-1)
+	if((navigator.userAgent+"").indexOf("MSIE")==-1&(navigator.userAgent+"").indexOf("MSIE")>0)
     {
        alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
        return;
@@ -59,7 +60,7 @@ function register(){
 					<div class="main_input_box">
 						<span class="add-on bg_ly" style="background: #28b779"><img
 							src="${pageContext.servletContext.contextPath }/admin_files/account_1.png"
-							alt="请输入账号.."></span><input type="text" placeholder="username" name="userId" value="admin"
+							alt="请输入账号.."></span><input type="text" placeholder="username" name="userId" value=""
 							style="height: 32px; margin-bottom: 0px;"/>
 					</div>
 				</div>
@@ -69,7 +70,7 @@ function register(){
 					<div class="main_input_box">
 						<span class="add-on bg_ly"><img
 							src="${pageContext.servletContext.contextPath }/admin_files/lock_1.png"
-							alt="请输入密码.."></span><input type="password" placeholder="password" name="userPassword" value="admin"
+							alt="请输入密码.."></span><input type="password" placeholder="password" name="userPassword" value=""
 							style="height: 32px; margin-bottom: 0px;"/>
 					</div> 
 				</div>
@@ -85,8 +86,18 @@ function register(){
 		if ("${error}" != "") {
 			alert("${error}");
 		}
+		
+		document.onkeydown=function(event){
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            if(e && e.keyCode==13){ // enter 键
+                checkUserForm();
+           }
+       }; 
+
+		
 		function checkUserForm() {
-			if((navigator.userAgent+"").indexOf("MSIE")==-1)
+			//if((navigator.userAgent+"").indexOf("MSIE")==-1)
+			if((navigator.userAgent+"").indexOf("MSIE")==-1&(navigator.userAgent+"").indexOf("MSIE")>0)
 		    {
 		       alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
 		       return;

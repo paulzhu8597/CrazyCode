@@ -82,7 +82,10 @@ $(function() {
 					if("add"==editfalg){
 							//$(this).dialog("close");
 							//search(0, "true");
-						addcargo();
+						if(addcargo())
+							{
+							$("#adddialog").dialog("close");
+							}
 				     }
 					else if("edit"==editfalg){
 						if(saveEditCargo()){
@@ -201,8 +204,10 @@ function saveEditCargo(){
 }
 
 function addcargo() {
-	if (!CommnUtil.notNull($("#addname").val())) {
-		alert("送取货人名称必须填写！");
+    var regu = "^[0-9a-zA-Z\u0391-\uFFE5]+$";       
+    var re = new RegExp(regu);      
+	if (!CommnUtil.notNull($("#addname").val()) || (!re.test($("#addname").val()))){
+		alert("送取货人名称必须填写(不能包含特殊字符)！");
 		return false;
 	}
 

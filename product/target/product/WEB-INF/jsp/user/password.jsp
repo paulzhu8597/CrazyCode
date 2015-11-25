@@ -57,15 +57,17 @@
 	  </td>
 	  </tr>
 	  <tr>
-	  <td style="text-align: center">旧密码：</td><td> <input type="text" id="oldpassword" name="oldpassword" /> </td>
+	  <td style="text-align: center">旧密码：</td><td> <input type="password" id="oldpassword" name="oldpassword" /> </td>
 	  </tr>
 	  <tr>
-	  <td style="text-align: center">新密码：</td><td> <input type="text" id="newpassword" name="newpassword" /> </td>
+	  <td style="text-align: center">新密码：</td><td> <input type="password" id="newpassword" name="newpassword" /> </td>
 	  </tr>
 	  <tr>
-	  <td style="text-align: center">新密码确认：</td><td> <input type="text" id="newpasswordconfirm" name="newpasswordconfirm" /> </td>
+	  <td style="text-align: center">新密码确认：</td><td> <input type="password" id="newpasswordconfirm" name="newpasswordconfirm" /> </td>
 	  </tr>
-	  <tr> <td  style="text-align: center" colspan="2"> <input type="submit" name="submit" value="提交"  /> </td> </tr>
+	  <tr> 
+	  <td  style="text-align: center" colspan="2"> <input type="button" name="back" value="返回"  onclick="window.history.go(-1)" /> &nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit" value="提交"  /> </td>
+	   </tr>
 	  </table>
   </form>
   </div>

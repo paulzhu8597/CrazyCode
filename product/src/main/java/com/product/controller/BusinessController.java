@@ -120,11 +120,13 @@ public class BusinessController {
 		String receivetime = request.getParameter("receivetime1");
 		String showorgs = request.getParameter("showorgs1");
 		String showBringTakeInfos = request.getParameter("showBringTakeInfos1");
+		String lastdate = request.getParameter("lastdate");
 		params.put("pageNow",Integer.valueOf(pageNow) * Integer.valueOf(pageSize));
 		params.put("pageSize", Integer.valueOf(pageSize));
 		params.put("receivetime", receivetime);
 		params.put("receiveorgid", showorgs);
 		params.put("receivepeopleid", showBringTakeInfos);
+		params.put("lastdate", lastdate);
 		returnValue.put("receivedCargos", ireceivingmana.getreceivedCargos(params));
 		returnValue.put("pagerecode", getCount(request));
 		returnValue.put("totalpage", Common.getPagetotalByPageSize((String) returnValue.get("pagerecode"), pageSize));
@@ -145,6 +147,7 @@ public class BusinessController {
 		String receivetime = request.getParameter("receivetime1");
 		String showorgs = request.getParameter("showorgs1");
 		String showBringTakeInfos = request.getParameter("showBringTakeInfos1");
+		String lastdate = request.getParameter("lastdate");
 		
 		Map<String,String> params = new HashMap<String,String>();
 		params.put("table", " receivemgrbase a ");
@@ -158,6 +161,9 @@ public class BusinessController {
 		}
 		if (Common.isNotEmpty(showBringTakeInfos)) {
 			sb.append(" and a.receivepeopleid= '"+ showBringTakeInfos +"'");
+		}//lastdate
+		if(Common.isNotEmpty(lastdate)){
+			sb.append(" or TO_DAYS(NOW()) - TO_DAYS(a.receivetime)<="+lastdate);
 		}
 		//params.put("where", " and  cargoname like '%" + cargoname + "%'");
 		params.put("where", sb.toString());

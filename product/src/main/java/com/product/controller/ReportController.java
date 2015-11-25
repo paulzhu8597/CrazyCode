@@ -42,6 +42,14 @@ public class ReportController {
 		return Common.BACKGROUND_PATH + "/report/printpage";
 	}
 	
+	@RequestMapping("goPrintChargePage")
+	public String goPrintChargePage(Model model,HttpServletRequest request){
+		model.addAttribute("date", Common.stringDefaultOfEmpty(request.getParameter("time"), "") );
+		model.addAttribute("ismoth", Common.stringDefaultOfEmpty(request.getParameter("ismoth"), "") );
+		model.addAttribute("printtime", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		return Common.BACKGROUND_PATH + "/report/printChargePage";
+	}
+	
 	@ResponseBody
 	@RequestMapping("queryreportlist")
 	public List<ReceiveInfo> queryreportlist(HttpServletRequest request){

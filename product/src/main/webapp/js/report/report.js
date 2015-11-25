@@ -25,9 +25,13 @@ $(function (){
 		refreshDalidyOutCargoesbody();
 		refreshDalidyChargeBody();
 	});
-	$("#Print").click("click", function() {
+	$("#PrintReceived").click("click", function() {
 		goprint();
 	});
+	$("#PrintCharge").click("click", function() {
+		goPrintCharge();
+	});
+	
 	refreshDalidyReceivedBody();
 	refreshDalidyIrradationBody();
 	refreshDalidyOutCargoesbody();
@@ -35,7 +39,10 @@ $(function (){
 });
 
 function goprint(){
-	 window.open("/product/report/goprintpage.do?time="+$("#printtime").val()+"&ismoth="+ismonth,'_blank');
+	 window.open("/product/report/goprintpage.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&cleancache="+new Date(),'_blank');
+}
+function goPrintCharge(){
+	window.open("/product/report/goPrintChargePage.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&cleancache="+new Date(),'_blank');
 }
 
 //刷新已收货物

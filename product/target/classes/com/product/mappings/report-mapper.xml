@@ -24,8 +24,8 @@
 		fee,
 		(select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='irradflags' and di.itemid= t.irradflag) irradflag,
 		(select userName from user u where u.userId=(select userid from receivemgrbase c1 where c1.id=t.receivemgrid)) username 
-		from receivemgrdetail t
-		where date_format((select receivetime from receivemgrbase where id=t.receivemgrid),'${format}') = #{date}
+		from receivemgrdetail t 
+		where t.status='2' and  date_format((select receivetime from receivemgrbase where id=t.receivemgrid),'${format}') = #{date}
 	    
 	</select>
 	

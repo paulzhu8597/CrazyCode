@@ -193,7 +193,7 @@ CREATE TABLE `product_chart` (
 -- Records of product_chart
 -- ----------------------------
 INSERT INTO `product_chart` VALUES ('checkRepeatOfsaveReceive', '1');
-INSERT INTO `product_chart` VALUES ('NOPRINTPICTUREDEFAULT', 'yangmi.jpg');
+INSERT INTO `product_chart` VALUES ('NOPRINTPICTUREDEFAULT', 'noprint.jpg');
 INSERT INTO `product_chart` VALUES ('PRINTPICTURESAVEDIR', 'E:/Amusement/新建文件夹 (7)/');
 
 -- ----------------------------
@@ -374,6 +374,6 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('admin', 'admin', 'admin', '1', '2,3,4,5,7,8,9,10,12,15,17,18');
-INSERT INTO `user` VALUES ('root', 'root', 'admin', '2', '2,3,4,5,7,18');
+INSERT INTO `user` VALUES ('admin', 'admin', 'adminfuzhao', '1', '2,3,4,5,7,8,9,10,12,15,17,18');
+INSERT INTO `user` VALUES ('root', 'root', 'rootfuzhao', '2', '2,3,4,5,7,18');
 INSERT INTO `user` VALUES ('sir', 'sir', '123456', '1', '7,8,9,10');

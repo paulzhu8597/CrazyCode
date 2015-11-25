@@ -26,7 +26,7 @@
 <script type="text/javascript">
 
 function register(){
-	if((navigator.userAgent+"").indexOf("MSIE")==-1)
+	if((navigator.userAgent+"").indexOf("MSIE")==-1&(navigator.userAgent+"").indexOf("MSIE")>0)
     {
        alert('本系统只支持 微软 Internet Explorer 6.0及以上版本，不支持其他浏览器！\n\n请换用Internet Explorer 6.0及以上版本浏览器访问此系统！');
        return;

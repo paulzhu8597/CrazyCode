@@ -708,6 +708,7 @@ public String upload(HttpServletRequest request, ModelMap model,@RequestParam(va
 
 		e.printStackTrace(); 
     }  
+    System.out.println("///////////////////////////////////////////////////////////"+result);
 model.addAttribute("result", result);  
 
     return result;  

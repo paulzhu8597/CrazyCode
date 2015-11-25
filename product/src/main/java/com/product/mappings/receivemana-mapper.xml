@@ -52,6 +52,7 @@
 			  and a.receiveorgid=#{receiveorgid} 
 			  and a.receivepeopleid=#{receivepeopleid} 
 			  and b.cargoid=#{cargoid}
+			  <!-- and b.cargocount={cargocount} -->
 	</select>
 	
 	<select id="checkhaveone" parameterType="java.util.Map" resultType="java.lang.String">
@@ -76,6 +77,10 @@
 	  <if test="receivepeopleid !=null and receivepeopleid!=''">
 		  and a.receivepeopleid=#{receivepeopleid} 
 	  </if>
+	  <if test="lastdate !=null and lastdate !=''">
+		  or TO_DAYS(NOW()) - TO_DAYS(receivetime)&lt;=${lastdate} 
+	  </if>
+	  
       <!-- 	
       <if test="cargoid != null and cargoid !=''">
 		  and b.cargoid=#{cargoid}
