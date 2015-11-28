@@ -1,0 +1,25 @@
+ =================================修改日志=============================
+》》》》》2015-11-26
+/product/src/main/webapp/WEB-INF/jsp/businessmana/receivingmana/list.jsp
+/product/src/main/webapp/js/businessmana/receivingmana/list.js
+/product/src/main/java/com/product/controller/BusinessController.java
+/product/src/main/java/com/product/mappings/receivemana-mapper.xml
+
+
+/product/src/main/java/com/product/controller/ReportController.java
+/product/src/main/webapp/WEB-INF/jsp/report/dayreport.jsp
+/product/src/main/webapp/js/report/report.js
+/product/src/main/java/com/product/mappings/report-mapper.xml
+新增：
+/product/src/main/webapp/WEB-INF/jsp/report/printChargePage.jsp
+=============================================================================
+》》》》》2015-11-28
+报表：
+	/product/src/main/webapp/WEB-INF/jsp/report/dayreport.jsp
+	/product/src/main/webapp/js/report/report.js
+	/product/src/main/java/com/product/controller/ReportController.java
+	新增：
+	/product/src/main/webapp/WEB-INF/jsp/report/printOutCargoes.jsp
+收费：
+        /product/src/main/webapp/js/charge/chargeManager.js(修复收费管理收费为0时显示问题)
+        /product/src/main/java/com/product/mappings/charge-mapper.xml（修复收费管理中收货人不显示bug，line: 13--14）
