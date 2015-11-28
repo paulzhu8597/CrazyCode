@@ -31,6 +31,9 @@ $(function (){
 	$("#PrintCharge").click("click", function() {
 		goPrintCharge();
 	});
+	$("#PrintOutCargoes").click("click", function() {
+		goPrintOutCargoes();
+	});
 	
 	refreshDalidyReceivedBody();
 	refreshDalidyIrradationBody();
@@ -43,6 +46,9 @@ function goprint(){
 }
 function goPrintCharge(){
 	window.open("/product/report/goPrintChargePage.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&cleancache="+new Date(),'_blank');
+}
+function goPrintOutCargoes(){
+	window.open("/product/report/goPrintOutCargoes.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&cleancache="+new Date(),'_blank');
 }
 
 //刷新已收货物

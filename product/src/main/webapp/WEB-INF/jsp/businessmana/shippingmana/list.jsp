@@ -86,7 +86,7 @@
 			<td>出货日期</td> <td> <input type="text" id="taketime" /> </td>
 		    </tr>
 		    <tr>
-			<td>取货单位</td> <td> <crazy:dictselect id="showorgs1" name="showorgs1"   collection="${showorgs}" ></crazy:dictselect> </td>
+			<td>取货单位</td> <td> <input type="text" id="showorgs1" name="showorgs1" ></input> </td>
 			</tr>
 		    <tr>
 			<td>委托单位</td> <td> <input type="text" id="proxyOrg" /> </td>

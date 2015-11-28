@@ -50,6 +50,7 @@ $(function() {
 		minChars :0,
 		cacheLength :1
 	});
+	
 	$("#showorgsoftaked").autocomplete({
 		source:function (request,response){
 			$.ajax({
@@ -57,6 +58,26 @@ $(function() {
 				dataType:"json",
 				data:{
 					query:encodeURI($("#showorgsoftaked").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
+	$("#showorgs1").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#showorgs1").val())
 				},
 				success:function(data){
 					response($.map(data,function(item){
@@ -180,7 +201,7 @@ function save(){
 	}
 	var taketime = $("#taketime").val();
 	var proxyOrg = $("#proxyOrg").val();
-	var showorgs1 = $("#showorgs1").val();
+	var showorgs1 = $("#showorgs1").val().split(":")[0];
 	var takecargocount = $("#takecargocount").val();
 	var allcount = globalselectedtakeinfo.split("-")[3];
 	var havetake = globalselectedtakeinfo.split("-")[4];
@@ -201,7 +222,7 @@ function save(){
 	var data = CommnUtil.normalAjax("/business/receivingmana/savetakecargoe.do",
 			"data="+globalselectedtakeinfo
 			+"&taketime="+$("#taketime").val()
-			+"&showorgs="+$("#showorgs1").val()
+			+"&showorgs="+showorgs1
 			+"&proxyOrg="+$("#proxyOrg").val()
 			+"&showBringTakeInfos="+$("#showBringTakeInfos").val()
 			+"&telnum="+$("#telnum").val()

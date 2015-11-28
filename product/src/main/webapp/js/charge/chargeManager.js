@@ -33,6 +33,9 @@ function search(){
 	if(CommnUtil.notNull(data)){
 		var html = "";
 		for(var i=0;i<data.length;i++){
+			if(data[i].fee<=0){
+				continue;
+			}
 			var param = data[i].id+"@_@"+data[i].fee+"@_@"+data[i].paid+"@_@"+data[i].unpaid+"@_@"+data[i].organizationname+"@_@"+data[i].receivetime+"@_@"+data[i].cargoname+"@_@"+data[i].cargocount+"@_@"+data[i].cargoweight;
 			html = html+
 			"<tr onclick=\"doselectview(this,'"+param+"');\">"

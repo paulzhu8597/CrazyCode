@@ -55,7 +55,26 @@ $(function() {
 	
 	search(0,"true");
 });
-
+//基本信息的单位收货
+$("#showorgs").autocomplete({
+	source:function (request,response){
+		$.ajax({
+			url:"business/receivingmana/queryorgs.do",
+			dataType:"json",
+			data:{
+				query:encodeURI($("#showorgs").val())
+			},
+			success:function(data){
+				response($.map(data,function(item){
+					return item.dictid+":"+item.dictname;
+				}));
+			}
+		});
+	},
+	minlength:0,
+	minChars :0,
+	cacheLength :1
+});
 function dosave(){
 	if(CommnUtil.haveOneTagIsNull("receivetime,showorgs,showBringTakeInfos,telnum,cargoname,irradtypes")){
 		return;
@@ -68,8 +87,11 @@ function dosave(){
 		alert("详细信息中标红选项必须为数字！");
 		return;
 	}
-	var param = "receivetime,showorgs,showBringTakeInfos,telnum,cargoname,cargocount,showcountorginfos,reqreagent,irradtime,timeorgs,irradflags,asCurrentRecord,cargoweight,funguscount,irradtypes";
-	var data = CommnUtil.normalAjax("/business/receivingmana/saveReceiveCargo.do",CommnUtil.UrlOfInputValue(param),"json");
+	var param1 = "receivetime,showBringTakeInfos,telnum,cargoname,cargocount,showcountorginfos,reqreagent,irradtime,timeorgs,irradflags,asCurrentRecord,cargoweight,funguscount,irradtypes";
+	var showorgs=$("#showorgs").val().split(":")[0];
+	
+	//var parm=parm1&showorgs;
+	var data = CommnUtil.normalAjax("/business/receivingmana/saveReceiveCargo.do",CommnUtil.UrlOfInputValue(param1)+"&showorgs="+showorgs,"json");
 	if(data.flag=='repeat'){
 		alert(data.result);
 		return;

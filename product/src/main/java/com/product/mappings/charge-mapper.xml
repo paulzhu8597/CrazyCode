@@ -10,7 +10,8 @@
             DATE_FORMAT((select receivetime from receivemgrbase where id=t.receivemgrid),'%Y-%m-%d') receivetime,
             (select orgname from shippinginfo where id=(select receiveorgid from receivemgrbase where id=t.receivemgrid)) organizationname,
 			(select cargoname from cargoinfo where  id=t.cargoid)  cargoname,
-			 (select name from bringtakeinfo where id=(select receiveorgid from receivemgrbase where id=t.receivemgrid)) takepeople,
+			 <!-- (select name from bringtakeinfo where id=(select receiveorgid from receivemgrbase where id=t.receivemgrid)) takepeople, -->
+			(select name from bringtakeinfo where id=(select receivepeopleid from receivemgrbase where id=t.receivemgrid)) takepeople,
 			cargocount,
 			irradednum,
 			 (select sum(takecargocount) from irradiation where detailid=t.id and baseid=t.receivemgrid) takedccargocount,
