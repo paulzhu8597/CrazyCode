@@ -23,3 +23,16 @@
 收费：
         /product/src/main/webapp/js/charge/chargeManager.js(修复收费管理收费为0时显示问题)
         /product/src/main/java/com/product/mappings/charge-mapper.xml（修复收费管理中收货人不显示bug，line: 13--14）
+=============================================================================
+》》》》》2015-12-02
+/product/src/main/webapp/WEB-INF/jsp/businessmana/confirmationmana/list.jsp
+/product/src/main/webapp/js/businessmana/confirmationmana/list.js
+/product/src/main/java/com/product/controller/BusinessController.java
+/product/src/main/java/com/product/service/ReceivingManaImpl.java
+/product/src/main/java/com/product/mapper/ReceivingManaMapper.java
+/product/src/main/java/com/product/mappings/receivemana-mapper.xml
+
+/product/src/main/webapp/js/report/report.js（修复报表js瑕疵）
+
+
+

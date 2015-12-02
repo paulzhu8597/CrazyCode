@@ -39,7 +39,13 @@
 								送  货  人： <crazy:dictselect id="showBringTakeInfos" name="showBringTakeInfos" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
 								<input id="query" name="query" type="button" value="Query"/>
 								<input type="button" id="deleteconfirm" name="deleteconfirm" value="Delete" />
-								<div align="left"><font size="2" color="red"  >双击完成收获确认(PS:灰色为已确认,再次确认将删除此货物已有的辐照、出货数据,然后重建数据)</font></div>
+								<div align="left">
+								<font size="2" color="red"  >
+								双击完成收获确认<br>
+								注意:(1)灰色为已确认的数据,再次确认将删除此货物已有的辐照、出货数据,然后重建数据;<br>
+								    (2)删除操作:红色只删除当前收获确认菜单数据，灰色数据删除会删除当前以及连带删除后续的辐照、出货数据
+								</font>
+								</div>
 								<table class="pp-list table  table-bordered">
 									<thead>
 										<tr>
@@ -140,7 +146,8 @@
 						<fieldset>
 							<legend>详细信息</legend>
 							<input name="editdetail"  id="editdetail" type="button" value="Edit" />
-							 <input name="deletedetail"  id="deletedetail" type="button" value="Delete"/>
+							 <input name="deletedetail"  id="deletedetail" type="button" value="Delete"/><br>
+							 <font size="2" color="red"  >红色数据只删除当前菜单数据;对于灰色数据：会连带删除后续辐照、出货数据</font>
 							<table class="pp-list table table-striped table-bordered" >
 								<thead>
 								<tr>

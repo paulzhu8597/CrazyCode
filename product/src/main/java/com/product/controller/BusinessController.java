@@ -368,20 +368,15 @@ public class BusinessController {
 		String ids = request.getParameter("ids");
 		StringBuffer sqlids = new  StringBuffer();
 		String ret = "";
+		int Affectnum =0;
 		try{
 		String [] idsarr = ids.split("@_@");
 		for(int i=0;i<idsarr.length;i++){
-			if(i==0){
-				sqlids.append(idsarr[i]);
-			}
-			else
-			{
-			    sqlids.append(",").append(idsarr[i]);
-			}
+			if(Common.isEmpty(idsarr[i])){continue;}
+			Affectnum +=  ireceivingmana.deleteconfirms(idsarr[i]);
 		}
 		LogUtil.getLog().debug(sqlids.toString());
-		int Affectnum =  ireceivingmana.deleteconfirms(sqlids.toString());
-		LogUtil.getLog().debug("删除货物确认"+Affectnum+"条");
+		LogUtil.getLog().debug("删除数据记录"+Affectnum+"条");
 		ret = "ok";
 		}catch (Exception e){
 			ret=e.getMessage();
@@ -433,6 +428,7 @@ public class BusinessController {
 		Map param = new HashMap();
 		param.put("id", ids.split("@_@")[0]);
 		param.put("receivemgrid", ids.split("@_@")[1]);
+		param.put("status", ids.split("@_@")[2]);
 		String result = ireceivingmana.deleteConfirDetailInfo(param);
 		return result;
 	}

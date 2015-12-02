@@ -23,6 +23,7 @@ import com.product.mapper.CargoinfoMapper;
 import com.product.mapper.CountOrginfoMapper;
 import com.product.mapper.ReceivingManaMapper;
 import com.product.mapper.ShippingInfoMapper;
+import com.product.util.Common;
 import com.product.util.LogUtil;
 
 @Service(value="ReceivingManaImpl")
@@ -173,9 +174,67 @@ public class ReceivingManaImpl implements IReceivingMana {
 	}
 	
 	//删除一条货物确认信息，连带删除其下属的详情
-	public int deleteconfirms(String sqlids) {
-		
-		return receivingmanamapper.deleteconfirms(sqlids);
+	@Transactional(rollbackFor=java.lang.Exception.class)
+	public int deleteconfirms(String  baseinfoid)  {
+		int deletecount = 0;
+		try {
+			Map param = new HashMap();
+			param.put("receiveorgid", baseinfoid);
+			List<ReceiveInfo> receiveInfos = receivingmanamapper.getDetInfoByReceiveorgId(param);//根据基本信息表的ID获得其所属的所有详情列表
+			if(receiveInfos.size()==0){
+				Map pid = new HashMap();
+				pid.put("baseinfoid", baseinfoid);
+				int r = receivingmanamapper.deleteconfirms(pid);//如果详情列表为空的，直接把主表的信息删除
+				if (r > 0) {
+					deletecount++;
+				}
+			}else{
+				for (int i = 0; i < receiveInfos.size(); i++) {
+					if ("1".equals(receiveInfos.get(i).getStatus())) { //正常的数据，即页面标红的数据
+						Map id = new HashMap();
+						id.put("baseinfoid", baseinfoid);
+						int r = receivingmanamapper.deleteconfirms(id);//删除主表信息
+						deletecount++;
+						if (r > 0) {
+							id.put("detailid", receiveInfos.get(i).getId());
+							receivingmanamapper.deleteconfirmDetail(id);//删除详情表信息
+							deletecount++;
+						}
+					}
+					if ("2".equals(receiveInfos.get(i).getStatus())) {//修正数据，即页面灰色数据
+						//第一步：删除下属数据
+						String receiveMgrDetailIds =receiveInfos.get(i).getId();
+						Map detailids = new HashMap();
+						detailids.put("detailid", receiveMgrDetailIds);
+						int deletedetails = receivingmanamapper.deleteconfirmDetail(detailids);//根据id删除详情表信息
+						deletecount = +deletedetails;
+						Map qparam = new HashMap();
+						qparam.put("receivemgrbaseId", baseinfoid);
+						qparam.put("receiveMgrDetailIds", receiveMgrDetailIds);
+						String irradationIds = receivingmanamapper.queryIrradationIdsByBaseAndDetailID(qparam);//根据详情Id和基本信息的Id查询所属的辐照ID集合
+						qparam.put("irradationIds", irradationIds);
+						if (null != irradationIds && !"".equals(irradationIds)) {
+							int deleteCount = receivingmanamapper.deleteIrradationIdsByBaseAndDetailID(qparam);//根据辐照的id删除所关联的辐照记录
+							deletecount++;
+							if (deleteCount > 0) {
+								int deleteTakecount = receivingmanamapper.deleteTakecargodetailByIrradedId(qparam);//删除出货信息
+								deletecount++;
+							}
+						}
+						Map pid = new HashMap();
+						pid.put("baseinfoid", baseinfoid);
+						int r = receivingmanamapper.deleteconfirms(pid);//最后删除基本信息表信息
+						if (r > 0) {
+							deletecount++;
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			LogUtil.getLog().debug(e.getMessage());
+			throw new RuntimeException(e.getMessage());
+		}
+		return deletecount;
 	}
 	
 	//取得所有的待确认货物
@@ -195,6 +254,23 @@ public class ReceivingManaImpl implements IReceivingMana {
 		
 		try {
 			int i = receivingmanamapper.deleteConfirDetailInfo(param);
+			String status = (String)param.get("status");
+			if(Common.isNotEmpty(status)&"2".equals(status)){
+				//第一步：删除下属数据
+				String receivemgrbaseId =  (String)param.get("receivemgrid");//基本信息表Id
+				String  receiveMgrDetailIds = (String)param.get("id");//对应的详情id
+				Map qparam = new HashMap();
+				qparam.put("receivemgrbaseId", receivemgrbaseId);
+				qparam.put("receiveMgrDetailIds", receiveMgrDetailIds);
+				String irradationIds = receivingmanamapper.queryIrradationIdsByBaseAndDetailID(qparam);//根据详情Id和基本信息的Id查询所属的辐照ID集合
+				qparam.put("irradationIds", irradationIds);
+				if(null != irradationIds && !"".equals(irradationIds)){ 
+					int deleteCount = receivingmanamapper.deleteIrradationIdsByBaseAndDetailID(qparam);//根据辐照的id删除所关联的辐照记录
+					if(deleteCount>0){
+						int deleteTakecount = receivingmanamapper.deleteTakecargodetailByIrradedId(qparam);//删除出货信息
+					}
+				}
+			}
 			if (i >= 1) {
 				rest = "ok";
 			} else {

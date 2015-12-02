@@ -19,7 +19,7 @@ public interface ReceivingManaMapper {
 	List<ReceiveInfo> isreapeat(ReceiveInfo receiveinfo);
 	List<ReceiveInfo> getReceivedCargos(Map<String,String> params);
 	List<ReceiveInfo> getconfirms(Map params);
-	int deleteconfirms(String sqlids);
+	int deleteconfirms(Map baseinfoid);
 	List<ReceiveInfo> getDetInfoByReceiveorgId(Map rtntValue);
 	ReceiveInfo getEditDetailInfo(Map param);
 	int deleteConfirDetailInfo(Map param);
@@ -51,5 +51,7 @@ public interface ReceivingManaMapper {
 	int deleteIrradationIdsByBaseAndDetailID(Map qparam);
 	int deleteTakecargodetailByIrradedId(Map param);
 	int updateReceivemgrDetailirradednum(Map param);
+	int  deleteconfirmDetail(Map id);
+	int deleteconfirmDetails(Map receiveMgrDetailIds);
 
 }

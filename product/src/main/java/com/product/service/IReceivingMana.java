@@ -18,7 +18,7 @@ public interface IReceivingMana {
 	String isreapeat(ReceiveInfo receiveinfo);
 	List<ReceiveInfo> getreceivedCargos(Map params);
 	List<ReceiveInfo> getconfirms(Map params);
-	int deleteconfirms(String sqlids);
+	int deleteconfirms(String  sqlids);
 	List<ReceiveInfo> getDetInfoByReceiveorgId(Map rtntValue);
 	ReceiveInfo getEditDetailInfo(Map param);
 	String deleteConfirDetailInfo(Map param);

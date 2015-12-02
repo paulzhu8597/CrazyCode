@@ -6,7 +6,13 @@ $(function (){
 	}else{
 		month = parseInt(myDate.getMonth())+1;
 	}
-	var defaultdate = myDate.getFullYear()+"-"+month+"-"+myDate.getDate();
+	var myday = 0;
+	if(parseInt(myDate.getDate())<9){
+		myday = "0"+parseInt(myDate.getDate());
+	}else{
+		myday = parseInt(myDate.getDate());
+	}
+	var defaultdate = myDate.getFullYear()+"-"+month+"-"+myday;
 	$('#printtime').val(defaultdate);
 	if(ismonth=="1"){
 		$('#printtime').val(myDate.getFullYear()+"-"+month);
