@@ -206,7 +206,7 @@ function save(){
 	var allcount = globalselectedtakeinfo.split("-")[3];
 	var havetake = globalselectedtakeinfo.split("-")[4];
 	var gap = parseInt(allcount) - parseInt(havetake);
-	if(!(takecargocount && ""!=takecargocount && parseInt(takecargocount)>0 && parseInt(takecargocount)<=gap)){
+	if(!(takecargocount && ""!=takecargocount && parseFloat(takecargocount)>0 && parseFloat(takecargocount)<=gap)){
 		alert("取货数量要大于0小于等于总数量并且必须填写！");
 		return;
 	}

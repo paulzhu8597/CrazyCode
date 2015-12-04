@@ -6,7 +6,7 @@
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="styles.css">
-    <title>日报表</title>
+    <title>${ismoth == '1'?'月':'日'}报表</title>
 
 <style type="text/css" media=print> 
 	.noprint{display : none } 
@@ -43,6 +43,7 @@ var rootPath = "${pageContext.request.contextPath}";
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath }/notebook/notebook_files/bootstrap.css"> 
 
 	<script type="text/javascript">
+	var countorg = "${countorg}";
 	$(function (){
 		initdata();
 		printpreview();
@@ -92,7 +93,7 @@ var rootPath = "${pageContext.request.contextPath}";
 	}	
      
 	function initdata(){
-		var data = CommnUtil.normalAjax("/report/queryreportlist.do","date="+$("#querydate").val()+"&ismoth=${ismoth}","json");
+		var data = CommnUtil.normalAjax("/report/queryreportlist.do","date="+$("#querydate").val()+"&ismoth=${ismoth}"+"&countorg="+countorg,"json");
 		if(CommnUtil.notNull(data)){
 			var html = "";
 			for(var i=0;i<data.length;i++){

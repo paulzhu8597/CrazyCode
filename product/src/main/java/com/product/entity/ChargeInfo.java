@@ -20,6 +20,7 @@ private String paid="";            //已付
 private String unpaid="";           //未付
 private String mask="";            //费用说明
 private String operater="";        //操作员
+private String paytype="";         //付款方式
 public String getId() {
 	return id;
 }
@@ -133,5 +134,11 @@ public String getOperater() {
 }
 public void setOperater(String operater) {
 	this.operater = operater;
+}
+public String getPaytype() {
+	return paytype;
+}
+public void setPaytype(String paytype) {
+	this.paytype = paytype;
 }
 }

@@ -67,7 +67,9 @@ border-color: red;
   </head>
   <body>
   <div class="m-b-md" >
-<font> 统计日期： <input type="text" id="printtime"  /> <input type="button" value="query" id="query"  />
+<font> 
+统计日期： <input type="text" id="printtime"  /> 
+统计单位：<input type="text" id="countorgcompany"  /> <input type="button" value="query" id="query"  />
  <input type="button" value="PrintReceived" id="PrintReceived" />
  <input type="button" value="PrintOutCargoes" id="PrintOutCargoes" />
  <input type="button" value="PrintCharge" id="PrintCharge" />

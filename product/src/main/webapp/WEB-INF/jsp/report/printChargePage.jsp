@@ -45,6 +45,7 @@ var rootPath = "${pageContext.request.contextPath}";
 	<script type="text/javascript">
 	var ismoth = "${ismoth}";
 	var date = "${date}";
+	var countorg = "${countorg}";
 	$(function (){
 		initdata();
 		printpreview();
@@ -94,7 +95,7 @@ var rootPath = "${pageContext.request.contextPath}";
 	}	
      
 	function initdata(){
-		var data = CommnUtil.normalAjax("/report/refreshDalidyChargeBody.do","date="+date+"&ismoth="+ismoth,"json");
+		var data = CommnUtil.normalAjax("/report/refreshDalidyChargeBody.do","date="+date+"&ismoth="+ismoth+"&countorg="+countorg,"json");
 		if(CommnUtil.notNull(data)){
 			var html = "";
 			for(var i=0;i<data.length;i++){

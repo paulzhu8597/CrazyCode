@@ -26,7 +26,9 @@
 		(select userName from user u where u.userId=(select userid from receivemgrbase c1 where c1.id=t.receivemgrid)) username 
 		from receivemgrdetail t 
 		where t.status='2' and  date_format((select receivetime from receivemgrbase where id=t.receivemgrid),'${format}') = #{date}
-	    
+	    <if test="'null' != countorg and '' != countorg">
+	        and #{countorg}=(select receiveorgid from receivemgrbase where id=t.receivemgrid)
+	    </if>
 	</select>
 	
 	<select id="refreshDalidyReceivedBody" parameterType="java.util.Map" resultType="DalidyReceived">
@@ -51,6 +53,9 @@
 		    <if test="format != '' and date != ''">
 		    and  date_format(t1.receivetime,'${format}') = #{date}
 		    </if>
+		    <if test="'null' != countorg and '' != countorg">
+	        and t1.receiveorgid=#{countorg}
+	        </if>
 	</select>
 	
 	<select id="refreshDalidyIrradationBody" parameterType="java.util.Map" resultType="DalidyIrradation">
@@ -67,6 +72,9 @@
  		<if test="format != '' and date != ''">
  		    and  date_format(t.doirraddate ,'${format}') = #{date}
  		</if>
+ 		<if test="'null' != countorg and '' != countorg">
+	        and t.receiveorgid=#{countorg}
+	    </if>
 	</select>
 	
 	<select id="refreshDalidyOutCargoesbody"   parameterType="java.util.Map" resultType="DalidyOutCargoes">
@@ -82,6 +90,9 @@
         <if test="format != '' and date != ''">
         	and date_format(t1.taketime,'${format}')= #{date}
         </if>
+	    <if test="'null' != countorg and '' != countorg">
+           and t1.takecargoorg=#{countorg}
+        </if>
 	</select>
 	
 	
@@ -96,6 +107,9 @@
         <if test="format != '' and date != ''">
 	        and date_format(chargetime,'${format}')= #{date}
         </if>
+	    <if test="'null' != countorg and '' != countorg">
+           and chargeorg=(select orgname from shippinginfo where id=#{countorg} )
+        </if>        
 	</select>
 	
 </mapper>

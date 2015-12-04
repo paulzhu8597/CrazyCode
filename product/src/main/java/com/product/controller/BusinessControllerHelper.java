@@ -61,7 +61,7 @@ public class BusinessControllerHelper {
 		receiveinfo.setIrradtime(Common.stringDefaultOfEmpty(request.getParameter("irradtime"),""));
 		receiveinfo.setIrradtimeorg(Common.stringDefaultOfEmpty(request.getParameter("timeorgs"),""));
 		receiveinfo.setIrradflag(Common.stringDefaultOfEmpty(request.getParameter("irradflags"),""));
-		receiveinfo.setFee(Integer.valueOf(Common.stringDefaultOfEmpty(request.getParameter("fee"),"0")) );
+		receiveinfo.setFee(Double.valueOf(Common.stringDefaultOfEmpty(request.getParameter("fee"),"0")) );
 		receiveinfo.setMask(Common.stringDefaultOfEmpty(request.getParameter("mask"),""));
 		receiveinfo.setId(idAndreceiveorgid.split("@_@")[0]);
 		receiveinfo.setReceivemgrid(idAndreceiveorgid.split("@_@")[1]);

@@ -178,7 +178,7 @@
 	</select>
 	
 	<select id="getEditDetailInfo" parameterType="java.util.Map" resultType="ReceiveInfo">
-		select  cargoid,cargocount,cargoweight,countorg,funguscount,reqreagent,irradtype,irradtime,irradtimeorg,irradflag ,fee
+		select  cargoid,cargocount,cargoweight,countorg,funguscount,reqreagent,irradtype,irradtime,irradtimeorg,irradflag ,fee,mask
 		from receivemgrdetail
 		where id=#{id} and receivemgrid=#{receiveorgid}
 	</select>

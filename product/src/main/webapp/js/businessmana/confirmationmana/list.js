@@ -239,6 +239,7 @@ function initEditConfirmInfo(){
 	  document.getElementById("fee").value=data.fee;
 	  $("#timeorgs").find("option[value='"+data.irradtimeorg+"']").attr("selected",true);//时间单位
 	  $("#irradflags").find("option[value='"+data.irradflag+"']").attr("selected",true);
+	  document.getElementById("mask").value=data.mask;
 	}
 }
 

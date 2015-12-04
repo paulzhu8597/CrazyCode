@@ -46,8 +46,8 @@
     </select>
     
     <insert id="doChargeLog" parameterType="ChargeInfo">
-        insert into chargelog(chargeid,chargeorg,chargetime,chargeamount,receivetime,cargoname,cargocount,cargoweight,fee,paid,unpaid,mask,operater) 
-        values(#{chargeid},#{organizationname},NOW(),#{currentapid},str_to_date(#{receivetime},'%Y-%m-%d'),#{cargoname},#{cargocount},#{cargoweight},#{fee},#{paid},#{unpaid},#{mask},#{operater});
+        insert into chargelog(chargeid,chargeorg,chargetime,chargeamount,receivetime,cargoname,cargocount,cargoweight,fee,paid,unpaid,mask,operater,paytype) 
+        values(#{chargeid},#{organizationname},NOW(),#{currentapid},str_to_date(#{receivetime},'%Y-%m-%d'),#{cargoname},#{cargocount},#{cargoweight},#{fee},#{paid},#{unpaid},#{mask},#{operater},#{paytype});
     </insert>
     
     <select id="queryChargeLog" parameterType="java.util.Map" resultType="ChargeInfo">
@@ -62,7 +62,8 @@
         cargoweight,
         fee,
         paid,
-        unpaid
+        unpaid,
+        (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='paytype' and di.itemid=t.paytype) paytype
         from chargelog t
         where 1=1
         <if test="organizationid !=null and organizationid != '' and asinputorg != 1">

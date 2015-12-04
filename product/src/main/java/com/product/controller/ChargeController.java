@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.product.entity.ChargeInfo;
 import com.product.entity.User;
+import com.product.mapper.CommonMapper;
 import com.product.service.IChargeMana;
 import com.product.service.IReceivingMana;
 import com.product.util.Common;
@@ -29,9 +30,13 @@ public class ChargeController {
 	@Resource(name="ChargeManaImpl")
 	private IChargeMana ichargemana;
 	
+	@Resource
+	private CommonMapper commonmapper;
+	
 	@RequestMapping("init")
 	public String init(Model model){
 		model.addAttribute("showorgs", ireceivingmana.getAllOrgs());//送货单位
+		model.addAttribute("paytype", commonmapper.getDictItemByGroupId("paytype"));
 		return Common.BACKGROUND_PATH + "/charge/chargeManager"; 
 	}
 
@@ -71,6 +76,7 @@ public class ChargeController {
 		String cargoweight = Common.stringDefaultOfEmpty(paramarr[8],"");
 		String fee = Common.stringDefaultOfEmpty(paramarr[1],"");
 		String chargeIntroduction = Common.stringDefaultOfEmpty(request.getParameter("chargeIntroduction"),"");
+		String paytype = Common.stringDefaultOfEmpty(request.getParameter("paytype"),"");
 		ChargeInfo chargeinfo = new ChargeInfo();
 		chargeinfo.setChargeid(chargeid);
 		chargeinfo.setOrganizationname(chargeorg);
@@ -82,6 +88,7 @@ public class ChargeController {
 		chargeinfo.setFee(fee);
 		chargeinfo.setMask(chargeIntroduction);
 		chargeinfo.setOperater(user.getUserName());
+		chargeinfo.setPaytype(paytype);
 		return ichargemana.doCharge(chargeinfo);
 	}
 	
@@ -119,6 +126,16 @@ public class ChargeController {
 
 	public void setIchargemana(IChargeMana ichargemana) {
 		this.ichargemana = ichargemana;
+	}
+
+
+	public CommonMapper getCommonmapper() {
+		return commonmapper;
+	}
+
+
+	public void setCommonmapper(CommonMapper commonmapper) {
+		this.commonmapper = commonmapper;
 	}
 	
 }

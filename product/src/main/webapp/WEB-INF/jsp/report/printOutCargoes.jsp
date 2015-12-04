@@ -6,7 +6,7 @@
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="styles.css">
-    <title>收费报表</title>
+    <title>出货报表</title>
 
 <style type="text/css" media=print> 
 	.noprint{display : none } 
@@ -45,6 +45,7 @@ var rootPath = "${pageContext.request.contextPath}";
 	<script type="text/javascript">
 	var ismoth = "${ismoth}";
 	var date = "${date}";
+	var countorg = "${countorg}";
 	$(function (){
 		initdata();
 		printpreview();
@@ -94,7 +95,7 @@ var rootPath = "${pageContext.request.contextPath}";
 	}	
      
 	function initdata(){
-		var data = CommnUtil.normalAjax("/report/refreshDalidyOutCargoesbody.do","date="+date+"&ismoth="+ismoth,"json");
+		var data = CommnUtil.normalAjax("/report/refreshDalidyOutCargoesbody.do","date="+date+"&ismoth="+ismoth+"&countorg="+countorg,"json");
 		if(CommnUtil.notNull(data)){
 			var html = "";
 			for(var i=0;i<data.length;i++){

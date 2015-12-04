@@ -38,6 +38,7 @@ public class ReportController {
 	public String printpage(Model model,HttpServletRequest request){
 		model.addAttribute("date", Common.stringDefaultOfEmpty(request.getParameter("time"), "") );
 		model.addAttribute("ismoth", Common.stringDefaultOfEmpty(request.getParameter("ismoth"), "") );
+		model.addAttribute("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"), "") );
 		model.addAttribute("printtime", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		return Common.BACKGROUND_PATH + "/report/printpage";
 	}
@@ -46,6 +47,7 @@ public class ReportController {
 	public String goPrintChargePage(Model model,HttpServletRequest request){
 		model.addAttribute("date", Common.stringDefaultOfEmpty(request.getParameter("time"), "") );
 		model.addAttribute("ismoth", Common.stringDefaultOfEmpty(request.getParameter("ismoth"), "") );
+		model.addAttribute("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"), "") );
 		model.addAttribute("printtime", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		return Common.BACKGROUND_PATH + "/report/printChargePage";
 	}
@@ -54,6 +56,7 @@ public class ReportController {
 	public String goPrintOutCargoes(Model model,HttpServletRequest request){
 		model.addAttribute("date", Common.stringDefaultOfEmpty(request.getParameter("time"), "") );
 		model.addAttribute("ismoth", Common.stringDefaultOfEmpty(request.getParameter("ismoth"), "") );
+		model.addAttribute("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"), "") );
 		model.addAttribute("printtime", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		return Common.BACKGROUND_PATH + "/report/printOutCargoes";
 	}
@@ -64,6 +67,7 @@ public class ReportController {
 		String ismoth = Common.stringDefaultOfEmpty(request.getParameter("ismoth"),"");
 		Map param = new HashMap();
 		param.put("date", request.getParameter("date"));
+		param.put("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"),""));
 		if("1".equals(ismoth)){
 			param.put("format", "%Y-%m");
 		}else{
@@ -90,6 +94,7 @@ public class ReportController {
 		System.out.println("refreshDalidyReceivedBody ismonth>>>>>>><<<<<<< "+ ismoth);
 		Map param = new HashMap();
 		param.put("date", Common.stringDefaultOfEmpty(request.getParameter("date"),""));
+		param.put("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"),""));
 		if("1".equals(ismoth)){
 			param.put("format", "%Y-%m");
 		}else{
@@ -110,6 +115,7 @@ public class ReportController {
 		System.out.println("refreshDalidyIrradationBody ismonth>>>>>>><<<<<<< "+ ismoth);
 		Map param = new HashMap();
 		param.put("date", Common.stringDefaultOfEmpty(request.getParameter("date"),""));
+		param.put("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"),""));
 		if("1".equals(ismoth)){
 			param.put("format", "%Y-%m");
 		}else{
@@ -130,6 +136,7 @@ public class ReportController {
 		System.out.println("refreshDalidyOutCargoesbody ismonth>>>>>>><<<<<<< "+ ismoth);
 		Map param = new HashMap();
 		param.put("date", Common.stringDefaultOfEmpty(request.getParameter("date"),""));
+		param.put("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"),""));
 		if("1".equals(ismoth)){
 			param.put("format", "%Y-%m");
 		}else{
@@ -146,6 +153,7 @@ public class ReportController {
 		System.out.println("refreshDalidyChargeBody ismonth>>>>>>><<<<<<< "+ ismoth);
 		Map param = new HashMap();
 		param.put("date", Common.stringDefaultOfEmpty(request.getParameter("date"),""));
+		param.put("countorg", Common.stringDefaultOfEmpty(request.getParameter("countorg"),""));
 		if("1".equals(ismoth)){
 			param.put("format", "%Y-%m");
 		}else{

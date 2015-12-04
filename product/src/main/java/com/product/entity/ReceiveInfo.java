@@ -26,7 +26,7 @@ public class ReceiveInfo  extends BaseEntity{
 	private String irradtimeorg;   //辐照时间单位
 	private String irradflag;      //辐照类型：首次辐照、重新辐照、不辐照
 	private String asCurrentRecord;//是否依照当前记录
-	private int fee=0;             //收取的费用
+	private double fee=0;             //收取的费用
 	private String status;         //状态，是否指纹确认 0:未指纹确认，1:已指纹确认
 	private String mask;           //说明
 	public String getMask() {
@@ -167,10 +167,10 @@ public class ReceiveInfo  extends BaseEntity{
 	public void setIrradednum(String irradednum) {
 		this.irradednum = irradednum;
 	}
-	public int getFee() {
+	public double getFee() {
 		return fee;
 	}
-	public void setFee(int fee) {
+	public void setFee(double fee) {
 		this.fee = fee;
 	}
 }
