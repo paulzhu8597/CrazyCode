@@ -266,7 +266,7 @@
 	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='timeorgs' and di.itemid= t2.irradtimeorg) irradtimeorg,
 	    reqreagent,
 	    funguscount
-	    from receivemgrbase t1, receivemgrdetail t2 where  t1.id=t2.receivemgrid and t2.irradednum &lt; t2.cargocount and t2.status='2'
+	    from receivemgrbase t1, receivemgrdetail t2 where  t1.id=t2.receivemgrid and t2.irradednum &lt; t2.cargocount and t2.status='2' and  t2.fee!=0
 		  <if test="receivetime !=null and receivetime !=''">
 			  and t1.receivetime= str_to_date(#{receivetime},'%Y-%m-%d')
 		  </if>

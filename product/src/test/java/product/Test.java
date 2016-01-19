@@ -1,16 +1,15 @@
 package product;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 public class Test {
-public static void main(String[] args) {
-	String a = "hello2";
-	final String b = "hello";
-	String c = "hello";
-	String d = b + 2;
-	String e = c + 2;
-	System.out.println("d="+d);
-	System.out.println("e="+e);
-	System.out.println((a == d));//true
-	System.out.println((a == e));//false
-	System.out.println((e == "hello2"));//false
-}
+	public static void main(String[] args) {
+		Logger logger = Logger.getLogger(Test.class);
+		PropertyConfigurator.configure("E:\\Study\\tarenaspace\\product\\src\\main\\resources\\log4j.properties");
+		logger.error("logger测试");
+	}
 }

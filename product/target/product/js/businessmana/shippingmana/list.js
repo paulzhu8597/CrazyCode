@@ -50,6 +50,7 @@ $(function() {
 		minChars :0,
 		cacheLength :1
 	});
+	
 	$("#showorgsoftaked").autocomplete({
 		source:function (request,response){
 			$.ajax({
@@ -57,6 +58,26 @@ $(function() {
 				dataType:"json",
 				data:{
 					query:encodeURI($("#showorgsoftaked").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
+	$("#showorgs1").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#showorgs1").val())
 				},
 				success:function(data){
 					response($.map(data,function(item){
@@ -180,12 +201,12 @@ function save(){
 	}
 	var taketime = $("#taketime").val();
 	var proxyOrg = $("#proxyOrg").val();
-	var showorgs1 = $("#showorgs1").val();
+	var showorgs1 = $("#showorgs1").val().split(":")[0];
 	var takecargocount = $("#takecargocount").val();
 	var allcount = globalselectedtakeinfo.split("-")[3];
 	var havetake = globalselectedtakeinfo.split("-")[4];
 	var gap = parseInt(allcount) - parseInt(havetake);
-	if(!(takecargocount && ""!=takecargocount && parseInt(takecargocount)>0 && parseInt(takecargocount)<=gap)){
+	if(!(takecargocount && ""!=takecargocount && parseFloat(takecargocount)>0 && parseFloat(takecargocount)<=gap)){
 		alert("取货数量要大于0小于等于总数量并且必须填写！");
 		return;
 	}
@@ -201,7 +222,7 @@ function save(){
 	var data = CommnUtil.normalAjax("/business/receivingmana/savetakecargoe.do",
 			"data="+globalselectedtakeinfo
 			+"&taketime="+$("#taketime").val()
-			+"&showorgs="+$("#showorgs1").val()
+			+"&showorgs="+showorgs1
 			+"&proxyOrg="+$("#proxyOrg").val()
 			+"&showBringTakeInfos="+$("#showBringTakeInfos").val()
 			+"&telnum="+$("#telnum").val()

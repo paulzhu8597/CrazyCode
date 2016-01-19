@@ -97,6 +97,7 @@ INSERT INTO `dict_group` VALUES ('irradflags', '辐照类型');
 INSERT INTO `dict_group` VALUES ('irradtypes', '辐照方式');
 INSERT INTO `dict_group` VALUES ('loadmodel', '辐照装载模式');
 INSERT INTO `dict_group` VALUES ('timeorgs', '时间单位');
+INSERT INTO `dict_group` VALUES ('paytype', '收费方式');
 
 -- ----------------------------
 -- Table structure for `dict_item`
@@ -132,6 +133,9 @@ INSERT INTO `dict_item` VALUES ('12', 'allmenu', '权限配置');
 INSERT INTO `dict_item` VALUES ('15', 'allmenu', '收款');
 INSERT INTO `dict_item` VALUES ('17', 'allmenu', '日报表');
 INSERT INTO `dict_item` VALUES ('18', 'allmenu', '月报表');
+INSERT INTO `dict_item` VALUES ('cash', 'paytype', '现金');
+INSERT INTO `dict_item` VALUES ('transfer', 'paytype', '转账');
+INSERT INTO `dict_item` VALUES ('other', 'paytype', '其他');
 
 -- ----------------------------
 -- Table structure for `irradiation`

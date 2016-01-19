@@ -67,12 +67,17 @@ border-color: red;
   </head>
   <body>
   <div class="m-b-md" >
-<font> 统计日期： <input type="text" id="printtime"  /> <input type="button" value="query" id="query"  /> <input type="button" value="Print" id="Print" />
+<font> 
+统计日期： <input type="text" id="printtime"  /> 
+统计单位：<input type="text" id="countorgcompany"  /> <input type="button" value="query" id="query"  />
+ <input type="button" value="PrintReceived" id="PrintReceived" />
+ <input type="button" value="PrintOutCargoes" id="PrintOutCargoes" />
+ <input type="button" value="PrintCharge" id="PrintCharge" />
   </div>
   <div class="m-b-md" id="printdiv"> 
 	<div id="prat1">
-		<table id="dalidyReceived" class="pp-list table  table-bordered" title="当日收获">
-		<caption align="top"><font color="red"> 当日收货</font></caption> 
+		<table id="dalidyReceived" class="pp-list table  table-bordered" title="当${ismoth=='1'?'月':'日'}收获">
+		<caption align="top"><font color="red"> 当${ismoth=='1'?'月':'日'}收货</font></caption> 
 		<thead>
 			<tr>
 			<td><nobr>收货时间</nobr> </td>
@@ -105,8 +110,8 @@ border-color: red;
 		</table>
 	</div>
 	<div id="prat2">
-		<table id="dalidyIrradation" class="pp-list table  table-bordered" title="当日辐照">
-		<caption align="top"><font color="red"> 当日辐照</font></caption> 
+		<table id="dalidyIrradation" class="pp-list table  table-bordered" title="当${ismoth=='1'?'月':'日'}辐照">
+		<caption align="top"><font color="red"> 当${ismoth=='1'?'月':'日'}辐照</font></caption> 
 		<thead>
 		<tr>
 		<td>货物名称</td>
@@ -124,8 +129,8 @@ border-color: red;
 		</table>
 	</div>
 	<div id="prat3">
-		<table id="dalidyOutCargoes" class="pp-list table  table-bordered" title="当日出货" >
-		<caption align="top"><font color="red"> 当日出货</font></caption>  
+		<table id="dalidyOutCargoes" class="pp-list table  table-bordered" title="当${ismoth=='1'?'月':'日'}出货" >
+		<caption align="top"><font color="red"> 当${ismoth=='1'?'月':'日'}出货</font></caption>  
 		<thead>
 		<tr>
 		<td>发货时间</td>
@@ -142,8 +147,8 @@ border-color: red;
 		</table>
 	</div>
 	<div id="prat4">
-		<table id="dalidyCharge"  class="pp-list table  table-bordered" title="当日 收款">
-		<caption align="top"><font color="red"> 当日收款</font></caption> 
+		<table id="dalidyCharge"  class="pp-list table  table-bordered" title="当${ismoth=='1'?'月':'日'} 收款">
+		<caption align="top"><font color="red"> 当${ismoth=='1'?'月':'日'}收款</font></caption> 
 		<thead>
 		<tr>
 		<td>收货时间</td>

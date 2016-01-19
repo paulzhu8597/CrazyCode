@@ -87,9 +87,6 @@
 					<option value="1">1天</option> 
 					<option value="2">2天</option> 
 					<option value="3">3天</option> 
-					<option value="7">1周</option> 
-					<option value="15">半月</option> 
-					<option value="30">1月</option> 
 					</select>
 					<input id="query" name="query" type="button" value="Query"/>
 					<br/>

@@ -10,7 +10,8 @@
             DATE_FORMAT((select receivetime from receivemgrbase where id=t.receivemgrid),'%Y-%m-%d') receivetime,
             (select orgname from shippinginfo where id=(select receiveorgid from receivemgrbase where id=t.receivemgrid)) organizationname,
 			(select cargoname from cargoinfo where  id=t.cargoid)  cargoname,
-			 (select name from bringtakeinfo where id=(select receiveorgid from receivemgrbase where id=t.receivemgrid)) takepeople,
+			 <!-- (select name from bringtakeinfo where id=(select receiveorgid from receivemgrbase where id=t.receivemgrid)) takepeople, -->
+			(select name from bringtakeinfo where id=(select receivepeopleid from receivemgrbase where id=t.receivemgrid)) takepeople,
 			cargocount,
 			irradednum,
 			 (select sum(takecargocount) from irradiation where detailid=t.id and baseid=t.receivemgrid) takedccargocount,
@@ -20,7 +21,7 @@
 			paid,
 			unpaid
 		from receivemgrdetail t
-		where 1=1 
+		where 1=1 and t.status=2
 			    <if test="asinputorg == 1">
 			      and  t.receivemgrid in (select id from receivemgrbase where receiveorgid in (select id from shippinginfo where orgname like  concat('%', #{inputorgname}, '%')))
 			    </if>
@@ -45,8 +46,8 @@
     </select>
     
     <insert id="doChargeLog" parameterType="ChargeInfo">
-        insert into chargelog(chargeid,chargeorg,chargetime,chargeamount,receivetime,cargoname,cargocount,cargoweight,fee,paid,unpaid,mask,operater) 
-        values(#{chargeid},#{organizationname},NOW(),#{currentapid},str_to_date(#{receivetime},'%Y-%m-%d'),#{cargoname},#{cargocount},#{cargoweight},#{fee},#{paid},#{unpaid},#{mask},#{operater});
+        insert into chargelog(chargeid,chargeorg,chargetime,chargeamount,receivetime,cargoname,cargocount,cargoweight,fee,paid,unpaid,mask,operater,paytype) 
+        values(#{chargeid},#{organizationname},NOW(),#{currentapid},str_to_date(#{receivetime},'%Y-%m-%d'),#{cargoname},#{cargocount},#{cargoweight},#{fee},#{paid},#{unpaid},#{mask},#{operater},#{paytype});
     </insert>
     
     <select id="queryChargeLog" parameterType="java.util.Map" resultType="ChargeInfo">
@@ -61,7 +62,8 @@
         cargoweight,
         fee,
         paid,
-        unpaid
+        unpaid,
+        (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='paytype' and di.itemid=t.paytype) paytype
         from chargelog t
         where 1=1
         <if test="organizationid !=null and organizationid != '' and asinputorg != 1">

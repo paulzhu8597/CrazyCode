@@ -33,6 +33,9 @@ function search(){
 	if(CommnUtil.notNull(data)){
 		var html = "";
 		for(var i=0;i<data.length;i++){
+			if(data[i].fee<=0){
+				continue;
+			}
 			var param = data[i].id+"@_@"+data[i].fee+"@_@"+data[i].paid+"@_@"+data[i].unpaid+"@_@"+data[i].organizationname+"@_@"+data[i].receivetime+"@_@"+data[i].cargoname+"@_@"+data[i].cargocount+"@_@"+data[i].cargoweight;
 			html = html+
 			"<tr onclick=\"doselectview(this,'"+param+"');\">"
@@ -45,7 +48,7 @@ function search(){
 			+"<td style='text-align: center'>"+data[i].countorgname+"</td>"
 			+"<td name='cargoweights' style='text-align: center'>"+data[i].cargoweight+"</td>"
 			+"<td name='cargofees' style='text-align: center'>"+data[i].fee+"</td>"
-			+"<td name'cargopaids' style='text-align: center'>"+data[i].paid+"</td>"
+			+"<td name='cargopaids' style='text-align: center'>"+data[i].paid+"</td>"
 			+"<td name='cargounpaids' style='text-align: center'>"+data[i].unpaid+"</td>"
 			+"</tr>";
 		}
@@ -103,6 +106,7 @@ function refresh(){
 			+"<td style='text-align: center'>"+data[i].cargoname+"</td>"
 			+"<td style='text-align: center'>"+data[i].cargocount+"</td>"
 			+"<td style='text-align: center'>"+data[i].cargoweight+"</td>"
+			+"<td style='text-align: center'>"+data[i].paytype+"</td>"
 			+"<td name='currentfee' style='text-align: center'>"+data[i].fee+"</td>"
 			+"<td name='currentpaid' style='text-align: center'>"+data[i].paid+"</td>"
 			+"<td name='currentunpaid' style='text-align: center'>"+data[i].unpaid+"</td>"
@@ -176,7 +180,7 @@ function docharge(){
 		
 		if(confirm("收款金额：￥ "+thePayment+"\n 交款单位："+organizationname+"\n 确认收款吗?")){
 			var data = CommnUtil.normalAjax("/collection/docharge.do",
-					"id="+itemid+"&thePayment="+thePayment+"&chargeIntroduction="+chargeIntroduction+"&param="+globalchargeid,"json");
+					"id="+itemid+"&thePayment="+thePayment+"&chargeIntroduction="+chargeIntroduction+"&param="+globalchargeid+"&paytype="+$("#paytype").val(),"json");
 			if("ok"==data){
 				alert("收款成功！");
 				$("#chargeIntroduction").val("");

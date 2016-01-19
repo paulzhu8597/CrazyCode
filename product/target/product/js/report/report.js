@@ -6,7 +6,13 @@ $(function (){
 	}else{
 		month = parseInt(myDate.getMonth())+1;
 	}
-	var defaultdate = myDate.getFullYear()+"-"+month+"-"+myDate.getDate();
+	var myday = 0;
+	if(parseInt(myDate.getDate())<9){
+		myday = "0"+parseInt(myDate.getDate());
+	}else{
+		myday = parseInt(myDate.getDate());
+	}
+	var defaultdate = myDate.getFullYear()+"-"+month+"-"+myday;
 	$('#printtime').val(defaultdate);
 	if(ismonth=="1"){
 		$('#printtime').val(myDate.getFullYear()+"-"+month);
@@ -19,15 +25,42 @@ $(function (){
 		$('#printtime').Zebra_DatePicker();
     }
 	
+	$("#countorgcompany").autocomplete({
+		source:function (request,response){
+			$.ajax({
+				url:"business/receivingmana/queryorgs.do",
+				dataType:"json",
+				data:{
+					query:encodeURI($("#countorgcompany").val())
+				},
+				success:function(data){
+					response($.map(data,function(item){
+						return item.dictid+":"+item.dictname;
+					}));
+				}
+			});
+		},
+		minlength:0,
+		minChars :0,
+		cacheLength :1
+	});
+	
 	$("#query").click("click", function() {
 		refreshDalidyReceivedBody();
 		refreshDalidyIrradationBody();
 		refreshDalidyOutCargoesbody();
 		refreshDalidyChargeBody();
 	});
-	$("#Print").click("click", function() {
+	$("#PrintReceived").click("click", function() {
 		goprint();
 	});
+	$("#PrintCharge").click("click", function() {
+		goPrintCharge();
+	});
+	$("#PrintOutCargoes").click("click", function() {
+		goPrintOutCargoes();
+	});
+	
 	refreshDalidyReceivedBody();
 	refreshDalidyIrradationBody();
 	refreshDalidyOutCargoesbody();
@@ -35,12 +68,19 @@ $(function (){
 });
 
 function goprint(){
-	 window.open("/product/report/goprintpage.do?time="+$("#printtime").val()+"&ismoth="+ismonth,'_blank');
+	
+	 window.open("/product/report/goprintpage.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0]+"&cleancache="+new Date(),'_blank');
+}
+function goPrintCharge(){
+	window.open("/product/report/goPrintChargePage.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0]+"&cleancache="+new Date(),'_blank');
+}
+function goPrintOutCargoes(){
+	window.open("/product/report/goPrintOutCargoes.do?time="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0]+"&cleancache="+new Date(),'_blank');
 }
 
 //刷新已收货物
 function refreshDalidyReceivedBody(){
-	var data = CommnUtil.normalAjax("/report/refreshDalidyReceivedBody.do","date="+$("#printtime").val()+"&ismoth="+ismonth,"json");
+	var data = CommnUtil.normalAjax("/report/refreshDalidyReceivedBody.do","date="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0],"json");
 	if(CommnUtil.notNull(data)){
 		var html = "";
 		for(var i=0;i<data.length;i++){
@@ -76,7 +116,7 @@ function refreshDalidyReceivedBody(){
 
 //刷新易福朝
 function refreshDalidyIrradationBody(){
-	var data = CommnUtil.normalAjax("/report/refreshDalidyIrradationBody.do","date="+$("#printtime").val()+"&ismoth="+ismonth,"json");
+	var data = CommnUtil.normalAjax("/report/refreshDalidyIrradationBody.do","date="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0],"json");
 	if(CommnUtil.notNull(data)){
 		var html = "";
 		for(var i=0;i<data.length;i++){
@@ -97,7 +137,7 @@ function refreshDalidyIrradationBody(){
 
 //刷新当日出货
 function refreshDalidyOutCargoesbody(){
-	var data = CommnUtil.normalAjax("/report/refreshDalidyOutCargoesbody.do","date="+$("#printtime").val()+"&ismoth="+ismonth,"json");
+	var data = CommnUtil.normalAjax("/report/refreshDalidyOutCargoesbody.do","date="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0],"json");
 	if(CommnUtil.notNull(data)){
 		var html = "";
 		for(var i=0;i<data.length;i++){
@@ -117,7 +157,7 @@ function refreshDalidyOutCargoesbody(){
 
 //刷新当日收款
 function refreshDalidyChargeBody(){
-	var data = CommnUtil.normalAjax("/report/refreshDalidyChargeBody.do","date="+$("#printtime").val()+"&ismoth="+ismonth,"json");
+	var data = CommnUtil.normalAjax("/report/refreshDalidyChargeBody.do","date="+$("#printtime").val()+"&ismoth="+ismonth+"&countorg="+$("#countorgcompany").val().split(":")[0],"json");
 	if(CommnUtil.notNull(data)){
 		var html = "";
 		for(var i=0;i<data.length;i++){

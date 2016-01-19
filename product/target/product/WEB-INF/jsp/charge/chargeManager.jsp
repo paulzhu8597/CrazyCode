@@ -69,7 +69,9 @@ var allmenues = "${allmenues}";
 			  	</tfoot>
 			  </table>
 		  </div>
-		  费用说明：<input type="text" id="chargeIntroduction"  /> 本次交款：<input type="text" placeholder="取值大于零" id="thePayment"  />元 &nbsp; &nbsp; &nbsp; &nbsp;
+		  费用说明：<input type="text" id="chargeIntroduction"  />
+		  收费方式：<crazy:dictselect id="paytype" name="paytype" emptyKey="" emptyValue="请选择"  collection="${paytype}" ></crazy:dictselect> 
+		   本次交款：<input type="text" placeholder="取值大于零" id="thePayment"  />元 &nbsp; &nbsp; &nbsp; &nbsp;
 		  <input type="button"  id="docharge" value="收款" />
 		  </fieldset> 
 		  <hr>
@@ -87,6 +89,7 @@ var allmenues = "${allmenues}";
 		    	<td>货物名称</td>
 		    	<td>货物数量</td>
 		    	<td>重量(吨)</td>
+		    	<td>收费方式</td>
 		    	<td>费用(元)</td>
 		    	<td>已付(元)</td>
 		    	<td>未付(元)</td>
@@ -98,11 +101,11 @@ var allmenues = "${allmenues}";
 		    	<tfoot id="sum">
 		    	<tr>
 		    	<td colspan="2">合计</td>
-		    	<td id="currentamountsum">￥3640.00</td>
-		    	<td colspan="5"></td>
-		    	<td id="currentfeesum">￥3640.00</td>
-		    	<td id="currentpaidsum">￥3640.00</td>
-		    	<td id="currentunpaidsum">￥3640.00</td>
+		    	<td id="currentamountsum">￥0.00</td>
+		    	<td colspan="6"></td>
+		    	<td id="currentfeesum">￥0.00</td>
+		    	<td id="currentpaidsum">￥0.00</td>
+		    	<td id="currentunpaidsum">￥0.00</td>
 		    	</tr>
 		    	</tfoot>
 		    </table>

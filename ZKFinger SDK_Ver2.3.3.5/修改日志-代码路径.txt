@@ -79,5 +79,12 @@ alter table chargelog add  paytype varchar(60) comment '付款方式';
 此文件是系统SQL定义文档，可选择性发布，主要是与开发机器的保持一致
 /product/src/main/resources/sql/product.sql
 
+====================2015-12-28
+（1）收费为0的在报表不显示
+（2）收获去掉一周、半月、一月
+
+（1）/product/src/main/java/com/product/mappings/report-mapper.xml
+（2）/product/src/main/webapp/WEB-INF/jsp/businessmana/receivingmana/list.jsp
+
 
 

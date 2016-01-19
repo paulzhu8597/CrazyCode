@@ -201,7 +201,7 @@ function getDetailInfo(receiveorgid,obj){
 		for(var i=0;i<data.length;i++){
 			html = html
 			+ "<tr>"
-			+ "<td style='text-align: center'><input type='checkbox' name='confirmsDetailcheck' value='"+ data[i].id +"@_@"+ data[i].receivemgrid + "' /> </td>"
+			+ "<td style='text-align: center'><input type='checkbox' name='confirmsDetailcheck' value='"+ data[i].id +"@_@"+ data[i].receivemgrid +"@_@"+data[i].status+ "' /> </td>"
 			+ "<td style='text-align: center'>" + data[i].cargoname + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].cargocount + " </td>" 
 			+ "<td style='text-align: center'>" + data[i].countorg + " </td>" 
@@ -239,6 +239,7 @@ function initEditConfirmInfo(){
 	  document.getElementById("fee").value=data.fee;
 	  $("#timeorgs").find("option[value='"+data.irradtimeorg+"']").attr("selected",true);//时间单位
 	  $("#irradflags").find("option[value='"+data.irradflag+"']").attr("selected",true);
+	  document.getElementById("mask").value=data.mask;
 	}
 }
 
@@ -290,9 +291,9 @@ function saveEditdetailInfo(){
 }
 
 function deletedetail(){
-	if(CommnUtil.isHaveSelectMoreCheckbox("confirmsDetailcheck")){
+	if(CommnUtil.isHaveSelectOneCheckbox("confirmsDetailcheck")){
 		if(confirm("您确定要删除吗？")){
-			var ids = CommnUtil.getAllCheckBoxesValue("confirmsDetailcheck");
+			var ids = CommnUtil.getCheckBoxValueOfSelect("confirmsDetailcheck");
 			var data = CommnUtil.normalAjax("/business/receivingmana/deleteConfirDetailInfo.do","ids="+ids, "json");
 			if("ok"==data){
 				alert("删除成功！");
@@ -302,7 +303,7 @@ function deletedetail(){
 			}
 		}
 	}else{
-		alert("请选择一条或多条详情！");
+		alert("请选择【一条】详情！");
 	}
 }
 

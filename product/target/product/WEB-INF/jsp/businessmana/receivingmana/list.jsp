@@ -34,7 +34,7 @@
 				 <legend>基本信息</legend>
 					 <table class="pp-list table table-striped table-bordered">
 						<tr><td>收货日期：</td><td><input id="receivetime" name="receivetime" type="text" class="input-medium ui-autocomplete-input" /> <td></tr>
-						<tr> <td>送货单位：</td><td><crazy:dictselect id="showorgs" name="showorgs"  collection="${showorgs}" ></crazy:dictselect> </td> </tr>
+					    <tr> <td>送货单位：</td><td><input type="text" id="showorgs" name="showorgs" ></input> </td> </tr>
 						<tr> <td>送货人：</td><td><crazy:dictselect id="showBringTakeInfos" name="showBringTakeInfos"  collection="${showBringTakeInfos}"></crazy:dictselect> </td> </tr>
 						<tr> <td>联系电话 ：</td><td><input id="telnum" name="telnum" type="text" class="input-medium ui-autocomplete-input"  /> </td> </tr>
 					 </table>
@@ -82,9 +82,15 @@
 					送货单位：<input type="text" id="searchorg" name="searchorg"  />
 					收货时间：<input id="receivetime1" name="receivetime1" type="text" class="input-medium ui-autocomplete-input" />
 					送  货  人： <crazy:dictselect id="showBringTakeInfos1" name="showBringTakeInfos1" emptyKey="" emptyValue="请选择"   collection="${showBringTakeInfos}"></crazy:dictselect>
+					最        近:<select name="lastdate" id="lastdate">
+					<option value="">请选择</option> 
+					<option value="1">1天</option> 
+					<option value="2">2天</option> 
+					<option value="3">3天</option> 
+					</select>
 					<input id="query" name="query" type="button" value="Query"/>
 					<br/>
-					<div align="left"><font size="2" color="red"  >双击完成收获</font></div>
+					<div align="left"><font size="2" color="red"  >双击完成收获(PS:灰色显示不可进行确认)</font></div>
 						<table class="pp-list table  table-bordered"
 							style="margin-bottom: -3px;">
 							<thead>

@@ -466,6 +466,7 @@ public class ReceivingManaImpl implements IReceivingMana {
 	}
 	
 	public List<RadiationInfo> getAllTakeCargoes(Map<String, Object> params) {
+		LogUtil.getLog().debug("ReceivingManaImpl.getAllTakeCargoes:\n"+params);
 		return receivingmanamapper.getAllTakeCargoes(params);
 	}
 	

@@ -52,6 +52,7 @@
 			  and a.receiveorgid=#{receiveorgid} 
 			  and a.receivepeopleid=#{receivepeopleid} 
 			  and b.cargoid=#{cargoid}
+			  <!-- and b.cargocount={cargocount} -->
 	</select>
 	
 	<select id="checkhaveone" parameterType="java.util.Map" resultType="java.lang.String">
@@ -76,6 +77,10 @@
 	  <if test="receivepeopleid !=null and receivepeopleid!=''">
 		  and a.receivepeopleid=#{receivepeopleid} 
 	  </if>
+	  <if test="lastdate !=null and lastdate !=''">
+		  or TO_DAYS(NOW()) - TO_DAYS(receivetime)&lt;=${lastdate} 
+	  </if>
+	  
       <!-- 	
       <if test="cargoid != null and cargoid !=''">
 		  and b.cargoid=#{cargoid}
@@ -128,8 +133,16 @@
 	    where id=#{id}
 	</select>	
 	
-	<delete id="deleteconfirms" parameterType="java.lang.String">
-		delete t1.* , t2.* from  receivemgrbase  t1, receivemgrdetail t2 where t1.id = t2.receivemgrid and t1.id in (#{sqlids})
+	<delete id="deleteconfirms" parameterType="java.util.Map">
+		delete  from  receivemgrbase    where  id =  ${baseinfoid}
+	</delete>
+	
+	<delete id="deleteconfirmDetail" parameterType="java.util.Map">
+		delete  from  receivemgrdetail    where  id = ${detailid}
+	</delete>
+	
+		<delete id="deleteconfirmDetails" parameterType="java.util.Map">
+		delete  from  receivemgrdetail    where  id in (${receiveMgrDetailIds})
 	</delete>
 	
 	<select id="getCargoBaseInfoById" parameterType="java.util.Map" resultType="ReceiveInfo">
@@ -158,13 +171,14 @@
 	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='timeorgs' and di.itemid= a.irradtimeorg) irradtimeorg,
 	    reqreagent,
 	    funguscount,
-	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='irradflags' and di.itemid= a.irradflag) irradflag 
+	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='irradflags' and di.itemid= a.irradflag) irradflag,
+	    status
 	    from receivemgrdetail a
 	    where a.receivemgrid=#{receiveorgid}
 	</select>
 	
 	<select id="getEditDetailInfo" parameterType="java.util.Map" resultType="ReceiveInfo">
-		select  cargoid,cargocount,cargoweight,countorg,funguscount,reqreagent,irradtype,irradtime,irradtimeorg,irradflag ,fee
+		select  cargoid,cargocount,cargoweight,countorg,funguscount,reqreagent,irradtype,irradtime,irradtimeorg,irradflag ,fee,mask
 		from receivemgrdetail
 		where id=#{id} and receivemgrid=#{receiveorgid}
 	</select>
@@ -252,7 +266,7 @@
 	    (select di.itemname from dict_group dg ,dict_item di where dg.groupid=di.groupid and  dg.groupid='timeorgs' and di.itemid= t2.irradtimeorg) irradtimeorg,
 	    reqreagent,
 	    funguscount
-	    from receivemgrbase t1, receivemgrdetail t2 where  t1.id=t2.receivemgrid and t2.irradednum &lt; t2.cargocount and t2.status='2'
+	    from receivemgrbase t1, receivemgrdetail t2 where  t1.id=t2.receivemgrid and t2.irradednum &lt; t2.cargocount and t2.status='2' and  t2.fee!=0
 		  <if test="receivetime !=null and receivetime !=''">
 			  and t1.receivetime= str_to_date(#{receivetime},'%Y-%m-%d')
 		  </if>
