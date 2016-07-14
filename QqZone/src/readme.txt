@@ -5,4 +5,3 @@
 com.qq.qzone.user.QzoneSpider的login的方法第一行设置当前QQ的主页。
 4、本爬虫只在Windows下测试，需要电脑登录qq，然后在运行爬虫
 5、默认开发使用的是chrome浏览器。
-6、使用本爬虫如若造成经济或者商业纠纷与作者无关。
