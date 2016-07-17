@@ -104,14 +104,15 @@ class QzoneSpider:
     @classmethod
     def cycleEveryOne(cls):
         #取得当前QQ号的QQ数量 参考：http://jingyan.baidu.com/article/e2284b2b3dba8be2e6118dd1.html
-        qqlistlength = ReadFile.getFileLength()
-        for i in range(1,qqlistlength):
-            qqUserAddress = ReadFile.getOneLine(i)
+        #qqlistlength = ReadFile.getFileLength()
+        innerindex = 1
+        while (innerindex <= maxQQCount):
+            qqUserAddress = ReadFile.getOneLine(innerindex)
             cls.constructUserData(qqUserAddress)
-            qqlistlength = ReadFile.getFileLength()
-            if maxQQCount<=qqlistlength:
-                print ("the qq  user size is enough , current size is : "+str(qqlistlength))
-                break
+            innerindex = innerindex+1
+#             if maxQQCount<=qqlistlength:
+#                 print ("the qq  user size is enough , current size is : "+str(qqlistlength))
+#                 break
             
             
             
