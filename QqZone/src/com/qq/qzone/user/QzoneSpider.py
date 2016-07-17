@@ -1,6 +1,6 @@
         #********************************************************************************
         #                            QQ空间好友爬虫 
-        #                author:CeaserWang time : 2016-07-01  ~  2016-07-01-14
+        #                author:CeaserWang time : 2016-07-01  ~  2016-07-01-14 QQ：1156721874
         #********************************************************************************
 
 # coding=utf-8
@@ -42,7 +42,7 @@ driver = webdriver.Chrome(chrome_options=options)
 # driver = webdriver.Chrome(chromedriver)
 #wait = ui.WebDriverWait(driver,10)
 currentqq = "1156721874"
-maxQQCount = 2
+maxQQCount = 10000
 
 class QzoneSpider:
     
@@ -150,8 +150,12 @@ class QzoneSpider:
                 userInfo.setQq(qq)
                 userInfo.setNick(nick)
                 userInfo.setPqq(currentqq)
+                print ("currnent QQ is : "+str(qq))
                 #切换到iframe操作
                 driver.switch_to_frame("QM_Feeds_Iframe")
+                #host_home_feedslen = driver.find_element_by_id("host_home_feeds")
+                if not Util.isExists(driver,"host_home_feeds"):
+                    return
                 feed_friend_list = driver.find_element_by_id("host_home_feeds").get_attribute("innerHTML")
                 ul =  BeautifulSoup(str(feed_friend_list),"html.parser")
                 lies = ul.findAll("li",attrs={"class":"f-single f-s-s"})
