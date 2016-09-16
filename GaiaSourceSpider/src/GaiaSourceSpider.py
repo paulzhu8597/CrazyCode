@@ -30,8 +30,13 @@ class GaiaSourceSpider:
     
     @classmethod
     def GaiaSourceData(cls):
-        for i in range(0,110):
-            driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-00"+str(i)+".csv.gz")
+        for i in range(12,110):
+            if i<10:
+                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-00"+str(i)+".csv.gz")
+            elif   i>9 and  i<100 :
+                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-0"+str(i)+".csv.gz")  
+            elif i>99:
+                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-"+str(i)+".csv.gz")    
             time.sleep(35)
 
 GaiaSourceSpider.GaiaSourceData()            
