@@ -34,8 +34,10 @@ class GaiaSourceSpider:
     def GaiaSourceData(cls):
         driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/")
         links = driver.find_elements_by_tag_name("a")
-        for i in range(544,len(links)):
-            if "GaiaSource" in links[i].text:
+        for i in range(610,len(links)):
+            if "GaiaSource_000-009-196.csv.gz"==links[i].text:
+                break
+            elif "GaiaSource" in links[i].text:
                 driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/"+links[i].text)
                 print (str(i)+" : "+links[i].text)
                 ReadFile.writeQQListIndex(str(i)) 
