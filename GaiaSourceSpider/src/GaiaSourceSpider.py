@@ -15,7 +15,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys        
 
+from ReadFile import ReadFile
 import selenium.webdriver.support.ui as ui    
+
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
@@ -24,19 +26,21 @@ options.add_argument("--user-data-dir="+r"C:/Users/Administrator/AppData/Local/G
 driver = webdriver.Chrome(chrome_options=options)
 
 #欧洲航天局 欧空局公布包含10亿颗恒星的三维星图 文件下载爬虫
-
+#http://www.cnblogs.com/tobecrazy/p/4117506.html
 
 class GaiaSourceSpider:
     
     @classmethod
     def GaiaSourceData(cls):
-        for i in range(12,110):
-            if i<10:
-                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-00"+str(i)+".csv.gz")
-            elif   i>9 and  i<100 :
-                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-0"+str(i)+".csv.gz")  
-            elif i>99:
-                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/GaiaSource_000-000-"+str(i)+".csv.gz")    
-            time.sleep(35)
-
+        driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/")
+        links = driver.find_elements_by_tag_name("a")
+        for i in range(544,len(links)):
+            if "GaiaSource" in links[i].text:
+                driver.get("http://cdn.gea.esac.esa.int/Gaia/gaia_source/csv/"+links[i].text)
+                print (str(i)+" : "+links[i].text)
+                ReadFile.writeQQListIndex(str(i)) 
+                time.sleep(1)
+            #print (links[i].text)
+            #links[i].click()
+            
 GaiaSourceSpider.GaiaSourceData()            
