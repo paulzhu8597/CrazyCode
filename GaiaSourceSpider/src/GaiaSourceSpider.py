@@ -27,6 +27,7 @@ driver = webdriver.Chrome(chrome_options=options)
 
 #欧洲航天局 欧空局公布包含10亿颗恒星的三维星图 文件下载爬虫
 #http://www.cnblogs.com/tobecrazy/p/4117506.html
+#http://gea.esac.esa.int/archive/
 
 class GaiaSourceSpider:
     
