@@ -21,6 +21,7 @@ public class ReverseInteger {
 
 	public String solution(Integer digital){
 		if(null!=digital){
+			digital = Math.abs(digital);
 			String str = String.valueOf(digital);
 			StringBuffer sb = new StringBuffer(str);
 			return sb.reverse().toString();
